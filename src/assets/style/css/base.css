@@ -1,0 +1,28 @@
+html {
+  box-sizing: border-box;
+  height: 100%; }
+  html *,
+  html *:after,
+  html *:before {
+    box-sizing: inherit;
+    margin: 0;
+    padding: 0; }
+  html body {
+    height: 100%; }
+  html .panel-top {
+    height: 50px;
+    background-color: gold;
+    line-height: 50px;
+    text-align: center; }
+  html .main {
+    display: flex;
+    height: calc(100% - 50px - 100px); }
+    html .main .panel-left {
+      flex: 0 0 50%;
+      background-color: lightblue; }
+    html .main .panel-right {
+      flex: 0 0 50%;
+      background-color: steelblue; }
+  html .panel-bottom {
+    height: 100px;
+    background-color: orange; }

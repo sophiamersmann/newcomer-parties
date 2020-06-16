@@ -1,0 +1,45 @@
+@import 'global';
+
+html {
+  box-sizing: border-box;
+  height: 100%;
+
+  *,
+  *:after,
+  *:before {
+    box-sizing: inherit;
+    margin: 0;
+    padding: 0;
+  }
+
+  body {
+    height: 100%;
+  }
+
+  .panel-top {
+    height: 50px;
+    background-color: gold;
+    line-height: 50px;
+    text-align: center;
+  }
+
+  .main {
+    display: flex;
+    height: calc(100% - 50px - 100px);
+
+    .panel-left {
+      flex: 0 0 50%;
+      background-color: lightblue;
+    }
+
+    .panel-right {
+      flex: 0 0 50%;
+      background-color: steelblue;
+    }
+  }
+
+  .panel-bottom {
+    height: 100px;
+    background-color: orange;
+  }
+}
