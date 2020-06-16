@@ -1,0 +1,19 @@
+{
+  "name": "newcomer-parties",
+  "version": "0.1.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sophiamersmann/newcomer-parties.git"
+  },
+  "author": "Sophia Mersmann",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/sophiamersmann/newcomer-parties/issues"
+  },
+  "homepage": "https://github.com/sophiamersmann/newcomer-parties#readme"
+}
