@@ -1,4 +1,14 @@
 {
   "parser": "babel-eslint",
-  "extends": ["airbnb"]
+  "extends": ["airbnb"],
+  "env": {
+    "browser": true,
+    "node": true
+  },
+  # TODO: Remove in production
+  "globals": {
+    "d3": "readonly",
+    "$": "readonly",
+    "HalfDonutChart": "readonly"
+  }
 }

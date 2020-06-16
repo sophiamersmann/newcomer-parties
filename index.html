@@ -14,12 +14,19 @@
   <title></title>
 
   <link rel="stylesheet" href="src/assets/style/css/base.css">
+
+  <script src="node_modules/jquery/dist/jquery.min.js"></script>
+  <script src="node_modules/d3/dist/d3.min.js"></script>
+  <script src="src/assets/js/modules/donut.js"></script>
+  <script src="src/assets/js/index.js" charset="utf-8"></script>
 </head>
 
 <body>
   <div class="panel-top">Hallo</div>
   <div class="main">
-    <div class="panel-left">Left</div>
+    <div class="panel-left">
+      <div id="chart-container" data-src="data/parlgov.csv"></div>
+    </div>
     <div class="panel-right">Right</div>
   </div>
   <div class="panel-bottom">Bottom</div>
