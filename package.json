@@ -4,7 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "http-server .",
+    "scss": "node-sass --watch ./src/assets/style/scss -o ./src/assets/style/css"
   },
   "repository": {
     "type": "git",
@@ -15,5 +17,9 @@
   "bugs": {
     "url": "https://github.com/sophiamersmann/newcomer-parties/issues"
   },
-  "homepage": "https://github.com/sophiamersmann/newcomer-parties#readme"
+  "homepage": "https://github.com/sophiamersmann/newcomer-parties#readme",
+  "dependencies": {
+    "http-server": "^0.12.3",
+    "sass-node": "^4.11.2"
+  }
 }
