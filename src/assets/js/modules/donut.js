@@ -1,15 +1,9 @@
 const DonutChart = {
   svg: {
     selector: null,
-    width: 300,
-    height: 500,
+    width: 200,
+    height: 200,
     g: null,
-  },
-  margin: {
-    top: 60,
-    right: 40,
-    bottom: 40,
-    left: 60,
   },
   data: {
     raw: null,
@@ -18,15 +12,19 @@ const DonutChart = {
     },
   },
   donut: {
+    pie: null,
     arc: null,
-    radius: 100,
-    thickness: 80,
+    radius: null,
+    thickness: null,
     labelOffset: 10,
   },
   active: {
     data: null,
   },
 };
+
+DonutChart.donut.radius = DonutChart.svg.width / 2;
+DonutChart.donut.thickness = 0.8 * DonutChart.donut.radius;
 
 function loadDatum(d) {
   return {
@@ -96,13 +94,13 @@ function familyPosition(familyID) {
 }
 
 DonutChart.setUpSVG = function setUpSVG() {
+  const { width, height } = this.svg;
   this.svg.g = d3.select(this.svg.selector)
     .append('svg')
     .attr('class', 'svg-content')
-    .attr('viewBox', `0 0 ${this.svg.width} ${this.svg.height}`)
+    .attr('viewBox', [-width / 2, -height / 2, width, height])
     .attr('preserveAspectRatio', 'xMinYMin meet')
-    .append('g')
-    .attr('transform', `translate(${this.margin.left},${this.margin.top})`);
+    .append('g');
 };
 
 DonutChart.drawDonut = function drawDonut(timeRange) {
@@ -113,8 +111,8 @@ DonutChart.drawDonut = function drawDonut(timeRange) {
         && d.electionDate.getFullYear() < timeRange.end,
   );
 
-  const pie = d3.pie()
-    .value(1 / this.active.data.length)
+  this.donut.pie = d3.pie()
+    .value(1)
     .sort((a, b) => d3.ascending(familyPosition(a.familyID), familyPosition(b.familyID)))
     .startAngle(-0.5 * Math.PI)
     .endAngle(0.5 * Math.PI);
@@ -125,10 +123,8 @@ DonutChart.drawDonut = function drawDonut(timeRange) {
 
   this.svg.g.append('g')
     .attr('class', 'donut')
-    // FIX: remove transform
-    .attr('transform', `translate(${radius}, ${radius})`)
     .selectAll('path')
-    .data(pie(this.active.data))
+    .data(this.donut.pie(this.active.data))
     .join('path')
     .attr('d', this.donut.arc)
     .attr('fill', (d) => familyColor(d.data.familyID))
@@ -154,11 +150,16 @@ DonutChart.drawLabels = function drawLabels() {
     .startAngle(-0.5 * Math.PI)
     .endAngle(0.5 * Math.PI);
 
+  if (!d3.select('g.donut-labels').empty()) {
+    d3.select('g.donut-labels').selectAll('*').remove();
+  }
+
   d3.select('.donut').append('g')
     .attr('class', 'donut-labels')
     .selectAll('text')
     .data(pie(familyData))
     .join('text')
+    .attr('class', 'label')
     .attr('transform', (d) => {
       const r = (arc.outerRadius()(d)) + labelOffset;
       const a = (d.startAngle + d.endAngle) / 2 - Math.PI / 2;

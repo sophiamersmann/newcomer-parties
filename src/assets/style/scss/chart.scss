@@ -1,0 +1,26 @@
+@import 'global';
+
+#chart-container {
+  align-items: center;
+  display: flex;
+  height: 100%;
+  margin: $spacing * 4;
+  // @include max-width($small) {
+  //   margin: $spacing;
+  // }
+  // @include max-width($extra-small) {
+  //   margin: $spacing / 2;
+  // }
+
+  svg {
+    display: block;
+    width: 80%;
+    height: 80%;
+    margin: 0 auto;
+    overflow: visible;
+  }
+
+  .label {
+    font-size: 10px;
+  }
+}
