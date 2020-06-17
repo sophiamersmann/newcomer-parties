@@ -34,13 +34,58 @@ function loadDatum(d) {
     partyOrigAscii: d.party_name_ascii,
 
     familyID: +d.family_id,
-    familyName: d.family_name,
-    familyNameShort: d.family_name_short,
+    family: d.family_name,
+    familyShort: d.family_name_short,
 
     electionID: +d.election_id,
     electionDate: d3.timeParse('%Y-%m-%d')(d.election_date),
     voteShare: +d.voteShare,
   };
+}
+
+function familyName(familyID) {
+  return {
+    2: 'Agrarian',
+    3: 'Christian democracy',
+    6: 'Liberal',
+    11: 'Social democracy',
+    12: 'no family',
+    14: 'Communist/Socialist',
+    16: 'Special issue',
+    19: 'Green/Ecologist',
+    26: 'Conservative',
+    40: 'Right-wing',
+  }[+familyID];
+}
+
+function familyColor(familyID) {
+  return {
+    2: 'brown',
+    3: 'black',
+    6: 'yellow',
+    11: 'red',
+    12: 'gray',
+    14: 'purple',
+    16: 'gray',
+    19: 'green',
+    26: 'black',
+    40: 'blue',
+  }[+familyID];
+}
+
+function familyPosition(familyID) {
+  return {
+    2: 5,
+    3: 4,
+    6: 2,
+    11: 7,
+    12: 10,
+    14: 8,
+    16: 9,
+    19: 6,
+    26: 3,
+    40: 1,
+  }[+familyID];
 }
 
 HalfDonutChart.setUpSVG = function setUpSVG() {
@@ -68,7 +113,7 @@ HalfDonutChart.drawDonut = function drawDonut(timeRange) {
 
   const pie = d3.pie()
     .value((d) => d.share)
-    .sort(null) // TODO: sort
+    .sort((a, b) => d3.ascending(familyPosition(a.familyID), familyPosition(b.familyID)))
     .startAngle(-0.5 * Math.PI)
     .endAngle(0.5 * Math.PI);
 
@@ -78,13 +123,13 @@ HalfDonutChart.drawDonut = function drawDonut(timeRange) {
 
   this.svg.g.append('g')
     .attr('class', 'donut')
-    // FIX: magic transform
+    // FIX: remove transform
     .attr('transform', `translate(${radius / 2}, ${radius})`)
     .selectAll('path')
     .data(pie(familyData))
     .join('path')
     .attr('d', arc)
-    .attr('fill', 'white')
+    .attr('fill', (d) => familyColor(d.data.familyID))
     .attr('stroke', 'black')
     .style('stroke-width', 2);
 };
