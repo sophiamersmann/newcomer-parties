@@ -9,6 +9,6 @@
   "globals": {
     "d3": "readonly",
     "$": "readonly",
-    "HalfDonutChart": "readonly"
+    "DonutChart": "readonly"
   }
 }

@@ -1,4 +1,4 @@
-const HalfDonutChart = {
+const DonutChart = {
   svg: {
     selector: null,
     width: 300,
@@ -91,7 +91,7 @@ function familyPosition(familyID) {
   }[+familyID];
 }
 
-HalfDonutChart.setUpSVG = function setUpSVG() {
+DonutChart.setUpSVG = function setUpSVG() {
   this.svg.g = d3.select(this.svg.selector)
     .append('svg')
     .attr('class', 'svg-content')
@@ -101,7 +101,7 @@ HalfDonutChart.setUpSVG = function setUpSVG() {
     .attr('transform', `translate(${this.margin.left},${this.margin.top})`);
 };
 
-HalfDonutChart.drawDonut = function drawDonut(timeRange) {
+DonutChart.drawDonut = function drawDonut(timeRange) {
   const { radius, thickness } = this.donut;
 
   const data = this.data.filter((d) => d.electionDate.getFullYear() >= timeRange.start
@@ -141,7 +141,7 @@ HalfDonutChart.drawDonut = function drawDonut(timeRange) {
     .text((d) => familyName(d.data.familyID));
 };
 
-HalfDonutChart.drawLabels = function drawLabels() {
+DonutChart.drawLabels = function drawLabels() {
   const { data, arc, labelOffset } = this.donut;
 
   d3.select('.donut').append('g')
@@ -165,14 +165,14 @@ HalfDonutChart.drawLabels = function drawLabels() {
     .text((d) => familyName(d.data.familyID));
 };
 
-HalfDonutChart.draw = function draw() {
+DonutChart.draw = function draw() {
   this.setUpSVG();
 
   this.drawDonut(this.initialValues.timeRange);
   this.drawLabels();
 };
 
-HalfDonutChart.prepareData = function prepareData(data, region = null) {
+DonutChart.prepareData = function prepareData(data, region = null) {
   if (region) {
     // TODO
   } else {
@@ -180,12 +180,12 @@ HalfDonutChart.prepareData = function prepareData(data, region = null) {
   }
 };
 
-HalfDonutChart.init = function init(selector, region = null) {
+DonutChart.init = function init(selector, region = null) {
   this.svg.selector = selector;
 
   const filename = d3.select(selector).attr('data-src');
   d3.csv(filename, loadDatum).then((data) => {
-    HalfDonutChart.prepareData(data, region);
-    HalfDonutChart.draw();
+    DonutChart.prepareData(data, region);
+    DonutChart.draw();
   });
 };
