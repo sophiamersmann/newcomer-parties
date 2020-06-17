@@ -18,7 +18,14 @@ html {
     display: flex;
     height: calc(100% - 50px - 100px); }
     html .main .panel-left {
+      display: flex;
+      flex-direction: column;
       flex: 0 0 50%; }
+      html .main .panel-left .panel-info {
+        background-color: lightblue;
+        flex: 0 1 auto; }
+      html .main .panel-left .panel-chart {
+        flex: 1 0 auto; }
     html .main .panel-right {
       flex: 0 0 50%;
       background-color: steelblue; }
