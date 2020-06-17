@@ -11,16 +11,20 @@ const DonutChart = {
     bottom: 40,
     left: 60,
   },
-  data: null,
-  initialValues: {
-    timeRange: { start: 2010, end: 2020 },
+  data: {
+    raw: null,
+    init: {
+      timeRange: { start: 2010, end: 2020 },
+    },
   },
   donut: {
-    data: null,
     arc: null,
     radius: 100,
     thickness: 80,
     labelOffset: 10,
+  },
+  active: {
+    data: null,
   },
 };
 
@@ -64,10 +68,10 @@ function familyName(familyID) {
 function familyColor(familyID) {
   return {
     2: 'brown',
-    3: 'black',
+    3: 'orange',
     6: 'yellow',
     11: 'red',
-    12: 'gray',
+    12: 'lightgray',
     14: 'purple',
     16: 'gray',
     19: 'green',
@@ -104,23 +108,16 @@ DonutChart.setUpSVG = function setUpSVG() {
 DonutChart.drawDonut = function drawDonut(timeRange) {
   const { radius, thickness } = this.donut;
 
-  const data = this.data.filter((d) => d.electionDate.getFullYear() >= timeRange.start
-    && d.electionDate.getFullYear() < timeRange.end);
-  const n = data.length;
-
-  const familyData = d3.nest()
-    .key((d) => d.familyID)
-    .rollup((v) => (v.length / n) * 100)
-    .entries(data)
-    .map((d) => ({ familyID: d.key, share: d.value }));
+  this.active.data = this.data.raw.filter(
+    (d) => d.electionDate.getFullYear() >= timeRange.start
+        && d.electionDate.getFullYear() < timeRange.end,
+  );
 
   const pie = d3.pie()
-    .value((d) => d.share)
+    .value(1 / this.active.data.length)
     .sort((a, b) => d3.ascending(familyPosition(a.familyID), familyPosition(b.familyID)))
     .startAngle(-0.5 * Math.PI)
     .endAngle(0.5 * Math.PI);
-
-  this.donut.data = pie(familyData);
 
   this.donut.arc = d3.arc()
     .outerRadius(radius)
@@ -131,23 +128,36 @@ DonutChart.drawDonut = function drawDonut(timeRange) {
     // FIX: remove transform
     .attr('transform', `translate(${radius}, ${radius})`)
     .selectAll('path')
-    .data(this.donut.data)
+    .data(pie(this.active.data))
     .join('path')
     .attr('d', this.donut.arc)
     .attr('fill', (d) => familyColor(d.data.familyID))
     .attr('stroke', 'white')
-    .style('stroke-width', 0.5)
+    .style('stroke-width', 0.25)
     .append('title')
-    .text((d) => familyName(d.data.familyID));
+    .text((d) => d.data.party);
 };
 
 DonutChart.drawLabels = function drawLabels() {
-  const { data, arc, labelOffset } = this.donut;
+  const { arc, labelOffset } = this.donut;
+
+  const n = this.active.data.length;
+  const familyData = d3.nest()
+    .key((d) => d.familyID)
+    .rollup((v) => (v.length / n) * 100)
+    .entries(this.active.data)
+    .map((d) => ({ familyID: d.key, share: d.value }));
+
+  const pie = d3.pie()
+    .value((d) => d.share)
+    .sort((a, b) => d3.ascending(familyPosition(a.familyID), familyPosition(b.familyID)))
+    .startAngle(-0.5 * Math.PI)
+    .endAngle(0.5 * Math.PI);
 
   d3.select('.donut').append('g')
     .attr('class', 'donut-labels')
     .selectAll('text')
-    .data(data)
+    .data(pie(familyData))
     .join('text')
     .attr('transform', (d) => {
       const r = (arc.outerRadius()(d)) + labelOffset;
@@ -168,7 +178,7 @@ DonutChart.drawLabels = function drawLabels() {
 DonutChart.draw = function draw() {
   this.setUpSVG();
 
-  this.drawDonut(this.initialValues.timeRange);
+  this.drawDonut(this.data.init.timeRange);
   this.drawLabels();
 };
 
@@ -176,7 +186,7 @@ DonutChart.prepareData = function prepareData(data, region = null) {
   if (region) {
     // TODO
   } else {
-    this.data = data;
+    this.data.raw = data;
   }
 };
 
