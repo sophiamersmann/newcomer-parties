@@ -146,7 +146,6 @@ HalfDonutChart.drawLabels = function drawLabels() {
 
   d3.select('.donut').append('g')
     .attr('class', 'donut-labels')
-    .attr('font-size', 12)
     .selectAll('text')
     .data(data)
     .join('text')
@@ -157,8 +156,13 @@ HalfDonutChart.drawLabels = function drawLabels() {
       return `translate(${translateXY})`;
     })
     .attr('alignment-baseline', 'middle')
-    .attr('text-anchor', 'middle')
-    .text((d) => d.data.familyID);
+    .attr('text-anchor', (d) => {
+      const a = (d.startAngle + d.endAngle) / 2;
+      if (a > -Math.PI / 30 && a < Math.PI / 30) return 'middle';
+      if (a < 0) return 'end';
+      return 'start';
+    })
+    .text((d) => familyName(d.data.familyID));
 };
 
 HalfDonutChart.draw = function draw() {
