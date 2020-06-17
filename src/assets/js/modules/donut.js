@@ -16,8 +16,11 @@ const HalfDonutChart = {
     timeRange: { start: 2010, end: 2020 },
   },
   donut: {
+    data: null,
+    arc: null,
     radius: 100,
     thickness: 80,
+    labelOffset: 10,
   },
 };
 
@@ -117,27 +120,52 @@ HalfDonutChart.drawDonut = function drawDonut(timeRange) {
     .startAngle(-0.5 * Math.PI)
     .endAngle(0.5 * Math.PI);
 
-  const arc = d3.arc()
+  this.donut.data = pie(familyData);
+
+  this.donut.arc = d3.arc()
     .outerRadius(radius)
     .innerRadius(radius - thickness);
 
   this.svg.g.append('g')
     .attr('class', 'donut')
     // FIX: remove transform
-    .attr('transform', `translate(${radius / 2}, ${radius})`)
+    .attr('transform', `translate(${radius}, ${radius})`)
     .selectAll('path')
-    .data(pie(familyData))
+    .data(this.donut.data)
     .join('path')
-    .attr('d', arc)
+    .attr('d', this.donut.arc)
     .attr('fill', (d) => familyColor(d.data.familyID))
-    .attr('stroke', 'black')
-    .style('stroke-width', 2);
+    .attr('stroke', 'white')
+    .style('stroke-width', 0.5)
+    .append('title')
+    .text((d) => familyName(d.data.familyID));
+};
+
+HalfDonutChart.drawLabels = function drawLabels() {
+  const { data, arc, labelOffset } = this.donut;
+
+  d3.select('.donut').append('g')
+    .attr('class', 'donut-labels')
+    .attr('font-size', 12)
+    .selectAll('text')
+    .data(data)
+    .join('text')
+    .attr('transform', (d) => {
+      const r = (arc.outerRadius()(d)) + labelOffset;
+      const a = (d.startAngle + d.endAngle) / 2 - Math.PI / 2;
+      const translateXY = [Math.cos(a) * r, Math.sin(a) * r];
+      return `translate(${translateXY})`;
+    })
+    .attr('alignment-baseline', 'middle')
+    .attr('text-anchor', 'middle')
+    .text((d) => d.data.familyID);
 };
 
 HalfDonutChart.draw = function draw() {
   this.setUpSVG();
 
   this.drawDonut(this.initialValues.timeRange);
+  this.drawLabels();
 };
 
 HalfDonutChart.prepareData = function prepareData(data, region = null) {

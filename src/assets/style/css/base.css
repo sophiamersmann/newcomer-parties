@@ -18,8 +18,7 @@ html {
     display: flex;
     height: calc(100% - 50px - 100px); }
     html .main .panel-left {
-      flex: 0 0 50%;
-      background-color: lightblue; }
+      flex: 0 0 50%; }
     html .main .panel-right {
       flex: 0 0 50%;
       background-color: steelblue; }
