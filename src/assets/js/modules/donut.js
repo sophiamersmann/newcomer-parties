@@ -1,3 +1,13 @@
+function updateInfoField(active) {
+  d3.select('.party-name').text(active.party);
+  d3.select('.party-country').text(active.country);
+}
+
+function clearInfoField() {
+  d3.select('.party-name').text('');
+  d3.select('.party-country').text('');
+}
+
 class DonutChart {
   constructor(selector, radius = 0.5, drawLabels = true) {
     const div = d3.select(selector);
@@ -136,13 +146,13 @@ class DonutChart {
           .attr('fill-opacity', 0.25);
         // TODO: could be property that contains infoField logic
         this.active.slice = d.data;
-        DonutChart.updateInfoField(this.active.slice);
+        updateInfoField(this.active.slice);
       }).on('mouseout', (d, i) => {
         this.svg.g.selectAll('.donut-slice')
           .filter((_, j) => i !== j)
           .attr('fill-opacity', 1);
         this.active.slice = null;
-        DonutChart.clearInfoField();
+        clearInfoField();
       });
   }
 
@@ -166,15 +176,5 @@ class DonutChart {
       electionDate: d3.timeParse('%Y-%m-%d')(d.election_date),
       voteShare: +d.vote_share,
     };
-  }
-
-  static updateInfoField(active) {
-    d3.select('.party-name').text(active.party);
-    d3.select('.party-country').text(active.country);
-  }
-
-  static clearInfoField() {
-    d3.select('.party-name').text('');
-    d3.select('.party-country').text('');
   }
 }
