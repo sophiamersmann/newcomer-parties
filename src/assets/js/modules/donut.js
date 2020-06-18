@@ -44,7 +44,7 @@ function loadDatum(d) {
 
     electionID: +d.election_id,
     electionDate: d3.timeParse('%Y-%m-%d')(d.election_date),
-    voteShare: +d.voteShare,
+    voteShare: +d.vote_share,
   };
 }
 
@@ -112,8 +112,9 @@ DonutChart.drawDonut = function drawDonut(timeRange) {
   );
 
   this.donut.pie = d3.pie()
-    .value(1)
-    .sort((a, b) => d3.ascending(familyPosition(a.familyID), familyPosition(b.familyID)))
+    .value((d) => d.voteShare)
+    .sort((a, b) => d3.ascending(familyPosition(a.familyID), familyPosition(b.familyID))
+      || d3.descending(a.voteShare, b.voteShare))
     .startAngle(-0.5 * Math.PI)
     .endAngle(0.5 * Math.PI);
 
@@ -131,16 +132,15 @@ DonutChart.drawDonut = function drawDonut(timeRange) {
     .attr('stroke', 'white')
     .style('stroke-width', 0.25)
     .append('title')
-    .text((d) => d.data.party);
+    .text((d) => `${d.data.party} (${d.data.voteShare})`);
 };
 
 DonutChart.drawLabels = function drawLabels() {
   const { arc, labelOffset } = this.donut;
 
-  const n = this.active.data.length;
   const familyData = d3.nest()
     .key((d) => d.familyID)
-    .rollup((v) => (v.length / n) * 100)
+    .rollup((v) => d3.sum(v, (d) => d.voteShare))
     .entries(this.active.data)
     .map((d) => ({ familyID: d.key, share: d.value }));
 
