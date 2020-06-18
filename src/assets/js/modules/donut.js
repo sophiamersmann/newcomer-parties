@@ -131,7 +131,7 @@ class DonutChart {
       .attr('d', this.donut.arc)
       .attr('fill', (d) => familyColor(d.data.familyID))
       .attr('stroke', 'white')
-      .style('stroke-width', 0.25);
+      .style('stroke-width', 0.2);
   }
 
   drawLabels() {
