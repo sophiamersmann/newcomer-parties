@@ -6,6 +6,7 @@ $(document).ready(() => {
   const donut = new DonutChart('#chart-container-all', 0.35);
 
   // draw country-specific charts
+  const countryDonuts = [];
   COUNTRY_IDS.forEach((countryID) => {
     const selector = `#chart-container-${countryID}`;
     const elem = $('<div>/', {
@@ -16,9 +17,9 @@ $(document).ready(() => {
       'data-src': 'data/parlgov.csv',
       'data-country-id': countryID,
     })).append(`<div>${country(countryID)}</div>`);
-
     $('.panel-right').append(elem);
-    new DonutChart(selector, 0.5, false);
+
+    countryDonuts.push(new DonutChart(selector, 0.5, false));
   });
 
   // slider logic
@@ -30,6 +31,8 @@ $(document).ready(() => {
     const newTimeRange = t.id === 'a'
       ? { start: +t.value, end: currentTimeRange.end }
       : { start: currentTimeRange.start, end: +t.value };
+
     donut.update(newTimeRange);
+    countryDonuts.forEach((d) => d.update(newTimeRange));
   });
 });

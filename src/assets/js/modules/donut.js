@@ -34,13 +34,18 @@ class DonutChart {
       .outerRadius(this.donut.radius)
       .innerRadius(this.donut.radius - this.donut.thickness);
 
-    this.init(drawLabels);
+    this.labels = {
+      draw: drawLabels,
+      offset: 10,
+    };
+
+    this.init();
   }
 
-  init(drawLabels = true) {
+  init() {
     d3.csv(this.data.filename, DonutChart.loadDatum).then((data) => {
       this.prepareData(data);
-      this.draw(drawLabels);
+      this.draw();
     });
   }
 
@@ -52,12 +57,12 @@ class DonutChart {
     }
   }
 
-  draw(drawLabels = true) {
+  draw() {
     this.setUpSVG();
 
     this.drawDonut(this.initialValues.timeRange);
 
-    if (drawLabels) {
+    if (this.labels.draw) {
       this.drawLabels();
     }
 
@@ -74,7 +79,7 @@ class DonutChart {
       .attr('class', 'donut');
   }
 
-  drawDonut(timeRange) {
+  drawDonut() {
     this.active.data = this.data.raw.filter(
       (d) => d.electionDate.getFullYear() >= this.active.timeRange.start
           && d.electionDate.getFullYear() < this.active.timeRange.end,
@@ -99,7 +104,7 @@ class DonutChart {
   }
 
   drawLabels() {
-    const { arc, labelOffset } = this.donut;
+    const { arc } = this.donut;
 
     const familyData = d3.nest()
       .key((d) => d.familyID)
@@ -120,7 +125,7 @@ class DonutChart {
       .join('text')
       .attr('class', 'label')
       .attr('transform', (d) => {
-        const r = (arc.outerRadius()(d)) + labelOffset;
+        const r = (arc.outerRadius()(d)) + this.labels.offset;
         const a = (d.startAngle + d.endAngle) / 2 - Math.PI / 2;
         const translateXY = [Math.cos(a) * r, Math.sin(a) * r];
         return `translate(${translateXY})`;
@@ -152,8 +157,10 @@ class DonutChart {
     this.clearDonut();
     this.drawDonut();
 
-    this.clearLabels();
-    this.drawLabels();
+    if (this.labels.draw) {
+      this.clearLabels();
+      this.drawLabels();
+    }
 
     this.enableInteractions();
   }
