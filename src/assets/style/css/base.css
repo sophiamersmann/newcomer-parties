@@ -37,8 +37,9 @@ html {
       padding: 1rem;
       overflow: scroll;
       background-color: steelblue; }
-      html .main .panel-right .chart-container-country {
+      html .main .panel-right > div {
         display: flex;
+        flex-direction: column;
         flex: 0 1 20%;
         align-items: center;
         margin: 0.25rem;

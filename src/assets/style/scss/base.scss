@@ -54,8 +54,9 @@ html {
       overflow: scroll;
       background-color: steelblue;
 
-      .chart-container-country {
+      & > div {
         display: flex;
+        flex-direction: column;
         flex: 0 1 20%;
         align-items: center;
         margin: $spacing / 8;
