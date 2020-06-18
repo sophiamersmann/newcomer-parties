@@ -24,15 +24,16 @@ $(document).ready(() => {
 
   // slider logic
   $('input').on('input', (e) => {
-    const t = e.target;
-    $(t).parent().css(`--${t.id}`, +t.value);
+    const t1 = e.target;
+    $(t1).parent().css(`--${t1.id}`, +t1.value);
 
-    const currentTimeRange = donut.active.timeRange;
-    const newTimeRange = t.id === 'a'
-      ? { start: +t.value, end: currentTimeRange.end }
-      : { start: currentTimeRange.start, end: +t.value };
+    const t2 = $(`#${t1.id === 'a' ? 'b' : 'a'}`).get(0);
 
-    donut.update(newTimeRange);
-    countryDonuts.forEach((d) => d.update(newTimeRange));
+    const timeRange = +t1.value < +t2.value
+      ? { start: +t1.value, end: +t2.value }
+      : { start: +t2.value, end: +t1.value };
+
+    donut.update(timeRange);
+    countryDonuts.forEach((d) => d.update(timeRange));
   });
 });
