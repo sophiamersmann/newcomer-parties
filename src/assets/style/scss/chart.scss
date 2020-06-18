@@ -1,17 +1,20 @@
 @import 'global';
 
 .chart-container {
-  align-items: center;
   display: flex;
+  align-items: center;
   height: 100%;
   margin: $spacing;
-  // @include max-width($small) {
-  //   margin: $spacing;
-  // }
-  // @include max-width($extra-small) {
-  //   margin: $spacing / 2;
-  // }
+}
 
+.chart-container-country {
+  display: flex;
+  align-items: center;
+  margin: $spacing / 2;
+}
+
+.chart-container,
+.chart-container-country {
   svg {
     display: block;
     width: 80%;

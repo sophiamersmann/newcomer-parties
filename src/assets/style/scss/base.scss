@@ -28,7 +28,7 @@ html {
     height: calc(100% - 50px - 100px);
 
     .panel-left {
-      flex: 0 0 50%;
+      flex: 0 0 30%;
 
       .panel-info {
         height: 50px;
@@ -38,13 +38,15 @@ html {
 
     .panel-right {
       display: flex;
-      flex: 0 0 50%;
-      flex-flow: column wrap;
-      background-color: steelblue;
+      flex: 0 0 70%;
+      flex-flow: row wrap;
+      align-items: center;
+      justify-content: center;
       padding: $spacing / 2;
+      background-color: steelblue;
 
       .chart-container-country {
-        flex: 0 0 50px;
+        flex: 0 0 20%;
         margin: $spacing / 8;
         background-color: whitesmoke;
       }

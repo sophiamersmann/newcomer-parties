@@ -50,7 +50,7 @@ class DonutChart {
     this.svg = {
       selector,
       width: 200,
-      height: 200,
+      height: 100,
       g: null,
     };
 
@@ -63,7 +63,7 @@ class DonutChart {
     this.active = { data: null, slice: null };
 
     this.donut = { labelOffset: 10 };
-    this.donut.radius = 0.4 * this.svg.width;
+    this.donut.radius = 0.5 * this.svg.width;
     this.donut.thickness = 0.8 * this.donut.radius;
     this.donut.arc = d3.arc()
       .outerRadius(this.donut.radius)
@@ -104,7 +104,7 @@ class DonutChart {
     this.svg.g = d3.select(this.svg.selector)
       .append('svg')
       .attr('class', 'svg-content')
-      .attr('viewBox', [-width / 2, -height / 2, width, height])
+      .attr('viewBox', [-width / 2, -height, width, height])
       .attr('preserveAspectRatio', 'xMinYMin meet')
       .append('g');
   }

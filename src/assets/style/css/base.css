@@ -18,18 +18,20 @@ html {
     display: flex;
     height: calc(100% - 50px - 100px); }
     html .main .panel-left {
-      flex: 0 0 50%; }
+      flex: 0 0 30%; }
       html .main .panel-left .panel-info {
         height: 50px;
         background-color: lightblue; }
     html .main .panel-right {
       display: flex;
-      flex: 0 0 50%;
-      flex-flow: column wrap;
-      background-color: steelblue;
-      padding: 1rem; }
+      flex: 0 0 70%;
+      flex-flow: row wrap;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem;
+      background-color: steelblue; }
       html .main .panel-right .chart-container-country {
-        flex: 0 0 50px;
+        flex: 0 0 20%;
         margin: 0.25rem;
         background-color: whitesmoke; }
   html .panel-bottom {
