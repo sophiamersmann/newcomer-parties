@@ -1,13 +1,13 @@
-#chart-container {
+.chart-container {
   align-items: center;
   display: flex;
   height: 100%;
   margin: 2rem; }
-  #chart-container svg {
+  .chart-container svg {
     display: block;
     width: 80%;
     height: 80%;
     margin: 0 auto;
     overflow: visible; }
-  #chart-container .label {
+  .chart-container .label {
     font-size: 10px; }

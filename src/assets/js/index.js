@@ -1,4 +1,5 @@
 $(document).ready(() => {
-  // draw chart
-  DonutChart.init('#chart-container');
+  // draw charts
+  const donut = new DonutChart('#chart-container-all');
+  const donutGermany = new DonutChart('#chart-container-germany', false);
 });

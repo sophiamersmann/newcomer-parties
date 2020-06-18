@@ -23,8 +23,15 @@ html {
         height: 50px;
         background-color: lightblue; }
     html .main .panel-right {
+      display: flex;
       flex: 0 0 50%;
-      background-color: steelblue; }
+      flex-flow: column wrap;
+      background-color: steelblue;
+      padding: 1rem; }
+      html .main .panel-right .chart-container-country {
+        flex: 0 0 50px;
+        margin: 0.25rem;
+        background-color: whitesmoke; }
   html .panel-bottom {
     height: 100px;
     background-color: orange; }

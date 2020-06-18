@@ -37,8 +37,17 @@ html {
     }
 
     .panel-right {
+      display: flex;
       flex: 0 0 50%;
+      flex-flow: column wrap;
       background-color: steelblue;
+      padding: $spacing / 2;
+
+      .chart-container-country {
+        flex: 0 0 50px;
+        margin: $spacing / 8;
+        background-color: whitesmoke;
+      }
     }
   }
 
