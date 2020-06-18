@@ -129,9 +129,7 @@ class DonutChart {
       .join('path')
       .attr('class', 'donut-slice')
       .attr('d', this.donut.arc)
-      .attr('fill', (d) => familyColor(d.data.familyID))
-      .attr('stroke', 'white')
-      .style('stroke-width', 0.2);
+      .attr('fill', (d) => familyColor(d.data.familyID));
   }
 
   drawLabels() {
