@@ -3,7 +3,7 @@ const COUNTRY_IDS = [7, 60, 23, 10, 37, 64, 39, 35, 72, 67, 59, 54, 26, 44, 9,
 
 $(document).ready(() => {
   // draw overall chart
-  new DonutChart('#chart-container-all', 0.35);
+  const donut = new DonutChart('#chart-container-all', 0.35);
 
   // draw country-specific charts
   COUNTRY_IDS.forEach((countryID) => {
@@ -19,5 +19,17 @@ $(document).ready(() => {
 
     $('.panel-right').append(elem);
     new DonutChart(selector, 0.5, false);
+  });
+
+  // slider logic
+  $('input').on('input', (e) => {
+    const t = e.target;
+    $(t).parent().css(`--${t.id}`, +t.value);
+
+    const currentTimeRange = donut.active.timeRange;
+    const newTimeRange = t.id === 'a'
+      ? { start: +t.value, end: currentTimeRange.end }
+      : { start: currentTimeRange.start, end: +t.value };
+    donut.update(newTimeRange);
   });
 });

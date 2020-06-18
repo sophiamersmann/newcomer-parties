@@ -25,7 +25,7 @@ class DonutChart {
       raw: null,
     };
     this.initialValues = { timeRange: { start: 2010, end: 2020 } };
-    this.active = { data: null, slice: null };
+    this.active = { data: null, slice: null, timeRange: this.initialValues.timeRange };
 
     this.donut = { labelOffset: 10 };
     this.donut.radius = radius * this.svg.width;
@@ -68,7 +68,6 @@ class DonutChart {
     const { width, height } = this.svg;
     this.svg.g = d3.select(this.svg.selector)
       .append('svg')
-      .attr('class', 'svg-content')
       .attr('viewBox', [-width / 2, -height, width, height])
       .attr('preserveAspectRatio', 'xMinYMin meet')
       .append('g')
@@ -77,8 +76,8 @@ class DonutChart {
 
   drawDonut(timeRange) {
     this.active.data = this.data.raw.filter(
-      (d) => d.electionDate.getFullYear() >= timeRange.start
-          && d.electionDate.getFullYear() < timeRange.end,
+      (d) => d.electionDate.getFullYear() >= this.active.timeRange.start
+          && d.electionDate.getFullYear() < this.active.timeRange.end,
     );
 
     this.donut.pie = d3.pie()
@@ -89,6 +88,7 @@ class DonutChart {
       .endAngle(0.5 * Math.PI);
 
     this.svg.g.append('g')
+      .attr('class', 'pie')
       .selectAll('path')
       .data(this.donut.pie(this.active.data))
       .join('path')
@@ -113,10 +113,6 @@ class DonutChart {
       .startAngle(-0.5 * Math.PI)
       .endAngle(0.5 * Math.PI);
 
-    if (!this.svg.g.select('g.donut-labels').empty()) {
-      this.svg.g.select('g.donut-labels').selectAll('*').remove();
-    }
-
     this.svg.g.append('g')
       .attr('class', 'donut-labels')
       .selectAll('text')
@@ -137,6 +133,29 @@ class DonutChart {
         return 'start';
       })
       .text((d) => familyName(d.data.familyID));
+  }
+
+  clearLabels() {
+    this.svg.g.select('.donut-labels').selectAll('*').remove();
+    this.svg.g.select('.donut-labels').remove();
+  }
+
+  clearDonut() {
+    this.svg.g.select('.pie').selectAll('*').remove();
+    this.svg.g.select('.pie').remove();
+  }
+
+  // TODO: Naive implementation
+  update(timeRange) {
+    this.active.timeRange = timeRange;
+
+    this.clearDonut();
+    this.drawDonut();
+
+    this.clearLabels();
+    this.drawLabels();
+
+    this.enableInteractions();
   }
 
   enableInteractions() {
