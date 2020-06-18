@@ -216,9 +216,11 @@ class DonutChart {
 
   static updateInfoField(active) {
     d3.select('.party-name').text(active.party);
+    d3.select('.party-country').text(active.country);
   }
 
   static clearInfoField() {
     d3.select('.party-name').text('');
+    d3.select('.party-country').text('');
   }
 }

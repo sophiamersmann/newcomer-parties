@@ -41,12 +41,11 @@ html {
       flex: 0 0 70%;
       flex-flow: row wrap;
       align-items: center;
-      justify-content: center;
       padding: $spacing / 2;
       background-color: steelblue;
 
       .chart-container-country {
-        flex: 0 0 20%;
+        flex: 0 1 15%;
         margin: $spacing / 8;
         background-color: whitesmoke;
       }
