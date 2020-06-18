@@ -14,7 +14,7 @@ const DonutChart = {
   donut: {
     pie: null,
     arc: null,
-    radius: 0.8,
+    radius: 0.4,
     thickness: 0.8,
     labelOffset: 10,
   },

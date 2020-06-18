@@ -2,7 +2,7 @@
   align-items: center;
   display: flex;
   height: 100%;
-  margin: 8rem; }
+  margin: 2rem; }
   #chart-container svg {
     display: block;
     width: 80%;
