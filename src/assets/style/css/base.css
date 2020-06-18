@@ -17,9 +17,11 @@ html {
   html .main {
     display: flex;
     height: calc(100% - 50px - 100px); }
-    html .main .panel-info {
-      height: 50px;
-      background-color: lightblue; }
+    html .main .panel-left {
+      flex: 0 0 50%; }
+      html .main .panel-left .panel-info {
+        height: 50px;
+        background-color: lightblue; }
     html .main .panel-right {
       flex: 0 0 50%;
       background-color: steelblue; }

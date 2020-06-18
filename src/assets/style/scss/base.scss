@@ -27,9 +27,13 @@ html {
     display: flex;
     height: calc(100% - 50px - 100px);
 
-    .panel-info {
-      height: 50px;
-      background-color: lightblue;
+    .panel-left {
+      flex: 0 0 50%;
+
+      .panel-info {
+        height: 50px;
+        background-color: lightblue;
+      }
     }
 
     .panel-right {
