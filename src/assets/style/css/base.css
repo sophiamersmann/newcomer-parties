@@ -1,6 +1,7 @@
 html {
   box-sizing: border-box;
-  height: 100%; }
+  height: 100%;
+  font-size: 12px; }
   html *,
   html *:after,
   html *:before {
@@ -18,19 +19,28 @@ html {
     display: flex;
     height: calc(100% - 50px - 100px); }
     html .main .panel-left {
-      flex: 0 0 30%; }
+      flex: 0 0 50%; }
       html .main .panel-left .panel-info {
         height: 50px;
         background-color: lightblue; }
+      html .main .panel-left .chart-container {
+        display: flex;
+        align-items: center;
+        height: 100%;
+        margin: 2rem; }
     html .main .panel-right {
       display: flex;
-      flex: 0 0 70%;
+      flex: 0 0 50%;
       flex-flow: row wrap;
       align-items: center;
+      justify-content: center;
       padding: 1rem;
+      overflow: scroll;
       background-color: steelblue; }
       html .main .panel-right .chart-container-country {
-        flex: 0 1 15%;
+        display: flex;
+        flex: 0 1 20%;
+        align-items: center;
         margin: 0.25rem;
         background-color: whitesmoke; }
   html .panel-bottom {

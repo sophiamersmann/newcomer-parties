@@ -3,6 +3,7 @@
 html {
   box-sizing: border-box;
   height: 100%;
+  font-size: 12px;
 
   *,
   *:after,
@@ -28,24 +29,35 @@ html {
     height: calc(100% - 50px - 100px);
 
     .panel-left {
-      flex: 0 0 30%;
+      flex: 0 0 50%;
 
       .panel-info {
         height: 50px;
         background-color: lightblue;
       }
+
+      .chart-container {
+        display: flex;
+        align-items: center;
+        height: 100%;
+        margin: $spacing;
+      }
     }
 
     .panel-right {
       display: flex;
-      flex: 0 0 70%;
+      flex: 0 0 50%;
       flex-flow: row wrap;
       align-items: center;
+      justify-content: center;
       padding: $spacing / 2;
+      overflow: scroll;
       background-color: steelblue;
 
       .chart-container-country {
-        flex: 0 1 15%;
+        display: flex;
+        flex: 0 1 20%;
+        align-items: center;
         margin: $spacing / 8;
         background-color: whitesmoke;
       }

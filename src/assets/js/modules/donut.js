@@ -44,7 +44,7 @@ function familyPosition(familyID) {
 }
 
 class DonutChart {
-  constructor(selector, drawLabels = true) {
+  constructor(selector, radius = 0.5, drawLabels = true) {
     const div = d3.select(selector);
 
     this.svg = {
@@ -63,7 +63,7 @@ class DonutChart {
     this.active = { data: null, slice: null };
 
     this.donut = { labelOffset: 10 };
-    this.donut.radius = 0.5 * this.svg.width;
+    this.donut.radius = radius * this.svg.width;
     this.donut.thickness = 0.8 * this.donut.radius;
     this.donut.arc = d3.arc()
       .outerRadius(this.donut.radius)
@@ -106,7 +106,8 @@ class DonutChart {
       .attr('class', 'svg-content')
       .attr('viewBox', [-width / 2, -height, width, height])
       .attr('preserveAspectRatio', 'xMinYMin meet')
-      .append('g');
+      .append('g')
+      .attr('class', 'donut');
   }
 
   drawDonut(timeRange) {
@@ -123,7 +124,6 @@ class DonutChart {
       .endAngle(0.5 * Math.PI);
 
     this.svg.g.append('g')
-      .attr('class', 'donut')
       .selectAll('path')
       .data(this.donut.pie(this.active.data))
       .join('path')
@@ -153,7 +153,7 @@ class DonutChart {
       this.svg.g.select('g.donut-labels').selectAll('*').remove();
     }
 
-    this.svg.g.select('.donut').append('g')
+    this.svg.g.append('g')
       .attr('class', 'donut-labels')
       .selectAll('text')
       .data(pie(familyData))
@@ -181,6 +181,7 @@ class DonutChart {
         this.svg.g.selectAll('.donut-slice')
           .filter((_, j) => i !== j)
           .attr('fill-opacity', 0.25);
+        // TODO: could be property that contains infoField logic
         this.active.slice = d.data;
         DonutChart.updateInfoField(this.active.slice);
       }).on('mouseout', (d, i) => {

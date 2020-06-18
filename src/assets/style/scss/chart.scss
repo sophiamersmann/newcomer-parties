@@ -1,18 +1,5 @@
 @import 'global';
 
-.chart-container {
-  display: flex;
-  align-items: center;
-  height: 100%;
-  margin: $spacing;
-}
-
-.chart-container-country {
-  display: flex;
-  align-items: center;
-  margin: $spacing / 2;
-}
-
 .chart-container,
 .chart-container-country {
   svg {
@@ -22,8 +9,10 @@
     margin: 0 auto;
     overflow: visible;
   }
+}
 
+.donut {
   .label {
-    font-size: 10px;
+    font-size: 0.5rem;
   }
 }
