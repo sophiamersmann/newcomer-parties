@@ -14,8 +14,8 @@ const DonutChart = {
   donut: {
     pie: null,
     arc: null,
-    radius: null,
-    thickness: null,
+    radius: 0.8,
+    thickness: 0.8,
     labelOffset: 10,
   },
   active: {
@@ -24,8 +24,8 @@ const DonutChart = {
   },
 };
 
-DonutChart.donut.radius = DonutChart.svg.width / 2;
-DonutChart.donut.thickness = 0.8 * DonutChart.donut.radius;
+DonutChart.donut.radius *= DonutChart.svg.width;
+DonutChart.donut.thickness *= DonutChart.donut.radius;
 
 function loadDatum(d) {
   return {
