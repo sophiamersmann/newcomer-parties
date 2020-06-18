@@ -93,6 +93,7 @@ class DonutChart {
       .data(this.donut.pie(this.active.data))
       .join('path')
       .attr('class', 'donut-slice')
+      .attr('data-party-id', (d) => d.data.partyID)
       .attr('d', this.donut.arc)
       .attr('fill', (d) => familyColor(d.data.familyID));
   }
@@ -141,15 +142,12 @@ class DonutChart {
   enableInteractions() {
     this.svg.g.selectAll('.donut-slice')
       .on('mouseover', (d, i) => {
-        this.svg.g.selectAll('.donut-slice')
-          .filter((_, j) => i !== j)
+        d3.selectAll(`.donut-slice:not([data-party-id='${d.data.partyID}'])`)
           .attr('fill-opacity', 0.25);
-        // TODO: could be property that contains infoField logic
         this.active.slice = d.data;
         updateInfoField(this.active.slice);
       }).on('mouseout', (d, i) => {
-        this.svg.g.selectAll('.donut-slice')
-          .filter((_, j) => i !== j)
+        d3.selectAll(`.donut-slice:not([data-party-id='${d.data.partyID}'])`)
           .attr('fill-opacity', 1);
         this.active.slice = null;
         clearInfoField();
