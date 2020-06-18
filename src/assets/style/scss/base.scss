@@ -27,19 +27,9 @@ html {
     display: flex;
     height: calc(100% - 50px - 100px);
 
-    .panel-left {
-      display: flex;
-      flex-direction: column;
-      flex: 0 0 50%;
-
-      .panel-info {
-        background-color: lightblue;
-        flex: 0 1 auto;
-      }
-
-      .panel-chart {
-        flex: 1 0 auto;
-      }
+    .panel-info {
+      height: 50px;
+      background-color: lightblue;
     }
 
     .panel-right {

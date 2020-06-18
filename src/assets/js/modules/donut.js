@@ -20,6 +20,7 @@ const DonutChart = {
   },
   active: {
     data: null,
+    slice: null,
   },
 };
 
@@ -127,12 +128,37 @@ DonutChart.drawDonut = function drawDonut(timeRange) {
     .selectAll('path')
     .data(this.donut.pie(this.active.data))
     .join('path')
+    .attr('class', 'donut-slice')
     .attr('d', this.donut.arc)
     .attr('fill', (d) => familyColor(d.data.familyID))
     .attr('stroke', 'white')
-    .style('stroke-width', 0.25)
-    .append('title')
-    .text((d) => `${d.data.party} (${d.data.voteShare})`);
+    .style('stroke-width', 0.25);
+};
+
+DonutChart.enableInteractions = function enableInteractions() {
+  this.svg.g.selectAll('.donut-slice')
+    .on('mouseover', (d, i) => {
+      this.svg.g.selectAll('.donut-slice')
+        .filter((_, j) => i !== j)
+        .attr('fill-opacity', 0.25);
+      this.active.slice = d.data;
+      this.updateInfoField();
+    }).on('mouseout', (d, i) => {
+      this.svg.g.selectAll('.donut-slice')
+        .filter((_, j) => i !== j)
+        .attr('fill-opacity', 1);
+      this.active.slice = null;
+      this.clearInfoField();
+    });
+};
+
+DonutChart.updateInfoField = function updateInfoField() {
+  const active = this.active.slice;
+  d3.select('.party-name').text(active.party);
+};
+
+DonutChart.clearInfoField = function clearInfoField() {
+  d3.select('.party-name').text('');
 };
 
 DonutChart.drawLabels = function drawLabels() {
@@ -181,6 +207,8 @@ DonutChart.draw = function draw() {
 
   this.drawDonut(this.data.init.timeRange);
   this.drawLabels();
+
+  this.enableInteractions();
 };
 
 DonutChart.prepareData = function prepareData(data, region = null) {
