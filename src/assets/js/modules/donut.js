@@ -1,11 +1,13 @@
 function updateInfoField(active) {
   d3.select('.party-name').text(active.party);
   d3.select('.party-country').text(active.country);
+  d3.select('.party-vote').text(active.voteShare);
 }
 
 function clearInfoField() {
   d3.select('.party-name').text('');
   d3.select('.party-country').text('');
+  d3.select('.party-vote').text('');
 }
 
 class DonutChart {
