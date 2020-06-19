@@ -21,19 +21,4 @@ $(document).ready(() => {
 
     countryDonuts.push(new DonutChart(selector, 0.5, false));
   });
-
-  // slider logic
-  $('input').on('input', (e) => {
-    const t1 = e.target;
-    $(t1).parent().css(`--${t1.id}`, +t1.value);
-
-    const t2 = $(`#${t1.id === 'a' ? 'b' : 'a'}`).get(0);
-
-    const timeRange = +t1.value < +t2.value
-      ? { start: +t1.value, end: +t2.value }
-      : { start: +t2.value, end: +t1.value };
-
-    donut.update(timeRange);
-    countryDonuts.forEach((d) => d.update(timeRange));
-  });
 });
