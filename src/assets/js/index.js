@@ -16,7 +16,7 @@ $(document).ready(() => {
       class: 'chart-container-country',
       'data-src': 'data/parlgov.csv',
       'data-country-id': countryID,
-    })).append(`<div>${country(countryID)}</div>`);
+    })).append(`<div>${getCountry(countryID).name}</div>`);
     $('.panel-right').append(elem);
 
     countryDonuts.push(new DonutChart(selector, 0.5, false));

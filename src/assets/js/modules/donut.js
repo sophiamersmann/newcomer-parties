@@ -89,7 +89,7 @@ class DonutChart {
 
     this.donut.pie = d3.pie()
       .value((d) => d.voteShare)
-      .sort((a, b) => d3.ascending(familyPosition(a.familyID), familyPosition(b.familyID))
+      .sort((a, b) => d3.ascending(getFamily(a.familyID).position, getFamily(b.familyID).position)
         || d3.descending(a.voteShare, b.voteShare))
       .startAngle(-0.5 * Math.PI)
       .endAngle(0.5 * Math.PI);
@@ -102,7 +102,7 @@ class DonutChart {
       .attr('class', 'donut-slice')
       .attr('data-party-id', (d) => d.data.partyID)
       .attr('d', this.donut.arc)
-      .attr('fill', (d) => familyColor(d.data.familyID));
+      .attr('fill', (d) => getFamily(d.data.familyID).color);
   }
 
   drawLabels() {
@@ -116,7 +116,7 @@ class DonutChart {
 
     const pie = d3.pie()
       .value((d) => d.share)
-      .sort((a, b) => d3.ascending(familyPosition(a.familyID), familyPosition(b.familyID)))
+      .sort((a, b) => d3.ascending(getFamily(a.familyID).position, getFamily(b.familyID).position))
       .startAngle(-0.5 * Math.PI)
       .endAngle(0.5 * Math.PI);
 
@@ -139,7 +139,7 @@ class DonutChart {
         if (a < 0) return 'end';
         return 'start';
       })
-      .text((d) => familyName(d.data.familyID));
+      .text((d) => getFamily(d.data.familyID).name);
   }
 
   clearLabels() {
