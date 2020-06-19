@@ -29,7 +29,7 @@ class DonutChart {
     this.initialValues = { timeRange: { start: 2010, end: 2020 } };
     this.active = { data: null, slice: null, timeRange: this.initialValues.timeRange };
 
-    this.donut = { labelOffset: 10 };
+    this.donut = {};
     this.donut.radius = radius * this.svg.width;
     this.donut.thickness = 0.8 * this.donut.radius;
     this.donut.arc = d3.arc()
