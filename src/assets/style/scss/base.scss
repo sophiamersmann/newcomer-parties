@@ -45,13 +45,12 @@ html {
     }
 
     .panel-right {
-      display: flex;
+      grid-gap: $spacing / 2;
+      display: grid;
+      // TODO: min-width should not be fixed
+      grid-template-columns: repeat(auto-fill, minmax(75px, 1fr));
       flex: 0 0 50%;
-      flex-flow: row wrap;
-      align-items: stretch;
-      justify-content: center;
       padding: $spacing / 2;
-      overflow: scroll;
       background-color: steelblue;
 
       & > .chart-and-caption {
