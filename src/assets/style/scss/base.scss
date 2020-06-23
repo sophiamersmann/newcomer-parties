@@ -48,19 +48,27 @@ html {
       display: flex;
       flex: 0 0 50%;
       flex-flow: row wrap;
-      align-items: center;
+      align-items: stretch;
       justify-content: center;
       padding: $spacing / 2;
       overflow: scroll;
       background-color: steelblue;
 
-      & > div {
+      & > .chart-and-caption {
         display: flex;
-        flex-direction: column;
         flex: 0 1 20%;
+        flex-direction: column;
         align-items: center;
         margin: $spacing / 8;
         background-color: whitesmoke;
+
+        .chart-container-country {
+          flex: 1 0 auto;
+        }
+
+        .caption {
+          flex: 0 1 auto;
+        }
       }
     }
   }
