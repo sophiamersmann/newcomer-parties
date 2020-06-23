@@ -30,6 +30,7 @@ class DonutChart {
     this.active = { data: null, slice: null, timeRange: this.initialValues.timeRange };
 
     this.donut = {};
+    this.donut.pieSize = 0.75;
     this.donut.radius = radius * this.svg.width;
     this.donut.thickness = 0.8 * this.donut.radius;
     this.donut.arc = d3.arc()
@@ -91,8 +92,8 @@ class DonutChart {
       .value((d) => d.voteShare)
       .sort((a, b) => d3.ascending(getFamily(a.familyID).position, getFamily(b.familyID).position)
         || d3.descending(a.voteShare, b.voteShare))
-      .startAngle(-0.5 * Math.PI)
-      .endAngle(0.5 * Math.PI);
+      .startAngle(-this.donut.pieSize * Math.PI)
+      .endAngle(this.donut.pieSize * Math.PI);
 
     this.svg.g.append('g')
       .attr('class', 'pie')
@@ -117,8 +118,8 @@ class DonutChart {
     const pie = d3.pie()
       .value((d) => d.share)
       .sort((a, b) => d3.ascending(getFamily(a.familyID).position, getFamily(b.familyID).position))
-      .startAngle(-0.5 * Math.PI)
-      .endAngle(0.5 * Math.PI);
+      .startAngle(-this.donut.pieSize * Math.PI)
+      .endAngle(this.donut.pieSize * Math.PI);
 
     this.svg.g.append('g')
       .attr('class', 'donut-labels')
