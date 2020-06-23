@@ -16,7 +16,7 @@ class DonutChart {
 
     this.svg = {
       selector,
-      width: 200,
+      width: 100,
       height: 100,
       g: null,
     };
@@ -39,7 +39,7 @@ class DonutChart {
 
     this.labels = {
       draw: drawLabels,
-      offset: 10,
+      offset: 2.5,
     };
 
     this.init();
@@ -76,10 +76,14 @@ class DonutChart {
     const { width, height } = this.svg;
     this.svg.g = d3.select(this.svg.selector)
       .append('svg')
-      .attr('viewBox', [-width / 2, -height, width, height])
-      .attr('preserveAspectRatio', 'xMinYMin meet')
+      .attr('viewBox', [-width / 2, -height / 2, width, height])
       .append('g')
       .attr('class', 'donut');
+
+    // TODO: remove; just for debugging
+    this.svg.g.append('circle')
+      .attr('r', 5)
+      .attr('fill', 'lightgray');
   }
 
   drawDonut() {

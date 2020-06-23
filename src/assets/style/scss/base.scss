@@ -63,7 +63,8 @@ html {
         background-color: whitesmoke;
 
         .chart-container-country {
-          flex: 1 0 auto;
+          flex: 1 0 0;
+          margin: $spacing / 8 auto;
         }
 
         .caption {
@@ -73,19 +74,24 @@ html {
     }
   }
 
-  .chart-container,
-  .chart-container-country {
+  .chart-container {
     svg {
       display: block;
       width: 80%;
-      height: 80%;
       margin: 0 auto;
       overflow: visible;
     }
   }
 
+  .chart-container-country {
+    svg {
+      display: block;
+      margin: 0 auto;
+    }
+  }
+
   .panel-bottom {
     height: 100px;
-    background-color: lightblue;
+    background-color: bisque;
   }
 }

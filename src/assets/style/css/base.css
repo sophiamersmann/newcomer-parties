@@ -45,16 +45,18 @@ html {
         margin: 0.25rem;
         background-color: whitesmoke; }
         html .main .panel-right > .chart-and-caption .chart-container-country {
-          flex: 1 0 auto; }
+          flex: 1 0 0;
+          margin: 0.25rem auto; }
         html .main .panel-right > .chart-and-caption .caption {
           flex: 0 1 auto; }
-  html .chart-container svg,
-  html .chart-container-country svg {
+  html .chart-container svg {
     display: block;
     width: 80%;
-    height: 80%;
     margin: 0 auto;
     overflow: visible; }
+  html .chart-container-country svg {
+    display: block;
+    margin: 0 auto; }
   html .panel-bottom {
     height: 100px;
-    background-color: lightblue; }
+    background-color: bisque; }
