@@ -48,6 +48,13 @@ html {
           flex: 1 0 auto; }
         html .main .panel-right > .chart-and-caption .caption {
           flex: 0 1 auto; }
+  html .chart-container svg,
+  html .chart-container-country svg {
+    display: block;
+    width: 80%;
+    height: 80%;
+    margin: 0 auto;
+    overflow: visible; }
   html .panel-bottom {
     height: 100px;
     background-color: lightblue; }
