@@ -24,10 +24,16 @@ class DonutChart {
     this.data = {
       filename: div.attr('data-src'),
       countryID: div.attr('data-country-id'),
-      raw: null,
+      parties: null,
+      families: null,
     };
     this.initialValues = { timeRange: { start: 2010, end: 2020 } };
-    this.active = { data: null, slice: null, timeRange: this.initialValues.timeRange };
+    this.active = {
+      parties: null,
+      families: null,
+      slice: null,
+      timeRange: this.initialValues.timeRange,
+    };
 
     this.donut = {};
     this.donut.pieSize = 0.75;
@@ -54,22 +60,33 @@ class DonutChart {
 
   prepareData(data) {
     if (this.data.countryID) {
-      this.data.raw = data.filter((d) => d.countryID === +this.data.countryID);
+      this.data.parties = data.filter((d) => d.countryID === +this.data.countryID);
     } else {
-      this.data.raw = data;
+      this.data.parties = data;
     }
+
+    this.data.families = DonutChart.groupIntoFamilies(this.data.parties);
   }
 
   draw() {
     this.setUpSVG();
 
-    this.drawDonut(this.initialValues.timeRange);
+    this.updateData();
+    this.drawDonut();
 
     if (this.labels.draw) {
       this.drawLabels();
     }
 
     this.enableInteractions();
+  }
+
+  updateData() {
+    this.active.parties = this.data.parties.filter(
+      (d) => d.electionDate.getFullYear() >= this.active.timeRange.start
+          && d.electionDate.getFullYear() < this.active.timeRange.end,
+    );
+    this.active.families = DonutChart.groupIntoFamilies(this.active.parties);
   }
 
   setUpSVG() {
@@ -87,11 +104,6 @@ class DonutChart {
   }
 
   drawDonut() {
-    this.active.data = this.data.raw.filter(
-      (d) => d.electionDate.getFullYear() >= this.active.timeRange.start
-          && d.electionDate.getFullYear() < this.active.timeRange.end,
-    );
-
     this.donut.pie = d3.pie()
       .value((d) => d.voteShare)
       .sort((a, b) => d3.ascending(getFamily(a.familyID).position, getFamily(b.familyID).position)
@@ -102,7 +114,7 @@ class DonutChart {
     this.svg.g.append('g')
       .attr('class', 'pie')
       .selectAll('path')
-      .data(this.donut.pie(this.active.data))
+      .data(this.donut.pie(this.active.parties))
       .join('path')
       .attr('class', 'donut-slice')
       .attr('data-party-id', (d) => d.data.partyID)
@@ -113,14 +125,8 @@ class DonutChart {
   drawLabels() {
     const { arc } = this.donut;
 
-    const familyData = d3.nest()
-      .key((d) => d.familyID)
-      .rollup((v) => d3.sum(v, (d) => d.voteShare))
-      .entries(this.active.data)
-      .map((d) => ({ familyID: d.key, share: d.value }));
-
     const pie = d3.pie()
-      .value((d) => d.share)
+      .value((d) => d.voteShare)
       .sort((a, b) => d3.ascending(getFamily(a.familyID).position, getFamily(b.familyID).position))
       .startAngle(-this.donut.pieSize * Math.PI)
       .endAngle(this.donut.pieSize * Math.PI);
@@ -128,7 +134,7 @@ class DonutChart {
     this.svg.g.append('g')
       .attr('class', 'donut-labels')
       .selectAll('text')
-      .data(pie(familyData))
+      .data(pie(this.active.families))
       .join('text')
       .attr('class', 'label')
       .attr('transform', (d) => {
@@ -185,6 +191,17 @@ class DonutChart {
         this.active.slice = null;
         clearInfoField();
       });
+  }
+
+  static groupIntoFamilies(parties) {
+    return d3.nest()
+      .key((d) => d.familyID)
+      .entries(parties)
+      .map((d) => ({
+        familyID: d.key,
+        parties: d.values,
+        voteShare: d3.sum(d.values, (p) => p.voteShare),
+      }));
   }
 
   static loadDatum(d) {
