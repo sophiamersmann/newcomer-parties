@@ -50,6 +50,7 @@ html {
       // TODO: min-width should not be fixed
       grid-template-columns: repeat(auto-fill, minmax(75px, 1fr));
       flex: 0 0 50%;
+      align-items: center;
       padding: $spacing / 2;
       background-color: steelblue;
 

@@ -33,6 +33,7 @@ html {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(75px, 1fr));
       flex: 0 0 50%;
+      align-items: center;
       padding: 1rem;
       background-color: steelblue; }
       html .main .panel-right > .chart-and-caption {
