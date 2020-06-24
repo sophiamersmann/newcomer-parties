@@ -39,9 +39,17 @@ class DonutChart {
     this.donut.pieSize = 0.75;
     this.donut.radius = radius * this.svg.width;
     this.donut.thickness = 0.8 * this.donut.radius;
+    this.donut.familyPadding = 0.02;
     this.donut.arc = d3.arc()
       .outerRadius(this.donut.radius)
       .innerRadius(this.donut.radius - this.donut.thickness);
+    this.donut.familyPie = d3.pie()
+      .value((d) => d.voteShare)
+      .sort((a, b) => d3.ascending(
+        getFamily(a.familyID).position, getFamily(b.familyID).position,
+      ) || d3.descending(a.voteShare, b.voteShare))
+      .startAngle(-this.donut.pieSize * Math.PI)
+      .endAngle((this.donut.pieSize + this.donut.familyPadding) * Math.PI);
 
     this.labels = {
       draw: drawLabels,
@@ -104,22 +112,25 @@ class DonutChart {
   }
 
   drawDonut() {
-    this.donut.pie = d3.pie()
-      .value((d) => d.voteShare)
-      .sort((a, b) => d3.ascending(getFamily(a.familyID).position, getFamily(b.familyID).position)
-        || d3.descending(a.voteShare, b.voteShare))
-      .startAngle(-this.donut.pieSize * Math.PI)
-      .endAngle(this.donut.pieSize * Math.PI);
+    const familyPieData = this.donut.familyPie(this.active.families);
 
-    this.svg.g.append('g')
-      .attr('class', 'pie')
-      .selectAll('path')
-      .data(this.donut.pie(this.active.parties))
+    const g = this.svg.g.selectAll('g')
+      .data(familyPieData)
+      .join('g')
+      .attr('class', (d) => `donut-family-${d.data.familyID}`)
+      .attr('fill', (d) => getFamily(d.data.familyID).color);
+
+    g.selectAll('path')
+      .data((d) => d3.pie()
+        .value((p) => p.voteShare)
+        .startAngle(d.startAngle)
+        .endAngle(d.endAngle - this.donut.familyPadding * Math.PI)(d.data.parties))
       .join('path')
       .attr('class', 'donut-slice')
       .attr('data-party-id', (d) => d.data.partyID)
       .attr('d', this.donut.arc)
-      .attr('fill', (d) => getFamily(d.data.familyID).color);
+      .attr('stroke', 'white')
+      .attr('stroke-width', 0.1);
   }
 
   drawLabels() {
