@@ -37,7 +37,7 @@ function getFamily(familyID) {
     },
     19: {
       name: 'Green/Ecologist',
-      color: 'orange',
+      color: 'green',
       position: 6,
     },
     26: {
