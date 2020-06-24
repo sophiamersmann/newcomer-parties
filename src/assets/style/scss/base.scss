@@ -54,20 +54,11 @@ html {
       background-color: steelblue;
 
       & > .chart-and-caption {
-        display: flex;
         flex: 0 1 20%;
-        flex-direction: column;
-        align-items: center;
-        margin: $spacing / 8;
         background-color: whitesmoke;
 
-        .chart-container-country {
-          flex: 1 0 0;
-          margin: $spacing / 8 auto;
-        }
-
         .caption {
-          flex: 0 1 auto;
+          text-align: center;
         }
       }
     }
