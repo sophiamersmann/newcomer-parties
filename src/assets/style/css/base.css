@@ -1,54 +1,20 @@
 html {
-  box-sizing: border-box;
   height: 100%;
-  font-size: 12px; }
+  box-sizing: border-box; }
   html *,
   html *:after,
   html *:before {
     box-sizing: inherit;
     margin: 0;
     padding: 0; }
-  html body {
-    height: 100%; }
-  html .panel-top {
-    height: 50px;
-    background-color: gold;
-    line-height: 50px;
-    text-align: center; }
-  html .main {
-    display: flex;
-    height: calc(100% - 50px - 100px); }
-    html .main .panel-left {
-      flex: 0 0 50%; }
-      html .main .panel-left .panel-info {
-        height: 50px;
-        background-color: lightblue; }
-      html .main .panel-left .chart-container {
-        display: flex;
-        align-items: center;
-        height: 100%;
-        margin: 2rem; }
-    html .main .panel-right {
-      grid-gap: 1rem;
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(75px, 1fr));
-      flex: 0 0 50%;
-      align-items: center;
-      padding: 1rem;
-      background-color: steelblue; }
-      html .main .panel-right > .chart-and-caption {
-        flex: 0 1 20%;
-        background-color: whitesmoke; }
-        html .main .panel-right > .chart-and-caption .caption {
-          text-align: center; }
-  html .chart-container svg {
-    display: block;
-    width: 80%;
-    margin: 0 auto;
-    overflow: visible; }
-  html .chart-container-country svg {
-    display: block;
-    margin: 0 auto; }
-  html .panel-bottom {
-    height: 100px;
-    background-color: bisque; }
+
+body {
+  height: 100%;
+  display: flex; }
+
+.main {
+  flex: 1 0 75vw; }
+
+.panel {
+  border-right: 1px solid black;
+  flex: 0 1 25vw; }

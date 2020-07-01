@@ -1,9 +1,8 @@
 @import 'global';
 
 html {
-  box-sizing: border-box;
   height: 100%;
-  font-size: 12px;
+  box-sizing: border-box;
 
   *,
   *:after,
@@ -12,77 +11,18 @@ html {
     margin: 0;
     padding: 0;
   }
+}
 
-  body {
-    height: 100%;
-  }
+body {
+  height: 100%;
+  display: flex;
+}
 
-  .panel-top {
-    height: 50px;
-    background-color: gold;
-    line-height: 50px;
-    text-align: center;
-  }
+.main {
+  flex: 1 0 75vw;
+}
 
-  .main {
-    display: flex;
-    height: calc(100% - 50px - 100px);
-
-    .panel-left {
-      flex: 0 0 50%;
-
-      .panel-info {
-        height: 50px;
-        background-color: lightblue;
-      }
-
-      .chart-container {
-        display: flex;
-        align-items: center;
-        height: 100%;
-        margin: $spacing;
-      }
-    }
-
-    .panel-right {
-      grid-gap: $spacing / 2;
-      display: grid;
-      // TODO: min-width should not be fixed
-      grid-template-columns: repeat(auto-fill, minmax(75px, 1fr));
-      flex: 0 0 50%;
-      align-items: center;
-      padding: $spacing / 2;
-      background-color: steelblue;
-
-      & > .chart-and-caption {
-        flex: 0 1 20%;
-        background-color: whitesmoke;
-
-        .caption {
-          text-align: center;
-        }
-      }
-    }
-  }
-
-  .chart-container {
-    svg {
-      display: block;
-      width: 80%;
-      margin: 0 auto;
-      overflow: visible;
-    }
-  }
-
-  .chart-container-country {
-    svg {
-      display: block;
-      margin: 0 auto;
-    }
-  }
-
-  .panel-bottom {
-    height: 100px;
-    background-color: bisque;
-  }
+.panel {
+  border-right: 1px solid black;
+  flex: 0 1 25vw;
 }
