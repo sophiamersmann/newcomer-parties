@@ -68,8 +68,7 @@ class MainChart {
       .scaleBand()
       .domain(this.data.families)
       .range([margin.left, width - margin.right])
-      .paddingInner(1)
-      .paddingOuter(0.5);
+      .paddingInner(1);
 
     const dates = this.data.raw.map((d) => d.electionDate).sort(d3.ascending);
     const y = d3
