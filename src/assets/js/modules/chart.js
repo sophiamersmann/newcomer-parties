@@ -43,7 +43,18 @@ class MainChart {
   prepareData(data) {
     this.data = {
       raw: data,
-      families: d3.map(data, (d) => d.familyId).keys(),
+      families: [
+        "right",
+        "lib",
+        "con",
+        "chr",
+        "agr",
+        "eco",
+        "soc",
+        "com",
+        "spec",
+        "",
+      ],
       mappings: MainChart.createMappings(data),
     };
   }
