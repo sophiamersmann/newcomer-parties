@@ -2,13 +2,13 @@ class MainChart {
   constructor(selector) {
     this.svg = {
       selector,
-      width: 750,
-      height: 500,
+      width: 920,
+      height: 650,
       margin: {
-        top: 10,
-        right: 10,
-        bottom: 10,
-        left: 10,
+        top: 40,
+        right: 50,
+        bottom: 40,
+        left: 50,
       },
     };
 
@@ -22,6 +22,11 @@ class MainChart {
       dead: {
         selector: ".party-dead",
       },
+    };
+
+    this.labels = {
+      yOffset: 5,
+      yOffsetPlus: 20,
     };
 
     const filename = d3.select(selector).attr("data-src");
@@ -39,13 +44,15 @@ class MainChart {
     this.data = {
       raw: data,
       families: d3.map(data, (d) => d.familyId).keys(),
+      mappings: MainChart.createMappings(data),
     };
-    this.data.raw = data;
   }
 
   draw() {
     this.setUpSVG();
-    this.setUpAxes();
+
+    this.setUpScales();
+    this.drawAxes();
 
     this.drawBeeswarms();
   }
@@ -56,12 +63,11 @@ class MainChart {
       .select(selector)
       .append("svg")
       .attr("viewBox", `0 0 ${width} ${height}`)
-      .attr("preserveAspectRatio", "xMinYMin meet")
       .append("g")
       .attr("transform", `translate(${margin.left},${margin.top})`);
   }
 
-  setUpAxes() {
+  setUpScales() {
     const { width, height, margin } = this.svg;
 
     const x = d3
@@ -77,11 +83,30 @@ class MainChart {
       .nice()
       .range([margin.top, height - margin.bottom]);
 
-    this.axes = { x: x, y: y };
+    this.scales = { x: x, y: y };
+  }
+
+  drawAxes() {
+    const { margin } = this.svg;
+    const { yOffset, yOffsetPlus } = this.labels;
+    this.svg.g
+      .append("g")
+      .attr("class", "x-axis")
+      .selectAll(".family-label")
+      .data(this.data.families)
+      .join("text")
+      .attr("class", "family-label")
+      .attr("x", (familyId) => this.scales.x(familyId))
+      .attr("y", (_, i) =>
+        i % 2 == 0 ? margin.top - yOffset : margin.top - yOffset - yOffsetPlus
+      )
+      .attr("text-anchor", "middle")
+      .attr("alignment-baseline", "hanging")
+      .text((familyId) => this.data.mappings.family.get(familyId).familyName);
   }
 
   drawBeeswarms() {
-    const { x, y } = this.axes;
+    const { x, y } = this.scales;
     const { height, margin } = this.svg;
     const { selector: partySel, radius, padding, alive, dead } = this.parties;
 
@@ -117,7 +142,9 @@ class MainChart {
       .attr("class", "beeswarm-separator")
       .attr("x1", (family) => x(family))
       .attr("x2", (family) => x(family))
-      .attr("y1", margin.top)
+      .attr("y1", (_, i) =>
+        i % 2 == 0 ? margin.top : margin.top - this.labels.yOffsetPlus
+      )
       .attr("y2", height - margin.bottom)
       .attr("stroke-width", 0.2)
       .attr("stroke", (family) => color(family));
@@ -179,6 +206,18 @@ class MainChart {
 
       share: +d.vote_share,
       currentShare: +d.most_recent_vote_share,
+    };
+  }
+
+  static createMappings(data) {
+    return {
+      family: d3.map(
+        data.map(({ familyId, family: familyName }) => ({
+          familyId,
+          familyName,
+        })),
+        (d) => d.familyId
+      ),
     };
   }
 
