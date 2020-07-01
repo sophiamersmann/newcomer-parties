@@ -84,6 +84,14 @@ class MainChart {
   drawBeeswarms() {
     const { x, y } = this.axes;
     const { height, margin } = this.svg;
+    const { selector: partySel, radius, padding, alive, dead } = this.parties;
+
+    // TODO: Random colors for now
+    const color = d3
+      .scaleOrdinal()
+      .domain(this.data.families)
+      .range(d3.schemeTableau10);
+    this.parties.color = color;
 
     const nested = d3
       .nest()
@@ -100,8 +108,8 @@ class MainChart {
       .data(nested)
       .join("g")
       .attr("class", "beeswarm-pair")
-      .attr("fill", "black")
-      .attr("stroke", "black");
+      .attr("fill", (d) => color(d.familyId))
+      .attr("stroke", (d) => color(d.familyId));
 
     beeswarmPair
       .selectAll(".beeswarm-separator")
@@ -113,9 +121,8 @@ class MainChart {
       .attr("y1", margin.top)
       .attr("y2", height - margin.bottom)
       .attr("stroke-width", 0.2)
-      .attr("stroke", "black");
+      .attr("stroke", (family) => color(family));
 
-    const { selector: partySel, radius, padding, alive, dead } = this.parties;
     beeswarmPair
       .selectAll(alive.selector)
       .data(({ parties }) =>
@@ -152,9 +159,9 @@ class MainChart {
   }
 
   static loadDatum(d) {
-    let { family_id: familyId, family_name: family } = d;
-    if ([0, 12, 28].includes(+familyId)) {
-      familyId = 0;
+    let { family_name_short: familyId, family_name: family } = d;
+    if (["", "none", "code"].includes(familyId)) {
+      familyId = "";
       family = "Other";
     }
 
@@ -168,7 +175,7 @@ class MainChart {
       electionId: +d.election_id,
       electionDate: d3.timeParse("%Y-%m-%d")(d.election_date),
 
-      familyId: +familyId,
+      familyId: familyId,
       family: family,
 
       share: +d.vote_share,
