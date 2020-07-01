@@ -85,7 +85,7 @@ class MainChart {
       .scaleBand()
       .domain(this.data.families)
       .range([margin.left, width - margin.right])
-      .paddingInner(1);
+      .padding(1);
 
     const dates = this.data.raw.map((d) => d.electionDate).sort(d3.ascending);
     const y = d3
@@ -98,22 +98,53 @@ class MainChart {
   }
 
   drawAxes() {
-    const { margin } = this.svg;
+    const { width, margin } = this.svg;
+    const { x, y } = this.scales;
     const { yOffset, yOffsetPlus } = this.labels;
+
     this.svg.g
       .append("g")
-      .attr("class", "x-axis")
+      .attr("class", "axis x-axis")
       .selectAll(".family-label")
       .data(this.data.families)
       .join("text")
       .attr("class", "family-label")
-      .attr("x", (familyId) => this.scales.x(familyId))
+      .attr("x", (familyId) => x(familyId))
       .attr("y", (_, i) =>
         i % 2 == 0 ? margin.top - yOffset : margin.top - yOffset - yOffsetPlus
       )
       .attr("text-anchor", "middle")
       .attr("alignment-baseline", "hanging")
       .text((familyId) => this.data.mappings.family.get(familyId).familyName);
+
+    const ticks = y.ticks();
+    const tickSpacing = y(ticks[1]) - y(ticks[0]);
+    const formatDecade = d3.timeFormat("%Ys");
+    this.svg.g
+      .append("g")
+      .attr("class", "axis y-axis")
+      .attr("transform", `translate(0, ${tickSpacing / 2})`)
+      .selectAll(".time-label")
+      .data(ticks.slice(0, -1))
+      .join("text")
+      .attr("class", "time-label")
+      .attr("x", 0)
+      .attr("y", (d) => y(d) + 6) // FIXME: magic value; not vertically centered
+      .text((d) => formatDecade(d));
+
+    this.svg.g
+      .append("g")
+      .attr("class", "grid grid-y")
+      .selectAll(".grid-line")
+      .data(ticks.slice(1, -1))
+      .join("line")
+      .attr("class", "grid-line")
+      .attr("x1", 0)
+      .attr("x2", width)
+      .attr("y1", (d) => y(d))
+      .attr("y2", (d) => y(d))
+      .attr("stroke-width", 2)
+      .attr("stroke", "whitesmoke");
   }
 
   drawBeeswarms() {
