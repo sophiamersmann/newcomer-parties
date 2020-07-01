@@ -4,11 +4,5 @@
   "env": {
     "browser": true,
     "node": true
-  },
-  // TODO: Remove in production
-  "globals": {
-    "d3": "readonly",
-    "$": "readonly",
-    "DonutChart": "readonly"
   }
 }
