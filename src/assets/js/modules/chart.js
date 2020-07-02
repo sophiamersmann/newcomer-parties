@@ -248,36 +248,36 @@ class MainChart {
   }
 
   addBrush() {
-    const { width, height, margin } = this.svg;
-    const { x, y } = this.scales;
-    const { xOffset, width: brushWidth, initial } = this.brush;
+    const { height, margin } = this.svg;
+    const { y } = this.scales;
+    const { xOffset, width, initial } = this.brush;
 
     function brushed() {
       const selection = d3.event.selection;
       if (!selection) return;
       const y0 = selection[0];
-      d3.selectAll(".party").attr("opacity", (d, i, n) =>
+      d3.selectAll(".party").attr("opacity", (_, i, n) =>
         y0 <= +d3.select(n[i]).attr("cy") ? 1 : 0.25
       );
     }
 
-    function brushened(y) {
+    function brushened(y, fixedDate) {
       const selection = d3.event.selection;
       if (!d3.event.sourceEvent || !selection) return;
       const year = d3.timeYear.round(y.invert(selection[0]));
       d3.select(".brush")
         .transition()
-        .call(brush.move, [year, new Date(2020, 0, 1)].map(y));
+        .call(brush.move, [year, fixedDate].map(y));
     }
 
     const brush = d3
       .brushY()
       .extent([
         [xOffset, margin.top],
-        [xOffset + brushWidth, height - margin.bottom],
+        [xOffset + width, height - margin.bottom],
       ])
       .on("start brush", brushed)
-      .on("end", () => brushened(y));
+      .on("end", () => brushened(y, initial[1]));
 
     this.svg.g
       .append("g")
