@@ -270,14 +270,16 @@ class MainChart {
       );
     }
 
-    function brushened(y, initial) {
-      const selection = d3.event.selection;
-      if (!d3.event.sourceEvent || !selection) return;
-      const year = d3.timeYear.round(y.invert(selection[0]));
+    function brushened(year, initial) {
       d3.select(".brush")
         .transition()
         .call(brush.move, [year, initial[1]].map(y));
-      return year;
+    }
+
+    function getYear(y) {
+      const selection = d3.event.selection;
+      if (!d3.event.sourceEvent || !selection) return;
+      return d3.timeYear.round(y.invert(selection[0]));
     }
 
     const brush = d3
@@ -286,10 +288,18 @@ class MainChart {
         [xOffset, margin.top],
         [xOffset + width, height - margin.bottom],
       ])
-      .on("start brush", brushed)
-      .on("end", () => {
-        const year = brushened(y, initial);
+      .on("start", brushed)
+      .on("brush", () => {
+        const year = getYear(y);
         if (year) this.updateState({ year });
+        brushed();
+      })
+      .on("end", () => {
+        const year = getYear(y);
+        if (year) {
+          this.updateState({ year });
+          brushened(year, initial);
+        }
       });
 
     this.svg.g
@@ -304,7 +314,7 @@ class MainChart {
   }
 
   updateState({ year } = {}) {
-    if (year) {
+    if (year && year.getFullYear() !== this.state.year.view) {
       this.state.year.view = { year: year.getFullYear() };
       MainChart.renderTemplate(this.state.year);
     }
