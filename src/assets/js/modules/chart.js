@@ -34,6 +34,7 @@ class MainChart {
       width: 25,
       xOffset: 50,
       initial: [new Date(1980, 0, 1), new Date(2020, 0, 1)],
+      max: new Date(2018, 0, 1),
     };
 
     this.state = {
@@ -259,7 +260,7 @@ class MainChart {
   addBrush() {
     const { height, margin } = this.svg;
     const { y } = this.scales;
-    const { xOffset, width, initial } = this.brush;
+    const { xOffset, width, initial, max } = this.brush;
 
     function brushed() {
       const selection = d3.event.selection;
@@ -271,15 +272,15 @@ class MainChart {
     }
 
     function brushened(year, initial) {
+      if (!d3.event.sourceEvent) return;
       d3.select(".brush")
         .transition()
         .call(brush.move, [year, initial[1]].map(y));
     }
 
-    function getYear(y) {
-      const selection = d3.event.selection;
-      if (!d3.event.sourceEvent || !selection) return;
-      return d3.timeYear.round(y.invert(selection[0]));
+    function getYear(y, initial) {
+      const sel = d3.event.selection;
+      return sel ? d3.timeYear.round(y.invert(sel[0])) : initial[1];
     }
 
     const brush = d3
@@ -290,13 +291,14 @@ class MainChart {
       ])
       .on("start", brushed)
       .on("brush", () => {
-        const year = getYear(y);
+        const year = getYear(y, initial);
         if (year) this.updateState({ year });
         brushed();
       })
       .on("end", () => {
-        const year = getYear(y);
+        let year = getYear(y, initial);
         if (year) {
+          year = d3.min([year, max]);
           this.updateState({ year });
           brushened(year, initial);
         }
