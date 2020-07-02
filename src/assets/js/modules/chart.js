@@ -36,6 +36,11 @@ class MainChart {
       initial: [new Date(1980, 0, 1), new Date(2020, 0, 1)],
     };
 
+    this.time = {
+      formatYear: d3.timeFormat("%Y"),
+      formatDecade: d3.timeFormat("%Ys"),
+    };
+
     const filename = d3.select(selector).attr("data-src");
     this.init(filename);
   }
@@ -127,7 +132,6 @@ class MainChart {
 
     const ticks = y.ticks();
     const tickSpacing = y(ticks[1]) - y(ticks[0]);
-    const formatDecade = d3.timeFormat("%Ys");
     this.svg.g
       .append("g")
       .attr("class", "axis y-axis")
@@ -138,7 +142,7 @@ class MainChart {
       .attr("class", "time-label")
       .attr("x", xOffset)
       .attr("y", (d) => y(d) + 6) // FIXME: magic value; not vertically centered
-      .text((d) => formatDecade(d));
+      .text((d) => this.time.formatDecade(d));
 
     this.svg.g
       .append("g")
@@ -211,7 +215,6 @@ class MainChart {
       )
       .join("circle")
       .attr("class", `${partyClass} ${alive.class}`)
-      .attr("r", radius)
       .attr("cx", (d) => x(d.data.familyId) - radius - padding - d.x)
       .attr("cy", (d) => d.y);
 
@@ -227,11 +230,21 @@ class MainChart {
       )
       .join("circle")
       .attr("class", `${partyClass} ${dead.class}`)
-      .attr("r", radius)
       .attr("cx", (d) => x(d.data.familyId) + radius + padding + d.x)
       .attr("cy", (d) => d.y)
       .attr("stroke-width", 1)
       .attr("fill", "transparent");
+
+    beeswarmPair
+      .selectAll(`.${partyClass}`)
+      .attr("r", radius)
+      .append("title")
+      .text(
+        ({ data: d }) =>
+          `${d.party} winning ${d.share}% of votes in ${this.time.formatYear(
+            d.electionDate
+          )} (${d.country}) - now, ${d.currentShare}%`
+      );
   }
 
   addBrush() {
@@ -241,7 +254,7 @@ class MainChart {
 
     function brushed() {
       const selection = d3.event.selection;
-      if (!d3.event.sourceEvent || !selection) return;
+      if (!selection) return;
       const y0 = selection[0];
       d3.selectAll(".party").attr("opacity", (d, i, n) =>
         y0 <= +d3.select(n[i]).attr("cy") ? 1 : 0.25
