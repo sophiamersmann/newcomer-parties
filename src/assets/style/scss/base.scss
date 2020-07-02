@@ -20,6 +20,15 @@ body {
 
 main {
   flex: 1 0 75vw;
+}
+
+.panel {
+  border-right: 1px solid black;
+  flex: 0 1 25vw;
+}
+
+#chart-wrapper {
+  height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -31,7 +40,13 @@ main {
   }
 }
 
-.panel {
-  border-right: 1px solid black;
-  flex: 0 1 25vw;
+.slider {
+  position: absolute;
+  margin: $spacing / 2;
+}
+
+.form-group {
+  input {
+    vertical-align: middle;
+  }
 }

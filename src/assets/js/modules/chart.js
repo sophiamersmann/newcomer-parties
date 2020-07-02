@@ -317,20 +317,12 @@ class MainChart {
   updateState({ year } = {}) {
     if (year && year.getFullYear() !== this.state.year.view) {
       this.state.year.view = { year: year.getFullYear() };
-      MainChart.renderTemplate(this.state.year);
+      renderTemplate(this.state.year);
     }
   }
 
   renderTemplates() {
-    MainChart.renderTemplate(this.state.year);
-  }
-
-  static renderTemplate({ template, target, view }) {
-    fetch(`src/templates/${template}`)
-      .then((response) => response.text())
-      .then((template) => {
-        $(target).html(Mustache.render(template, view));
-      });
+    renderTemplate(this.state.year);
   }
 
   static loadDatum(d) {

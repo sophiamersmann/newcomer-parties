@@ -13,15 +13,25 @@ body {
   display: flex; }
 
 main {
-  flex: 1 0 75vw;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center; }
-  main #main-chart {
-    width: 90%;
-    max-width: 1200px; }
+  flex: 1 0 75vw; }
 
 .panel {
   border-right: 1px solid black;
   flex: 0 1 25vw; }
+
+#chart-wrapper {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center; }
+  #chart-wrapper #main-chart {
+    width: 90%;
+    max-width: 1200px; }
+
+.slider {
+  position: absolute;
+  margin: 1rem; }
+
+.form-group input {
+  vertical-align: middle; }
