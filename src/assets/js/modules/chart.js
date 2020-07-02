@@ -13,20 +13,27 @@ class MainChart {
     };
 
     this.parties = {
-      selector: ".party",
+      class: "party",
       radius: 3,
       padding: 1.5,
       alive: {
-        selector: ".party-alive",
+        class: "party-alive",
       },
       dead: {
-        selector: ".party-dead",
+        class: "party-dead",
       },
     };
 
     this.labels = {
+      xOffset: 5,
       yOffset: 5,
       yOffsetPlus: 20,
+    };
+
+    this.brush = {
+      width: 25,
+      xOffset: 50,
+      initial: [new Date(1980, 0, 1), new Date(2020, 0, 1)],
     };
 
     const filename = d3.select(selector).attr("data-src");
@@ -66,6 +73,7 @@ class MainChart {
     this.drawAxes();
 
     this.drawBeeswarms();
+    this.addBrush();
   }
 
   setUpSVG() {
@@ -100,7 +108,7 @@ class MainChart {
   drawAxes() {
     const { width, margin } = this.svg;
     const { x, y } = this.scales;
-    const { yOffset, yOffsetPlus } = this.labels;
+    const { xOffset, yOffset, yOffsetPlus } = this.labels;
 
     this.svg.g
       .append("g")
@@ -128,7 +136,7 @@ class MainChart {
       .data(ticks.slice(0, -1))
       .join("text")
       .attr("class", "time-label")
-      .attr("x", 0)
+      .attr("x", xOffset)
       .attr("y", (d) => y(d) + 6) // FIXME: magic value; not vertically centered
       .text((d) => formatDecade(d));
 
@@ -150,7 +158,7 @@ class MainChart {
   drawBeeswarms() {
     const { x, y } = this.scales;
     const { height, margin } = this.svg;
-    const { selector: partySel, radius, padding, alive, dead } = this.parties;
+    const { class: partyClass, radius, padding, alive, dead } = this.parties;
 
     // TODO: Random colors for now
     const color = d3
@@ -192,7 +200,7 @@ class MainChart {
       .attr("stroke", (family) => color(family));
 
     beeswarmPair
-      .selectAll(alive.selector)
+      .selectAll(`.${alive.class}`)
       .data(({ parties }) =>
         MainChart.dodge(
           parties.filter((d) => d.currentShare),
@@ -202,13 +210,13 @@ class MainChart {
         )
       )
       .join("circle")
-      .attr("class", `${partySel} ${alive.selector}`)
+      .attr("class", `${partyClass} ${alive.class}`)
       .attr("r", radius)
       .attr("cx", (d) => x(d.data.familyId) - radius - padding - d.x)
       .attr("cy", (d) => d.y);
 
     beeswarmPair
-      .selectAll(dead.selector)
+      .selectAll(`.${dead.class}`)
       .data(({ parties }) =>
         MainChart.dodge(
           parties.filter((d) => !d.currentShare),
@@ -218,12 +226,55 @@ class MainChart {
         )
       )
       .join("circle")
-      .attr("class", `${partySel} ${dead.selector}`)
+      .attr("class", `${partyClass} ${dead.class}`)
       .attr("r", radius)
       .attr("cx", (d) => x(d.data.familyId) + radius + padding + d.x)
       .attr("cy", (d) => d.y)
       .attr("stroke-width", 1)
       .attr("fill", "transparent");
+  }
+
+  addBrush() {
+    const { width, height, margin } = this.svg;
+    const { x, y } = this.scales;
+    const { xOffset, width: brushWidth, initial } = this.brush;
+
+    function brushed() {
+      const selection = d3.event.selection;
+      if (!d3.event.sourceEvent || !selection) return;
+      const y0 = selection[0];
+      d3.selectAll(".party").attr("opacity", (d, i, n) =>
+        y0 <= +d3.select(n[i]).attr("cy") ? 1 : 0.25
+      );
+    }
+
+    function brushened(y) {
+      const selection = d3.event.selection;
+      if (!d3.event.sourceEvent || !selection) return;
+      const year = d3.timeYear.round(y.invert(selection[0]));
+      d3.select(".brush")
+        .transition()
+        .call(brush.move, [year, new Date(2020, 0, 1)].map(y));
+    }
+
+    const brush = d3
+      .brushY()
+      .extent([
+        [xOffset, margin.top],
+        [xOffset + brushWidth, height - margin.bottom],
+      ])
+      .on("start brush", brushed)
+      .on("end", () => brushened(y));
+
+    this.svg.g
+      .append("g")
+      .attr("class", "brush")
+      .call(brush)
+      .call(brush.move, initial.map(y));
+
+    this.svg.g.select(".overlay").remove();
+    this.svg.g.select(".selection").style("pointer-events", "none");
+    this.svg.g.select(".handle--s").style("pointer-events", "none");
   }
 
   static loadDatum(d) {
