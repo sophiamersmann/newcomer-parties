@@ -1,44 +1,53 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <meta name="author" content="Sophia Mersmann" />
+    <!-- TODO: title -->
+    <!-- <meta name="title" content=""> -->
+    <!-- TODO: description -->
+    <!-- <meta name="description" content=""> -->
 
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta name="author" content="Sophia Mersmann">
-  <!-- TODO: title -->
-  <!-- <meta name="title" content=""> -->
-  <!-- TODO: description -->
-  <!-- <meta name="description" content=""> -->
+    <!-- TODO: title -->
+    <title></title>
 
-  <!-- TODO: title -->
-  <title></title>
+    <link rel="stylesheet" href="src/assets/style/css/base.css" />
+    <link rel="stylesheet" href="src/assets/style/css/chart.css" />
 
-  <link rel="stylesheet" href="src/assets/style/css/base.css">
-  <link rel="stylesheet" href="src/assets/style/css/chart.css">
+    <script src="node_modules/jquery/dist/jquery.min.js"></script>
+    <!-- TODO: From node_moduels -->
+    <script src="https://unpkg.com/mustache@latest"></script>
+    <script src="node_modules/d3/dist/d3.min.js"></script>
+    <script src="src/assets/js/modules/utils.js"></script>
+    <script src="src/assets/js/modules/mappings.js"></script>
+    <script src="src/assets/js/modules/chart.js"></script>
+    <script src="src/assets/js/index.js"></script>
+  </head>
 
-  <script src="node_modules/jquery/dist/jquery.min.js"></script>
-  <!-- TODO: From node_moduels -->
-  <script src="https://unpkg.com/mustache@latest"></script> 
-  <script src="node_modules/d3/dist/d3.min.js"></script>
-  <script src="src/assets/js/modules/utils.js"></script>
-  <script src="src/assets/js/modules/mappings.js"></script>
-  <script src="src/assets/js/modules/chart.js"></script>
-  <script src="src/assets/js/index.js"></script>
-</head>
-
-<body>
-  <div class="panel">
-    <div id="year"></div>
-  </div>
-  <main>
-    <div class="form-group slider">
-      <input type="range" id="input-vote-share" name="voteShare" min="0" max="1" step="0.01" value="0.05">
-      <label id="input-vote-share-label" for="input-vote-share"></label>
+  <body>
+    <div class="panel">
+      <div id="year"></div>
     </div>
-    <div id="chart-wrapper">
-      <div id="main-chart" data-src="data/parlgov2018.csv"></div>
-    </div>
-  </main>
-</body>
-
+    <main>
+      <div class="form-group slider">
+        <input
+          type="range"
+          id="input-vote-share"
+          name="voteShare"
+          min="0"
+          max="1"
+          step="0.01"
+          value="0.05"
+        />
+        <label id="input-vote-share-label" for="input-vote-share"></label>
+      </div>
+      <div id="chart-wrapper">
+        <div id="main-chart" data-src="data/parlgov2018.csv"></div>
+      </div>
+    </main>
+  </body>
 </html>
