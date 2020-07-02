@@ -34,7 +34,7 @@ class MainChart {
       width: 25,
       xOffset: 50,
       initial: [new Date(1980, 0, 1), new Date(2020, 0, 1)],
-      max: new Date(2018, 0, 1),
+      max: new Date(2017, 0, 1),
     };
 
     this.state = {
