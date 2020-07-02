@@ -36,6 +36,14 @@ class MainChart {
       initial: [new Date(1980, 0, 1), new Date(2020, 0, 1)],
     };
 
+    this.state = {
+      year: {
+        template: "year.mustache",
+        target: "#year",
+        view: { year: this.brush.initial[0].getFullYear() },
+      },
+    };
+
     this.time = {
       formatYear: d3.timeFormat("%Y"),
       formatDecade: d3.timeFormat("%Ys"),
@@ -49,6 +57,7 @@ class MainChart {
     d3.csv(filename, MainChart.loadDatum).then((data) => {
       this.prepareData(data);
       this.draw();
+      this.renderTemplates();
     });
   }
 
@@ -261,13 +270,14 @@ class MainChart {
       );
     }
 
-    function brushened(y, fixedDate) {
+    function brushened(y, initial) {
       const selection = d3.event.selection;
       if (!d3.event.sourceEvent || !selection) return;
       const year = d3.timeYear.round(y.invert(selection[0]));
       d3.select(".brush")
         .transition()
-        .call(brush.move, [year, fixedDate].map(y));
+        .call(brush.move, [year, initial[1]].map(y));
+      return year;
     }
 
     const brush = d3
@@ -277,7 +287,10 @@ class MainChart {
         [xOffset + width, height - margin.bottom],
       ])
       .on("start brush", brushed)
-      .on("end", () => brushened(y, initial[1]));
+      .on("end", () => {
+        const year = brushened(y, initial);
+        if (year) this.updateState({ year });
+      });
 
     this.svg.g
       .append("g")
@@ -288,6 +301,25 @@ class MainChart {
     this.svg.g.select(".overlay").remove();
     this.svg.g.select(".selection").style("pointer-events", "none");
     this.svg.g.select(".handle--s").style("pointer-events", "none");
+  }
+
+  updateState({ year } = {}) {
+    if (year) {
+      this.state.year.view = { year: year.getFullYear() };
+      MainChart.renderTemplate(this.state.year);
+    }
+  }
+
+  renderTemplates() {
+    MainChart.renderTemplate(this.state.year);
+  }
+
+  static renderTemplate({ template, target, view }) {
+    fetch(`src/templates/${template}`)
+      .then((response) => response.text())
+      .then((template) => {
+        $(target).html(Mustache.render(template, view));
+      });
   }
 
   static loadDatum(d) {

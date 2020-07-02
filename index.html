@@ -17,6 +17,8 @@
   <link rel="stylesheet" href="src/assets/style/css/chart.css">
 
   <script src="node_modules/jquery/dist/jquery.min.js"></script>
+  <!-- TODO: From node_moduels -->
+  <script src="https://unpkg.com/mustache@latest"></script> 
   <script src="node_modules/d3/dist/d3.min.js"></script>
   <script src="src/assets/js/modules/mappings.js"></script>
   <script src="src/assets/js/modules/chart.js"></script>
@@ -24,7 +26,9 @@
 </head>
 
 <body>
-  <div class="panel"></div>
+  <div class="panel">
+    <div id="year"></div>
+  </div>
   <main class="main">
     <div id="main-chart" data-src="data/parlgov2018.csv"></div>
   </main>
