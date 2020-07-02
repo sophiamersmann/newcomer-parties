@@ -14,7 +14,7 @@ class MainChart {
 
     this.parties = {
       class: "party",
-      radius: 3,
+      radiusRange: [1, 8],
       padding: 1.5,
       alive: {
         class: "party-alive",
@@ -117,7 +117,12 @@ class MainChart {
       .nice()
       .range([margin.top, height - margin.bottom]);
 
-    this.scales = { x: x, y: y };
+    const r = d3
+      .scaleSqrt()
+      .domain(d3.extent(this.data.raw, (d) => d.share))
+      .range(this.parties.radiusRange);
+
+    this.scales = { x, y, r };
   }
 
   drawAxes() {
@@ -170,9 +175,9 @@ class MainChart {
   }
 
   drawBeeswarms() {
-    const { x, y } = this.scales;
+    const { x, r } = this.scales;
     const { height, margin } = this.svg;
-    const { class: partyClass, radius, padding, alive, dead } = this.parties;
+    const { class: partyClass, padding, alive, dead } = this.parties;
 
     // TODO: Random colors for now
     const color = d3
@@ -213,41 +218,35 @@ class MainChart {
       .attr("stroke-width", 0.2)
       .attr("stroke", (family) => color(family));
 
+    const dodge = (data) =>
+      MainChart.dodge(
+        data,
+        padding,
+        { pos: "electionDate", size: "share" },
+        this.scales
+      );
+
     beeswarmPair
       .selectAll(`.${alive.class}`)
-      .data(({ parties }) =>
-        MainChart.dodge(
-          parties.filter((d) => d.currentShare),
-          "electionDate",
-          radius * 2 + padding,
-          y
-        )
-      )
+      .data(({ parties }) => dodge(parties.filter((d) => d.currentShare)))
       .join("circle")
       .attr("class", `${partyClass} ${alive.class}`)
-      .attr("cx", (d) => x(d.data.familyId) - radius - padding - d.x)
+      .attr("cx", (d) => x(d.data.familyId) - padding - d.x)
       .attr("cy", (d) => d.y);
 
     beeswarmPair
       .selectAll(`.${dead.class}`)
-      .data(({ parties }) =>
-        MainChart.dodge(
-          parties.filter((d) => !d.currentShare),
-          "electionDate",
-          radius * 2 + padding,
-          y
-        )
-      )
+      .data(({ parties }) => dodge(parties.filter((d) => !d.currentShare)))
       .join("circle")
       .attr("class", `${partyClass} ${dead.class}`)
-      .attr("cx", (d) => x(d.data.familyId) + radius + padding + d.x)
+      .attr("cx", (d) => x(d.data.familyId) + padding + d.x)
       .attr("cy", (d) => d.y)
       .attr("stroke-width", 1)
       .attr("fill", "transparent");
 
     beeswarmPair
       .selectAll(`.${partyClass}`)
-      .attr("r", radius)
+      .attr("r", ({ data: d }) => r(d.share))
       .append("title")
       .text(
         ({ data: d }) =>
@@ -371,20 +370,23 @@ class MainChart {
     };
   }
 
-  // Adapted from https://observablehq.com/@d3/beeswarm
-  static dodge(data, property, radius, y) {
-    const radius2 = radius ** 2;
+  // Adapted from https://observablehq.com/@d3/beeswarm and https://observablehq.com/@tomwhite/beeswarm-bubbles
+  static dodge(data, padding, properties, scales) {
+    const { pos, size } = properties;
+    const { y, r } = scales;
+
     const circles = data
-      .map((d) => ({ y: y(d[property]), data: d }))
-      .sort((a, b) => a.y - b.y);
+      .map((d) => ({ y: y(d[pos]), r: r(d[size]), data: d }))
+      .sort((a, b) => b.r - a.r);
     const epsilon = 1e-3;
     let head = null,
       tail = null;
 
     // Returns true if circle ⟨x,y⟩ intersects with any circle in the queue.
-    function intersects(x, y) {
+    function intersects(x, y, r) {
       let a = head;
       while (a) {
+        const radius2 = (a.r + r + padding) ** 2;
         if (radius2 - epsilon > (a.x - x) ** 2 + (a.y - y) ** 2) {
           return true;
         }
@@ -396,15 +398,16 @@ class MainChart {
     // Place each circle sequentially.
     for (const b of circles) {
       // Remove circles from the queue that can’t intersect the new circle b.
-      while (head && head.y < b.y - radius2) head = head.next;
+      // while (head && head.y < b.y - radius2) head = head.next;
 
       // Choose the minimum non-intersecting tangent.
-      if (intersects((b.x = 0), b.y)) {
+      if (intersects((b.x = b.r), b.y, b.r)) {
         let a = head;
         b.x = Infinity;
         do {
-          let x = a.x + Math.sqrt(radius2 - (a.y - b.y) ** 2);
-          if (x < b.x && !intersects(x, b.y)) b.x = x;
+          let x =
+            a.x + Math.sqrt((a.r + b.r + padding) ** 2 - (a.y - b.y) ** 2);
+          if (x < b.x && !intersects(x, b.y, b.r)) b.x = x;
           a = a.next;
         } while (a);
       }
@@ -417,4 +420,51 @@ class MainChart {
 
     return circles;
   }
+
+  //   // Adapted from https://observablehq.com/@d3/beeswarm
+  //   static dodge(data, property, radius, y) {
+  //     const radius2 = radius ** 2;
+  //     const circles = data
+  //       .map((d) => ({ y: y(d[property]), data: d }))
+  //       .sort((a, b) => a.y - b.y);
+  //     const epsilon = 1e-3;
+  //     let head = null,
+  //       tail = null;
+
+  //     // Returns true if circle ⟨x,y⟩ intersects with any circle in the queue.
+  //     function intersects(x, y) {
+  //       let a = head;
+  //       while (a) {
+  //         if (radius2 - epsilon > (a.x - x) ** 2 + (a.y - y) ** 2) {
+  //           return true;
+  //         }
+  //         a = a.next;
+  //       }
+  //       return false;
+  //     }
+
+  //     // Place each circle sequentially.
+  //     for (const b of circles) {
+  //       // Remove circles from the queue that can’t intersect the new circle b.
+  //       while (head && head.y < b.y - radius2) head = head.next;
+
+  //       // Choose the minimum non-intersecting tangent.
+  //       if (intersects((b.x = 0), b.y)) {
+  //         let a = head;
+  //         b.x = Infinity;
+  //         do {
+  //           let x = a.x + Math.sqrt(radius2 - (a.y - b.y) ** 2);
+  //           if (x < b.x && !intersects(x, b.y)) b.x = x;
+  //           a = a.next;
+  //         } while (a);
+  //       }
+
+  //       // Add b to the queue.
+  //       b.next = null;
+  //       if (head === null) head = tail = b;
+  //       else tail = tail.next = b;
+  //     }
+
+  //     return circles;
+  //   }
 }
