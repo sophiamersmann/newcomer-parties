@@ -43,6 +43,7 @@ class MainChart {
         target: "#year",
         view: { year: this.brush.initial[0].getFullYear() },
       },
+      minVoteShare: 0.05, // FIXME is set in html as well
     };
 
     this.time = {
@@ -64,7 +65,10 @@ class MainChart {
 
   prepareData(data) {
     this.data = {
-      raw: data,
+      raw: data.map((d) => {
+        d.isAlive = d.currentShare > 0;
+        return d;
+      }),
       families: [
         "right",
         "lib",
@@ -87,8 +91,11 @@ class MainChart {
     this.setUpScales();
     this.drawAxes();
 
+    this.computeBeeswarmPositions();
     this.drawBeeswarms();
-    this.addBrush();
+    // this.addBrush();
+
+    // this.updateBeeswarms();
   }
 
   setUpSVG() {
@@ -174,10 +181,32 @@ class MainChart {
       .attr("stroke", "whitesmoke");
   }
 
+  computeBeeswarmPositions() {
+    const dodge = (data) =>
+      MainChart.dodge(
+        data,
+        this.parties.padding,
+        { pos: "electionDate", size: "share" },
+        this.scales
+      );
+
+    this.data.beeswarms = d3
+      .nest()
+      .key((d) => d.familyId)
+      .entries(this.data.raw)
+      .map(({ key: familyId, values: parties }) => ({
+        familyId,
+        family: parties[0].family,
+        parties: dodge(parties.filter((e) => e.isAlive))
+          .concat(dodge(parties.filter((e) => !e.isAlive)))
+          .sort((a, b) => d3.descending(a.data.share, b.data.share)),
+      }));
+  }
+
   drawBeeswarms() {
     const { x, r } = this.scales;
     const { height, margin } = this.svg;
-    const { class: partyClass, padding, alive, dead } = this.parties;
+    const { class: partyClass, padding } = this.parties;
 
     // TODO: Random colors for now
     const color = d3
@@ -186,19 +215,9 @@ class MainChart {
       .range(d3.schemeTableau10);
     this.parties.color = color;
 
-    const nested = d3
-      .nest()
-      .key((d) => d.familyId)
-      .entries(this.data.raw)
-      .map(({ key: familyId, values: parties }) => ({
-        familyId,
-        family: parties[0].family,
-        parties,
-      }));
-
     const beeswarmPair = this.svg.g
       .selectAll(".beeswarm-pair")
-      .data(nested)
+      .data(this.data.beeswarms)
       .join("g")
       .attr("class", "beeswarm-pair")
       .attr("fill", (d) => color(d.familyId))
@@ -218,35 +237,20 @@ class MainChart {
       .attr("stroke-width", 0.2)
       .attr("stroke", (family) => color(family));
 
-    const dodge = (data) =>
-      MainChart.dodge(
-        data,
-        padding,
-        { pos: "electionDate", size: "share" },
-        this.scales
-      );
-
-    beeswarmPair
-      .selectAll(`.${alive.class}`)
-      .data(({ parties }) => dodge(parties.filter((d) => d.currentShare)))
-      .join("circle")
-      .attr("class", `${partyClass} ${alive.class}`)
-      .attr("cx", (d) => x(d.data.familyId) - padding - d.x)
-      .attr("cy", (d) => d.y);
-
-    beeswarmPair
-      .selectAll(`.${dead.class}`)
-      .data(({ parties }) => dodge(parties.filter((d) => !d.currentShare)))
-      .join("circle")
-      .attr("class", `${partyClass} ${dead.class}`)
-      .attr("cx", (d) => x(d.data.familyId) + padding + d.x)
-      .attr("cy", (d) => d.y)
-      .attr("stroke-width", 1)
-      .attr("fill", "transparent");
-
     beeswarmPair
       .selectAll(`.${partyClass}`)
+      .data(({ parties }) => parties)
+      .join("circle")
+      .attr("class", partyClass) // TODO
+      .attr(
+        "cx",
+        (d) =>
+          x(d.data.familyId) + (d.data.isAlive ? -padding - d.x : padding + d.x)
+      )
+      .attr("cy", (d) => d.y)
       .attr("r", ({ data: d }) => r(d.share))
+      .attr("stroke-width", 1)
+      .attr("fill", ({ data: d }) => (d.isAlive ? "inherit" : "transparent"))
       .append("title")
       .text(
         ({ data: d }) =>
@@ -314,10 +318,15 @@ class MainChart {
     this.svg.g.select(".handle--s").style("pointer-events", "none");
   }
 
-  updateState({ year } = {}) {
+  updateState({ year, minVoteShare } = {}) {
     if (year && year.getFullYear() !== this.state.year.view) {
       this.state.year.view = { year: year.getFullYear() };
       renderTemplate(this.state.year);
+    }
+
+    if (minVoteShare && minVoteShare !== this.state.minVoteShare) {
+      this.state.minVoteShare = minVoteShare;
+      this.updateBeeswarms();
     }
   }
 
