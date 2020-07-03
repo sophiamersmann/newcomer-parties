@@ -1,5 +1,5 @@
 class MainChart {
-  constructor(selector) {
+  constructor(selector, minVoteShare = 0.05) {
     this.svg = {
       selector,
       width: 920,
@@ -38,12 +38,16 @@ class MainChart {
     };
 
     this.state = {
+      year: this.brush.initial[0],
+      minVoteShare: minVoteShare,
+    };
+
+    this.templates = {
       year: {
         template: "year.mustache",
         target: "#year",
-        view: { year: this.brush.initial[0].getFullYear() },
+        view: { year: this.state.year.getFullYear() },
       },
-      minVoteShare: 0.05, // FIXME is set in html as well
     };
 
     this.time = {
@@ -93,9 +97,8 @@ class MainChart {
 
     this.computeBeeswarmPositions();
     this.drawBeeswarms();
-    // this.addBrush();
 
-    // this.updateBeeswarms();
+    this.addBrush();
   }
 
   setUpSVG() {
@@ -204,9 +207,8 @@ class MainChart {
   }
 
   drawBeeswarms() {
-    const { x, r } = this.scales;
+    const { x } = this.scales;
     const { height, margin } = this.svg;
-    const { selector, padding, alive, dead } = this.parties;
 
     // TODO: Random colors for now
     const color = d3
@@ -237,30 +239,60 @@ class MainChart {
       .attr("stroke-width", 0.2)
       .attr("stroke", (family) => color(family));
 
-    beeswarmPair
+    this.drawBees();
+  }
+
+  drawBees() {
+    const { x, y, r } = this.scales;
+    const { selector, padding, alive, dead } = this.parties;
+
+    this.svg.g
+      .selectAll(".beeswarm-pair")
       .selectAll(selector)
-      .data(({ parties }) => parties)
-      .join("circle")
-      .attr(
-        "class",
-        ({ data: d }) =>
-          `${selector.slice(1)} ${(d.isAlive ? alive : dead).selector.slice(1)}`
+      .data(({ parties }) =>
+        parties.filter(
+          ({ data: d }) => d.share >= this.state.minVoteShare * 100
+        )
       )
-      .attr(
-        "cx",
-        (d) =>
-          x(d.data.familyId) + (d.data.isAlive ? -padding - d.x : padding + d.x)
-      )
-      .attr("cy", (d) => d.y)
-      .attr("r", ({ data: d }) => r(d.share))
-      .attr("stroke-width", 1)
-      .attr("fill", ({ data: d }) => (d.isAlive ? "inherit" : "transparent"))
-      .append("title")
-      .text(
-        ({ data: d }) =>
-          `${d.party} winning ${d.share}% of votes in ${this.time.formatYear(
-            d.electionDate
-          )} (${d.country}) - now, ${d.currentShare}%`
+      .join(
+        (enter) =>
+          enter
+            .append("circle")
+            .attr(
+              "class",
+              ({ data: d }) =>
+                `${selector.slice(1)} ${(d.isAlive
+                  ? alive
+                  : dead
+                ).selector.slice(1)}`
+            )
+            .attr(
+              "cx",
+              (d) =>
+                x(d.data.familyId) +
+                (d.data.isAlive ? -padding - d.x : padding + d.x)
+            )
+            .attr("cy", (d) => d.y)
+            .attr("r", ({ data: d }) => r(d.share))
+            .attr("stroke-width", 1)
+            .attr("fill", ({ data: d }) =>
+              d.isAlive ? "inherit" : "transparent"
+            )
+            .attr("opacity", (d) => (y(this.state.year) <= d.y ? 1 : 0.25)) // TODO: should be saved in MainChart
+            .call((enter) =>
+              enter
+                .append("title")
+                .text(
+                  ({ data: d }) =>
+                    `${d.party} winning ${
+                      d.share
+                    }% of votes in ${this.time.formatYear(d.electionDate)} (${
+                      d.country
+                    }) - now, ${d.currentShare}%`
+                )
+            ),
+        (update) => update,
+        (exit) => exit.remove()
       );
   }
 
@@ -273,8 +305,9 @@ class MainChart {
       const selection = d3.event.selection;
       if (!selection) return;
       const y0 = selection[0];
-      d3.selectAll(".party").attr("opacity", (_, i, n) =>
-        y0 <= +d3.select(n[i]).attr("cy") ? 1 : 0.25
+      d3.selectAll(".party").attr(
+        "opacity",
+        (_, i, n) => (y0 <= +d3.select(n[i]).attr("cy") ? 1 : 0.25) // TODO: should be saved in MainChart
       );
     }
 
@@ -323,19 +356,20 @@ class MainChart {
   }
 
   updateState({ year, minVoteShare } = {}) {
-    if (year && year.getFullYear() !== this.state.year.view) {
-      this.state.year.view = { year: year.getFullYear() };
-      renderTemplate(this.state.year);
+    if (year && year !== this.state.year) {
+      this.state.year = year;
+      this.templates.year.view = { year: year.getFullYear() };
+      renderTemplate(this.templates.year);
     }
 
     if (minVoteShare && minVoteShare !== this.state.minVoteShare) {
       this.state.minVoteShare = minVoteShare;
-      this.updateBeeswarms();
+      this.drawBees();
     }
   }
 
   renderTemplates() {
-    renderTemplate(this.state.year);
+    renderTemplate(this.templates.year);
   }
 
   static loadDatum(d) {
