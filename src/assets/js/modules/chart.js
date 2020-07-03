@@ -315,7 +315,9 @@ class MainChart {
 
     function brushened(year, initial) {
       if (!d3.event.sourceEvent) return;
-      d3.select(this).transition().call(brush.move, [year, initial[1]].map(y));
+      d3.select(".brush")
+        .transition()
+        .call(brush.move, [year, initial[1]].map(y));
     }
 
     function getYear(y, initial) {
