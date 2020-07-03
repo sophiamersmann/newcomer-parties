@@ -16,6 +16,7 @@ class MainChart {
       selector: ".party",
       radiusRange: [1, 8],
       padding: 1.5,
+      transparent: 0.25,
       alive: {
         selector: ".party-alive",
       },
@@ -244,7 +245,7 @@ class MainChart {
 
   drawBees() {
     const { x, y, r } = this.scales;
-    const { selector, padding, alive, dead } = this.parties;
+    const { selector, padding, transparent, alive, dead } = this.parties;
 
     this.svg.g
       .selectAll(".beeswarm-pair")
@@ -278,7 +279,9 @@ class MainChart {
             .attr("fill", ({ data: d }) =>
               d.isAlive ? "inherit" : "transparent"
             )
-            .attr("opacity", (d) => (y(this.state.year) <= d.y ? 1 : 0.25)) // TODO: should be saved in MainChart
+            .attr("opacity", (d) =>
+              y(this.state.year) <= d.y ? 1 : transparent
+            )
             .call((enter) =>
               enter
                 .append("title")
@@ -301,21 +304,18 @@ class MainChart {
     const { y } = this.scales;
     const { xOffset, width, initial, max } = this.brush;
 
-    function brushed() {
+    function brushed(opacity) {
       const selection = d3.event.selection;
       if (!selection) return;
       const y0 = selection[0];
-      d3.selectAll(".party").attr(
-        "opacity",
-        (_, i, n) => (y0 <= +d3.select(n[i]).attr("cy") ? 1 : 0.25) // TODO: should be saved in MainChart
+      d3.selectAll(".party").attr("opacity", (_, i, n) =>
+        y0 <= +d3.select(n[i]).attr("cy") ? 1 : opacity
       );
     }
 
     function brushened(year, initial) {
       if (!d3.event.sourceEvent) return;
-      d3.select(".brush")
-        .transition()
-        .call(brush.move, [year, initial[1]].map(y));
+      d3.select(this).transition().call(brush.move, [year, initial[1]].map(y));
     }
 
     function getYear(y, initial) {
@@ -329,11 +329,11 @@ class MainChart {
         [xOffset, margin.top],
         [xOffset + width, height - margin.bottom],
       ])
-      .on("start", brushed)
+      .on("start", () => brushed(this.parties.transparent))
       .on("brush", () => {
         const year = getYear(y, initial);
         if (year) this.updateState({ year });
-        brushed();
+        brushed(this.parties.transparent);
       })
       .on("end", () => {
         let year = getYear(y, initial);
