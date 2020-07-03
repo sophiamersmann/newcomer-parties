@@ -13,14 +13,14 @@ class MainChart {
     };
 
     this.parties = {
-      class: "party",
+      selector: ".party",
       radiusRange: [1, 8],
       padding: 1.5,
       alive: {
-        class: "party-alive",
+        selector: ".party-alive",
       },
       dead: {
-        class: "party-dead",
+        selector: ".party-dead",
       },
     };
 
@@ -206,7 +206,7 @@ class MainChart {
   drawBeeswarms() {
     const { x, r } = this.scales;
     const { height, margin } = this.svg;
-    const { class: partyClass, padding } = this.parties;
+    const { selector, padding, alive, dead } = this.parties;
 
     // TODO: Random colors for now
     const color = d3
@@ -238,10 +238,14 @@ class MainChart {
       .attr("stroke", (family) => color(family));
 
     beeswarmPair
-      .selectAll(`.${partyClass}`)
+      .selectAll(selector)
       .data(({ parties }) => parties)
       .join("circle")
-      .attr("class", partyClass) // TODO
+      .attr(
+        "class",
+        ({ data: d }) =>
+          `${selector.slice(1)} ${(d.isAlive ? alive : dead).selector.slice(1)}`
+      )
       .attr(
         "cx",
         (d) =>
