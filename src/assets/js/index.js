@@ -1,14 +1,17 @@
 $(document).ready(() => {
   const inputVoteShare = $("#input-vote-share");
-  renderMinVoteShare = renderMinVoteShare.bind(inputVoteShare);
-
   const minVoteShare = +inputVoteShare.val();
-  const mainChart = new MainChart("#main-chart", minVoteShare);
 
+  renderMinVoteShare = renderMinVoteShare.bind(inputVoteShare);
   renderMinVoteShare();
-  inputVoteShare.on("input", () => {
-    renderMinVoteShare();
-    mainChart.updateState({ minVoteShare: +$(event.currentTarget).val() });
+
+  new Promise(function (resolve) {
+    resolve(new MainChart("#main-chart", minVoteShare));
+  }).then(function (mainChart) {
+    inputVoteShare.on("input", () => {
+      renderMinVoteShare();
+      mainChart.updateState({ minVoteShare: +$(event.currentTarget).val() });
+    });
   });
 });
 
