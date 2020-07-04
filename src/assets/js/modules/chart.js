@@ -1,5 +1,5 @@
 class MainChart {
-  constructor(selector, minVoteShare = 0.05) {
+  constructor(selector) {
     this.svg = {
       selector,
       width: 920,
@@ -40,7 +40,7 @@ class MainChart {
 
     this.state = {
       year: this.brush.initial[0],
-      minVoteShare: minVoteShare,
+      minVoteShare: null,
     };
 
     this.templates = {
@@ -55,13 +55,14 @@ class MainChart {
       formatYear: d3.timeFormat("%Y"),
       formatDecade: d3.timeFormat("%Ys"),
     };
-
-    const filename = d3.select(selector).attr("data-src");
-    this.init(filename);
   }
 
-  init(filename) {
-    d3.csv(filename, MainChart.loadDatum).then((data) => {
+  async init(minVoteShare = 0.05) {
+    // TODO: should the state be manipulated from here?
+    this.state.minVoteShare = minVoteShare;
+
+    const filename = d3.select(this.svg.selector).attr("data-src");
+    return d3.csv(filename, MainChart.loadDatum).then((data) => {
       this.prepareData(data);
       this.draw();
       this.renderTemplates();
@@ -86,6 +87,10 @@ class MainChart {
         "spec",
         "",
       ],
+      countries: d3
+        .map(data, (d) => d.country)
+        .keys()
+        .sort(d3.ascending),
       mappings: MainChart.createMappings(data),
     };
   }

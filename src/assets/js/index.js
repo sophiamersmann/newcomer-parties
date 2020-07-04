@@ -5,9 +5,9 @@ $(document).ready(() => {
   renderMinVoteShare = renderMinVoteShare.bind(inputVoteShare);
   renderMinVoteShare();
 
-  new Promise(function (resolve) {
-    resolve(new MainChart("#main-chart", minVoteShare));
-  }).then(function (mainChart) {
+  const mainChart = new MainChart("#main-chart");
+  mainChart.init(minVoteShare).then(() => {
+    renderCountries(mainChart.data.countries);
     inputVoteShare.on("input", () => {
       renderMinVoteShare();
       mainChart.updateState({ minVoteShare: +$(event.currentTarget).val() });
@@ -20,5 +20,13 @@ function renderMinVoteShare() {
     template: "input-vote-share.mustache",
     target: "#input-vote-share-label",
     view: { minVoteShare: this.val() },
+  });
+}
+
+function renderCountries(countries) {
+  renderTemplate({
+    template: "countries.mustache",
+    target: "#countries",
+    view: { countries },
   });
 }
