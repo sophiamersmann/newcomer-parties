@@ -13,7 +13,23 @@ $(document).ready(() => {
       mainChart.updateState({ minVoteShare: +$(event.currentTarget).val() });
     });
   });
+
+  const selectCountry = $("#select-country");
+  selectCountry.on("keydown", (event) => {
+    if (event.keyCode === 13) {
+      const country = $(event.target).val();
+      if (validateCountry(country, mainChart.data.countries)) {
+        console.log("Country valid:", country);
+      } else {
+        console.log("Country invalid:", country);
+      }
+    }
+  });
 });
+
+function validateCountry(country, countries) {
+  return country && countries.includes(country);
+}
 
 function renderMinVoteShare() {
   renderTemplate({
