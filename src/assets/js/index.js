@@ -11,21 +11,23 @@ $(document).ready(() => {
   const mainChart = new MainChart("#main-chart");
   mainChart.init({ minVoteShare, country }).then(() => {
     renderCountries(mainChart.data.countries);
+
     inputVoteShare.on("input", () => {
       renderMinVoteShare();
       mainChart.updateState({ minVoteShare: +$(event.currentTarget).val() });
     });
-  });
 
-  selectCountry.on("keydown", (event) => {
-    if (event.keyCode === 13) {
-      const country = $(event.target).val();
-      if (validateCountry(country, mainChart.data.countries)) {
-        console.log("Country valid:", country);
-      } else {
-        console.log("Country invalid:", country);
+    selectCountry.on("keydown", (event) => {
+      if (event.keyCode === 13) {
+        const country = $(event.target).val();
+        if (validateCountry(country, mainChart.data.countries)) {
+          console.log("Country valid:", country);
+          mainChart.updateState({ country });
+        } else {
+          console.log("Country invalid:", country);
+        }
       }
-    }
+    });
   });
 });
 

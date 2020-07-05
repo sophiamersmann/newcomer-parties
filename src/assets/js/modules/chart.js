@@ -101,6 +101,7 @@ class MainChart {
 
   draw() {
     this.setUpSVG();
+    this.createDefs();
 
     this.setUpScales();
     this.drawAxes();
@@ -113,12 +114,32 @@ class MainChart {
 
   setUpSVG() {
     const { selector, width, height, margin } = this.svg;
+
     this.svg.g = d3
       .select(selector)
       .append("svg")
       .attr("viewBox", `0 0 ${width} ${height}`)
       .append("g")
       .attr("transform", `translate(${margin.left},${margin.top})`);
+
+    this.svg.bg = this.svg.g.append("g").attr("class", "background");
+  }
+
+  createDefs() {
+    const radialGradient = this.svg.g
+      .append("defs")
+      .append("radialGradient")
+      .attr("id", "radial-gradient");
+
+    radialGradient
+      .append("stop")
+      .attr("offset", "0%")
+      .attr("stop-color", "lightgray");
+
+    radialGradient
+      .append("stop")
+      .attr("offset", "100%")
+      .attr("stop-color", "#fff");
   }
 
   setUpScales() {
@@ -242,12 +263,51 @@ class MainChart {
       .attr("stroke-width", 0.2)
       .attr("stroke", (family) => color(family));
 
+    this.svg.bg
+      .selectAll(".beeswarm-pair")
+      .data(this.data.beeswarms)
+      .join("g")
+      .attr("class", "beeswarm-pair");
+
     this.drawBees();
   }
 
   drawBees() {
     const { x, y, r } = this.scales;
     const { selector, padding, transparent, alive, dead } = this.parties;
+
+    this.svg.bg
+      .selectAll(".beeswarm-pair")
+      .selectAll(`${selector}-highlight`)
+      .data(({ parties }) =>
+        parties.filter(
+          ({ data: d }) => d.share >= this.state.minVoteShare * 100
+        )
+      )
+      .join(
+        (enter) =>
+          enter
+            .append("circle")
+            .attr("class", `${selector.slice(1)}-highlight`)
+            .attr(
+              "cx",
+              (d) =>
+                x(d.data.familyId) +
+                (d.data.isAlive ? -padding - d.x : padding + d.x)
+            )
+            .attr("cy", (d) => d.y)
+            .attr("r", ({ data: d }) => r(d.share) * 4)
+            .attr("stroke-width", 0)
+            .attr("fill", "url(#radial-gradient)")
+            .attr("opacity", ({ data: d }) =>
+              d.country === this.state.country ? 1 : 0
+            ),
+        (update) =>
+          update.attr("opacity", ({ data: d }) =>
+            d.country === this.state.country ? 1 : 0
+          ),
+        (exit) => exit.remove()
+      );
 
     this.svg.g
       .selectAll(".beeswarm-pair")
@@ -279,7 +339,7 @@ class MainChart {
             .attr("r", ({ data: d }) => r(d.share))
             .attr("stroke-width", 1)
             .attr("fill", ({ data: d }) =>
-              d.isAlive ? "inherit" : "transparent"
+              d.isAlive ? this.parties.color(d.familyId) : "transparent"
             )
             .attr("opacity", (d) =>
               y(this.state.year) <= d.y ? 1 : transparent
@@ -369,7 +429,7 @@ class MainChart {
     adjustHandleHeight(this.svg.g);
   }
 
-  updateState({ year, minVoteShare } = {}) {
+  updateState({ year, minVoteShare, country } = {}) {
     if (year != null && year !== this.state.year) {
       this.state.year = year;
       this.templates.year.view = { year: year.getFullYear() };
@@ -378,6 +438,11 @@ class MainChart {
 
     if (minVoteShare != null && minVoteShare !== this.state.minVoteShare) {
       this.state.minVoteShare = minVoteShare;
+      this.drawBees();
+    }
+
+    if (country != null && country !== this.state.country) {
+      this.state.country = country;
       this.drawBees();
     }
   }
