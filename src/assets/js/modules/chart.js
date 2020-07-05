@@ -370,13 +370,13 @@ class MainChart {
   }
 
   updateState({ year, minVoteShare } = {}) {
-    if (year && year !== this.state.year) {
+    if (year != null && year !== this.state.year) {
       this.state.year = year;
       this.templates.year.view = { year: year.getFullYear() };
       renderTemplate(this.templates.year);
     }
 
-    if (minVoteShare && minVoteShare !== this.state.minVoteShare) {
+    if (minVoteShare != null && minVoteShare !== this.state.minVoteShare) {
       this.state.minVoteShare = minVoteShare;
       this.drawBees();
     }
