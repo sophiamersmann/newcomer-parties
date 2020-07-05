@@ -2,11 +2,14 @@ $(document).ready(() => {
   const inputVoteShare = $("#input-vote-share");
   const minVoteShare = +inputVoteShare.val();
 
+  const selectCountry = $("#select-country");
+  const country = selectCountry.val();
+
   renderMinVoteShare = renderMinVoteShare.bind(inputVoteShare);
   renderMinVoteShare();
 
   const mainChart = new MainChart("#main-chart");
-  mainChart.init(minVoteShare).then(() => {
+  mainChart.init({ minVoteShare, country }).then(() => {
     renderCountries(mainChart.data.countries);
     inputVoteShare.on("input", () => {
       renderMinVoteShare();
@@ -14,7 +17,6 @@ $(document).ready(() => {
     });
   });
 
-  const selectCountry = $("#select-country");
   selectCountry.on("keydown", (event) => {
     if (event.keyCode === 13) {
       const country = $(event.target).val();

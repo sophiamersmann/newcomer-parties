@@ -39,6 +39,7 @@ class MainChart {
     this.state = {
       year: this.brush.initialDates[0],
       minVoteShare: null,
+      country: null,
     };
 
     this.templates = {
@@ -55,9 +56,10 @@ class MainChart {
     };
   }
 
-  async init(minVoteShare = 0.05) {
+  async init({ minVoteShare = 0.05, country = "" } = {}) {
     // TODO: should the state be manipulated from here?
     this.state.minVoteShare = minVoteShare;
+    this.state.country = country;
 
     const filename = d3.select(this.svg.selector).attr("data-src");
     return d3.csv(filename, MainChart.loadDatum).then((data) => {
@@ -68,29 +70,33 @@ class MainChart {
   }
 
   prepareData(data) {
-    this.data = {
-      raw: data.map((d) => {
-        d.isAlive = d.currentShare > 0;
-        return d;
-      }),
-      families: [
-        "right",
-        "lib",
-        "con",
-        "chr",
-        "agr",
-        "eco",
-        "soc",
-        "com",
-        "spec",
-        "",
-      ],
-      countries: d3
-        .map(data, (d) => d.country)
-        .keys()
-        .sort(d3.ascending),
-      mappings: MainChart.createMappings(data),
-    };
+    const raw = data.map((d) => {
+      d.isAlive = d.currentShare > 0;
+      return d;
+    });
+
+    const families = [
+      "right",
+      "lib",
+      "con",
+      "chr",
+      "agr",
+      "eco",
+      "soc",
+      "com",
+      "spec",
+      "",
+    ];
+
+    const countries = d3
+      .map(data, (d) => d.country)
+      .keys()
+      .sort(d3.ascending);
+    countries.push("");
+
+    const mappings = MainChart.createMappings(data);
+
+    this.data = { raw, families, countries, mappings };
   }
 
   draw() {
