@@ -289,12 +289,7 @@ class MainChart {
           enter
             .append("circle")
             .attr("class", `${selector.slice(1)}-highlight`)
-            .attr(
-              "cx",
-              (d) =>
-                x(d.data.familyId) +
-                (d.data.isAlive ? -padding - d.x : padding + d.x)
-            )
+            .attr("cx", (d) => d.x)
             .attr("cy", (d) => d.y)
             .attr("r", ({ data: d }) => r(d.share) * 4)
             .attr("stroke-width", 0)
@@ -329,12 +324,7 @@ class MainChart {
                   : dead
                 ).selector.slice(1)}`
             )
-            .attr(
-              "cx",
-              (d) =>
-                x(d.data.familyId) +
-                (d.data.isAlive ? -padding - d.x : padding + d.x)
-            )
+            .attr("cx", (d) => d.x)
             .attr("cy", (d) => d.y)
             .attr("r", ({ data: d }) => r(d.share))
             .attr("stroke-width", 1)
@@ -491,7 +481,7 @@ class MainChart {
   // Adapted from https://observablehq.com/@d3/beeswarm and https://observablehq.com/@tomwhite/beeswarm-bubbles
   static dodge(data, padding, properties, scales) {
     const { pos, size } = properties;
-    const { y, r } = scales;
+    const { x, y, r } = scales;
 
     const circles = data
       .map((d) => ({ y: y(d[pos]), r: r(d[size]), data: d }))
@@ -536,6 +526,10 @@ class MainChart {
       else tail = tail.next = b;
     }
 
-    return circles;
+    return circles.map((d) => {
+      d.x =
+        x(d.data.familyId) + (d.data.isAlive ? -padding - d.x : padding + d.x);
+      return d;
+    });
   }
 }
