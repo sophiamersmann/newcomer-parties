@@ -17,7 +17,15 @@ main {
 
 .panel {
   border-right: 1px solid black;
-  flex: 0 1 25vw; }
+  flex: 0 1 25vw;
+  display: flex;
+  flex-direction: column;
+  padding: 1rem; }
+  .panel .overview {
+    background-color: lightpink; }
+  .panel .party-list {
+    background-color: lightseagreen;
+    flex: 1 0 auto; }
 
 #chart-wrapper {
   height: 100vh;

@@ -15,6 +15,8 @@
     <!-- TODO: title -->
     <title></title>
 
+    <!-- TODO: Import in production -->
+    <link rel="stylesheet" href="node_modules/normalize.css/normalize.css" />
     <link rel="stylesheet" href="src/assets/style/css/base.css" />
     <link rel="stylesheet" href="src/assets/style/css/chart.css" />
 
@@ -30,27 +32,39 @@
 
   <body>
     <div class="panel">
-      <div id="year"></div>
+      <div class="overview">
+        <h1>Newcomer Parties</h1>
 
-      <div class="form-group">
-        <label for="select-country">Country:</label>
-        <input id="select-country" name="country" list="countries" />
-        <datalist id="countries"> </datalist>
+        <div class="form-group">
+          in
+          <!-- <label for="select-country">Country:</label> -->
+          <input id="select-country" name="country" list="countries" />
+          <datalist id="countries"> </datalist>
+        </div>
+
+        <div>
+          winning at leat
+          <div class="form-group slider">
+            <input
+              type="range"
+              id="input-vote-share"
+              name="voteShare"
+              min="0"
+              max="0.5"
+              step="0.01"
+              value="0.05"
+            />
+            <label id="input-vote-share-label" for="input-vote-share"></label>
+          </div>
+        </div>
+
+        <div>in an election after <span id="year"></span></div>
+      </div>
+      <div class="party-list">
+        To do
       </div>
     </div>
     <main>
-      <div class="form-group slider">
-        <input
-          type="range"
-          id="input-vote-share"
-          name="voteShare"
-          min="0"
-          max="0.5"
-          step="0.01"
-          value="0.05"
-        />
-        <label id="input-vote-share-label" for="input-vote-share"></label>
-      </div>
       <div id="chart-wrapper">
         <div id="main-chart" data-src="data/parlgov2018.csv"></div>
       </div>
