@@ -6,9 +6,9 @@ class MainChart {
       height: 650,
       margin: {
         top: 40,
-        right: 50,
+        right: 20,
         bottom: 40,
-        left: 50,
+        left: 20,
       },
     };
 
@@ -32,14 +32,12 @@ class MainChart {
     };
 
     this.brush = {
-      width: 25,
-      xOffset: 50,
-      initial: [new Date(1980, 0, 1), new Date(2020, 0, 1)],
-      max: new Date(2017, 0, 1),
+      initialDates: [new Date(1980, 0, 1), new Date(2020, 0, 1)],
+      maxDate: new Date(2017, 0, 1),
     };
 
     this.state = {
-      year: this.brush.initial[0],
+      year: this.brush.initialDates[0],
       minVoteShare: null,
     };
 
@@ -124,7 +122,8 @@ class MainChart {
       .scaleBand()
       .domain(this.data.families)
       .range([margin.left, width - margin.right])
-      .padding(1);
+      .paddingInner(1)
+      .paddingOuter(0.5);
 
     const dates = this.data.raw.map((d) => d.electionDate).sort(d3.ascending);
     const y = d3
@@ -161,33 +160,25 @@ class MainChart {
       .attr("alignment-baseline", "hanging")
       .text((familyId) => this.data.mappings.family.get(familyId).familyName);
 
-    const ticks = y.ticks();
-    const tickSpacing = y(ticks[1]) - y(ticks[0]);
-    this.svg.g
-      .append("g")
-      .attr("class", "axis y-axis")
-      .attr("transform", `translate(0, ${tickSpacing / 2})`)
-      .selectAll(".time-label")
-      .data(ticks.slice(0, -1))
-      .join("text")
-      .attr("class", "time-label")
-      .attr("x", xOffset)
-      .attr("y", (d) => y(d) + 6) // FIXME: magic value; not vertically centered
-      .text((d) => this.time.formatDecade(d));
-
     this.svg.g
       .append("g")
       .attr("class", "grid grid-y")
       .selectAll(".grid-line")
-      .data(ticks.slice(1, -1))
+      .data(y.ticks().slice(1, -1))
       .join("line")
       .attr("class", "grid-line")
-      .attr("x1", 0)
-      .attr("x2", width)
+      .attr("x1", margin.left)
+      .attr("x2", width - margin.right)
       .attr("y1", (d) => y(d))
       .attr("y2", (d) => y(d))
       .attr("stroke-width", 2)
       .attr("stroke", "whitesmoke");
+
+    this.svg.g
+      .append("g")
+      .attr("class", "axis axis-y")
+      .attr("transform", `translate(${margin.left})`)
+      .call(d3.axisLeft(y).tickValues(y.ticks().slice(1, -1)));
   }
 
   computeBeeswarmPositions() {
@@ -305,9 +296,9 @@ class MainChart {
   }
 
   addBrush() {
-    const { height, margin } = this.svg;
+    const { width, height, margin } = this.svg;
     const { y } = this.scales;
-    const { xOffset, width, initial, max } = this.brush;
+    const { initialDates, maxDate } = this.brush;
 
     function brushed(opacity) {
       const selection = d3.event.selection;
@@ -318,36 +309,47 @@ class MainChart {
       );
     }
 
-    function brushened(year, initial) {
+    function brushened(year, initialDates) {
       if (!d3.event.sourceEvent) return;
       d3.select(".brush")
         .transition()
-        .call(brush.move, [year, initial[1]].map(y));
+        .call(brush.move, [year, initialDates[1]].map(y));
     }
 
-    function getYear(y, initial) {
+    function getYear(y, initialDates) {
       const sel = d3.event.selection;
-      return sel ? d3.timeYear.round(y.invert(sel[0])) : initial[1];
+      return sel ? d3.timeYear.round(y.invert(sel[0])) : initialDates[1];
+    }
+
+    function adjustHandleHeight(svg) {
+      svg
+        .select(".brush .handle--n")
+        .attr("height", 1)
+        .attr("transform", "translate(0, 3)"); // TODO: Magic value
     }
 
     const brush = d3
       .brushY()
       .extent([
-        [xOffset, margin.top],
-        [xOffset + width, height - margin.bottom],
+        [margin.left, margin.top],
+        [width - margin.right, height - margin.bottom],
       ])
-      .on("start", () => brushed(this.parties.transparent))
+      .on("start", () => {
+        brushed(this.parties.transparent);
+        adjustHandleHeight(this.svg.g);
+      })
       .on("brush", () => {
-        const year = getYear(y, initial);
+        const year = getYear(y, initialDates);
         if (year) this.updateState({ year });
         brushed(this.parties.transparent);
+        adjustHandleHeight(this.svg.g);
       })
       .on("end", () => {
-        let year = getYear(y, initial);
+        let year = getYear(y, initialDates);
         if (year) {
-          year = d3.min([year, max]);
+          year = d3.min([year, maxDate]);
           this.updateState({ year });
-          brushened(year, initial);
+          brushened(year, initialDates);
         }
       });
 
@@ -355,11 +357,10 @@ class MainChart {
       .append("g")
       .attr("class", "brush")
       .call(brush)
-      .call(brush.move, initial.map(y));
+      .call(brush.move, initialDates.map(y));
 
     this.svg.g.select(".overlay").remove();
-    this.svg.g.select(".selection").style("pointer-events", "none");
-    this.svg.g.select(".handle--s").style("pointer-events", "none");
+    adjustHandleHeight(this.svg.g);
   }
 
   updateState({ year, minVoteShare } = {}) {

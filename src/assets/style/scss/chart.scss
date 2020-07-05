@@ -1,1 +1,23 @@
 @import "global";
+
+.brush {
+  .selection {
+    stroke: transparent;
+    fill: transparent;
+    pointer-events: none;
+  }
+
+  .handle--s {
+    display: none;
+  }
+
+  .handle--n {
+    fill: currentColor;
+  }
+}
+
+.axis-y {
+  .domain {
+    display: none;
+  }
+}

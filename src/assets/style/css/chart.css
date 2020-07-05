@@ -1,0 +1,13 @@
+.brush .selection {
+  stroke: transparent;
+  fill: transparent;
+  pointer-events: none; }
+
+.brush .handle--s {
+  display: none; }
+
+.brush .handle--n {
+  fill: currentColor; }
+
+.axis-y .domain {
+  display: none; }
