@@ -37,9 +37,5 @@ main {
     width: 90%;
     max-width: 1200px; }
 
-.slider {
-  position: absolute;
-  margin: 1rem; }
-
 .form-group input {
   vertical-align: middle; }
