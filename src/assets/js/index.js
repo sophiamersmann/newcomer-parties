@@ -8,8 +8,10 @@ $(document).ready(() => {
   renderMinVoteShare = renderMinVoteShare.bind(inputVoteShare);
   renderMinVoteShare();
 
-  const mainChart = new MainChart("#main-chart");
-  mainChart.init({ minVoteShare, country }).then(() => {
+  (async function () {
+    const mainChart = new MainChart("#main-chart");
+    await mainChart.init({ minVoteShare, country });
+
     renderCountries(mainChart.data.countries);
 
     inputVoteShare.on("input", () => {
@@ -28,7 +30,7 @@ $(document).ready(() => {
         }
       }
     });
-  });
+  })();
 });
 
 function validateCountry(country, countries) {
