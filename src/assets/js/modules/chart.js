@@ -295,11 +295,17 @@ class MainChart {
             .attr("stroke-width", 0)
             .attr("fill", "url(#radial-gradient)")
             .attr("opacity", ({ data: d }) =>
-              d.country === this.state.country ? 1 : 0
+              d.country === this.state.country &&
+              d.electionDate >= this.state.year
+                ? 1
+                : 0
             ),
         (update) =>
           update.attr("opacity", ({ data: d }) =>
-            d.country === this.state.country ? 1 : 0
+            d.country === this.state.country &&
+            d.electionDate >= this.state.year
+              ? 1
+              : 0
           ),
         (exit) => exit.remove()
       );
@@ -424,6 +430,7 @@ class MainChart {
       this.state.year = year;
       this.templates.year.view = { year: year.getFullYear() };
       renderTemplate(this.templates.year);
+      this.drawBees();
     }
 
     if (minVoteShare != null && minVoteShare !== this.state.minVoteShare) {
