@@ -57,13 +57,10 @@ class MainChart {
   }
 
   async init({ minVoteShare = 0.05, country = "" } = {}) {
-    // TODO: should the state be manipulated from here?
-    this.state.minVoteShare = minVoteShare;
-    this.state.country = country;
-
     const filename = d3.select(this.svg.selector).attr("data-src");
     return d3.csv(filename, MainChart.loadDatum).then((data) => {
       this.prepareData(data);
+      this.updateState({ minVoteShare, country, action: false });
       this.draw();
       this.renderTemplates();
     });
@@ -425,23 +422,23 @@ class MainChart {
     adjustHandleHeight(this.svg.g);
   }
 
-  updateState({ year, minVoteShare, country } = {}) {
+  updateState({ year, minVoteShare, country, action = true } = {}) {
     if (year != null && year !== this.state.year) {
       this.state.year = year;
       this.templates.year.view = { year: year.getFullYear() };
-      renderTemplate(this.templates.year);
-      this.drawBees();
+
+      if (action) renderTemplate(this.templates.year);
     }
 
     if (minVoteShare != null && minVoteShare !== this.state.minVoteShare) {
       this.state.minVoteShare = minVoteShare;
-      this.drawBees();
     }
 
     if (country != null && country !== this.state.country) {
       this.state.country = country;
-      this.drawBees();
     }
+
+    if (action) this.drawBees();
   }
 
   renderTemplates() {
