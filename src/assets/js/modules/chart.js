@@ -40,6 +40,7 @@ class MainChart {
       year: this.brush.initialDates[0],
       minVoteShare: null,
       country: null,
+      parties: null,
     };
 
     this.templates = {
@@ -437,6 +438,13 @@ class MainChart {
     if (country != null && country !== this.state.country) {
       this.state.country = country;
     }
+
+    this.state.parties = this.data.raw.filter(
+      (d) =>
+        d.electionDate >= this.state.year &&
+        d.share >= this.state.minVoteShare * 100 &&
+        (this.state.country ? d.country === this.state.country : true)
+    );
 
     if (action) this.drawBees();
   }
