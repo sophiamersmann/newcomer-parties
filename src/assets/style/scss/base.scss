@@ -30,11 +30,11 @@ main {
   padding: $spacing / 2;
 
   .overview {
-    background-color: lightpink;
+    background-color: aliceblue;
   }
 
-  .party-list {
-    background-color: lightseagreen;
+  #party-list {
+    background-color: lavender;
     flex: 1 0 auto;
   }
 }

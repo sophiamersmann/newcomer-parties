@@ -22,9 +22,9 @@ main {
   flex-direction: column;
   padding: 1rem; }
   .panel .overview {
-    background-color: lightpink; }
-  .panel .party-list {
-    background-color: lightseagreen;
+    background-color: aliceblue; }
+  .panel #party-list {
+    background-color: lavender;
     flex: 1 0 auto; }
 
 #chart-wrapper {

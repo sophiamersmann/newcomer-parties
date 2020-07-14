@@ -49,6 +49,11 @@ class MainChart {
         target: "#year",
         view: { year: this.state.year.getFullYear() },
       },
+      parties: {
+        template: "parties.mustache",
+        target: "#party-list",
+        view: { parties: null },
+      }
     };
 
     this.time = {
@@ -445,12 +450,17 @@ class MainChart {
         d.share >= this.state.minVoteShare * 100 &&
         (this.state.country ? d.country === this.state.country : true)
     );
-
-    if (action) this.drawBees();
+    this.templates.parties.view = { parties: this.state.parties };
+    
+    if (action) {
+      renderTemplate(this.templates.parties);
+      this.drawBees();
+    }
   }
 
   renderTemplates() {
     renderTemplate(this.templates.year);
+    renderTemplate(this.templates.parties);
   }
 
   static loadDatum(d) {

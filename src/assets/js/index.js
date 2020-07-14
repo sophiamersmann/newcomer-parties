@@ -50,3 +50,11 @@ function renderCountries(countries) {
     view: { countries },
   });
 }
+
+function renderParties(parties) {
+  renderTemplate({
+    template: "parties.mustache",
+    target: "#party-list",
+    view: { parties },
+  });
+}
