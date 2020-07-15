@@ -185,7 +185,7 @@ class MainChart {
     const { x, y } = this.scales;
     const { xOffset, yOffset, yOffsetPlus } = this.labels;
 
-    this.svg.g
+    this.svg.bg
       .append("g")
       .attr("class", "axis x-axis")
       .selectAll(".family-label")
@@ -200,7 +200,7 @@ class MainChart {
       .attr("alignment-baseline", "hanging")
       .text((familyId) => this.data.mappings.family.get(familyId).familyName);
 
-    this.svg.g
+    this.svg.bg
       .append("g")
       .attr("class", "grid grid-y")
       .selectAll(".grid-line")
@@ -214,7 +214,7 @@ class MainChart {
       .attr("stroke-width", 2)
       .attr("stroke", "whitesmoke");
 
-    this.svg.g
+    this.svg.bg
       .append("g")
       .attr("class", "axis axis-y")
       .attr("transform", `translate(${margin.left})`)
