@@ -27,6 +27,13 @@ main {
     background-color: lavender;
     flex: 1 0 auto; }
 
+.party-list-item {
+  display: flex; }
+  .party-list-item .party-trend svg {
+    overflow: visible; }
+  .party-list-item .party-info {
+    margin-left: 0.5rem; }
+
 #chart-wrapper {
   height: 100vh;
   display: flex;

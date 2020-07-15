@@ -1,3 +1,12 @@
 {{ #parties }}
-<div>{{ party }}</div>
+<div class="party-list-item">
+  <div class="party-trend">
+    <svg width="34" height="16" viewBox="0 0 40 16">
+      <path d="M 0 8 L 34 8" transform="rotate({{ trendAngle }}, 17, 8)" stroke-width="4" stroke="black"></path>
+    </svg>
+  </div>
+  <div class="party-info">
+    {{ party }} ({{ partyId }})
+  </div>
+</div>
 {{ /parties }}

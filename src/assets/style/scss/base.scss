@@ -39,6 +39,18 @@ main {
   }
 }
 
+.party-list-item {
+  display: flex;
+
+  .party-trend svg {
+    overflow: visible;
+  }
+
+  .party-info {
+    margin-left: $spacing / 4;
+  }
+}
+
 #chart-wrapper {
   height: 100vh;
   display: flex;

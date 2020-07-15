@@ -53,7 +53,7 @@ class MainChart {
         template: "parties.mustache",
         target: "#party-list",
         view: { parties: null },
-      }
+      },
     };
 
     this.time = {
@@ -73,8 +73,18 @@ class MainChart {
   }
 
   prepareData(data) {
+    const maxDiff = d3.max(
+      d3.extent(data, (d) => d.currentShare - d.share).map(Math.abs)
+    );
+    const angleScale = d3
+      .scaleLinear()
+      .domain([maxDiff, -maxDiff])
+      .range([-60, 60]);
+
     const raw = data.map((d) => {
       d.isAlive = d.currentShare > 0;
+      d.trend = d.currentShare - d.share;
+      d.trendAngle = angleScale(d.trend);
       return d;
     });
 
@@ -450,8 +460,12 @@ class MainChart {
         d.share >= this.state.minVoteShare * 100 &&
         (this.state.country ? d.country === this.state.country : true)
     );
-    this.templates.parties.view = { parties: this.state.parties };
-    
+    this.templates.parties.view = {
+      parties: this.state.parties.sort((a, b) =>
+        d3.descending(a.trend, b.trend)
+      ),
+    };
+
     if (action) {
       renderTemplate(this.templates.parties);
       this.drawBees();
