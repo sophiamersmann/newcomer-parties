@@ -25,17 +25,17 @@ main {
 .panel {
   border-right: 1px solid black;
   flex: 0 1 25vw;
-  display: flex;
-  flex-direction: column;
   padding: $spacing / 2;
 
   .overview {
     background-color: aliceblue;
+    height: 200px;
   }
 
   #party-list {
     background-color: lavender;
-    flex: 1 0 auto;
+    height: calc(100% - 200px);
+    overflow: auto;
   }
 }
 
