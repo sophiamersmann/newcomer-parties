@@ -62,7 +62,7 @@ class MainChart {
     };
   }
 
-  async init({ minVoteShare = 0.05, country = "" } = {}) {
+  async init({ minVoteShare = 0.05, country = "Europe" } = {}) {
     const filename = d3.select(this.svg.selector).attr("data-src");
     return d3.csv(filename, MainChart.loadDatum).then((data) => {
       this.prepareData(data);
