@@ -452,8 +452,8 @@ class MainChart {
               .attr("dominant-baseline", "middle")
               .attr("stroke", "black")
               .attr("cursor", "ns-resize")
-              .text(this.state.year.getFullYear()),
-          (update) => update.text(this.state.year.getFullYear())
+              .text(this.time.formatYear(this.state.year)),
+          (update) => update.text(this.time.formatYear(this.state.year))
         )
         .attr("x", margin.left - 55 / 2)
         .attr("y", selection === null ? null : selection[1]);
