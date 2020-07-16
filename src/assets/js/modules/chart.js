@@ -27,8 +27,8 @@ class MainChart {
 
     this.labels = {
       xOffset: 5,
-      yOffset: 5,
-      yOffsetPlus: 20,
+      yOffset: 10,
+      yOffsetPlus: 35,
     };
 
     this.brush = {
@@ -161,8 +161,9 @@ class MainChart {
   }
 
   createDefs() {
-    const radialGradient = this.svg.g
-      .append("defs")
+    const defs = this.svg.g.append("defs");
+
+    const radialGradient = defs
       .append("radialGradient")
       .attr("id", "radial-gradient");
 
@@ -187,11 +188,9 @@ class MainChart {
       .paddingInner(1)
       .paddingOuter(0.5);
 
-    const dates = this.data.raw.map((d) => d.electionDate).sort(d3.ascending);
     const y = d3
       .scaleTime()
-      .domain([dates[0], dates[dates.length - 1]])
-      .nice()
+      .domain([new Date(1940, 0, 1), new Date(2025, 0, 1)])
       .range([margin.top, height - margin.bottom]);
 
     const r = d3
@@ -207,6 +206,37 @@ class MainChart {
     const { x, y } = this.scales;
     const { xOffset, yOffset, yOffsetPlus } = this.labels;
 
+    // TODO: Random colors for now
+    const color = d3
+      .scaleOrdinal()
+      .domain(this.data.families)
+      .range(d3.schemeTableau10);
+    this.parties.color = color;
+
+    this.svg.bg
+      .append("g")
+      .attr("class", "axis x-axis x-axis-bg")
+      .selectAll(".family-label-bg")
+      .data(
+        this.data.families.map((familyId) => ({
+          familyId,
+          l: this.data.mappings.family.get(familyId).familyName.length,
+        }))
+      )
+      .join("rect")
+      .attr("x", ({ familyId, l }) => x(familyId) - 4.5 * l)
+      .attr(
+        "y",
+        (_, i) => margin.top + yOffset - 18 - (i % 2 === 0 ? 0 : yOffsetPlus)
+      )
+      .attr("width", ({ l }) => 9 * l)
+      .attr("height", 25)
+      .attr("rx", 15)
+      .attr("ry", 15)
+      .attr("stroke", ({ familyId }) => color(familyId))
+      .attr("stroke-width", 2)
+      .attr("fill", "whitesmoke");
+
     this.svg.bg
       .append("g")
       .attr("class", "axis x-axis x-axis-labels")
@@ -215,8 +245,9 @@ class MainChart {
       .join("text")
       .attr("class", "family-label")
       .attr("x", (familyId) => x(familyId))
-      .attr("y", (_, i) =>
-        i % 2 == 0 ? margin.top - yOffset : margin.top - yOffset - yOffsetPlus
+      .attr(
+        "y",
+        (_, i) => margin.top + yOffset - (i % 2 === 0 ? 0 : yOffsetPlus)
       )
       .attr("text-anchor", "middle")
       .text((familyId) => this.data.mappings.family.get(familyId).familyName);
@@ -278,13 +309,7 @@ class MainChart {
   setUpBeeswarms() {
     const { x } = this.scales;
     const { height, margin } = this.svg;
-
-    // TODO: Random colors for now
-    const color = d3
-      .scaleOrdinal()
-      .domain(this.data.families)
-      .range(d3.schemeTableau10);
-    this.parties.color = color;
+    const { color } = this.parties;
 
     const beeswarmPair = this.svg.g
       .selectAll(".beeswarm-pair")
@@ -301,11 +326,16 @@ class MainChart {
       .attr("class", "beeswarm-separator")
       .attr("x1", (family) => x(family))
       .attr("x2", (family) => x(family))
-      .attr("y1", (_, i) =>
-        i % 2 == 0 ? margin.top : margin.top - this.labels.yOffsetPlus
+      .attr(
+        "y1",
+        (_, i) =>
+          margin.top +
+          this.labels.yOffset +
+          7 -
+          (i % 2 === 0 ? 0 : this.labels.yOffsetPlus)
       )
       .attr("y2", height - margin.bottom)
-      .attr("stroke-width", 0.2)
+      .attr("stroke-width", 1.5)
       .attr("stroke", (family) => color(family));
 
     this.svg.bg
