@@ -6,9 +6,9 @@ class MainChart {
       height: 650,
       margin: {
         top: 40,
-        right: 25,
+        right: 30,
         bottom: 40,
-        left: 25,
+        left: 30,
       },
     };
 
@@ -405,6 +405,24 @@ class MainChart {
     const { y } = this.scales;
     const { initialDates, maxDate } = this.brush;
 
+    const brushHandle = (g, selection) =>
+      g
+        .selectAll(".handle--custom")
+        .data([{ type: "c" }])
+        .join((enter) =>
+          enter
+            .append("rect")
+            .attr("class", "handle handle--custom")
+            .attr("stroke", "black")
+            .attr("stroke-width", 1)
+            .attr("cursor", "ns-resize")
+        )
+        .attr("display", selection === null ? "none" : null)
+        .attr("width", 55)
+        .attr("height", 30)
+        .attr("x", margin.left - 55)
+        .attr("y", selection === null ? null : selection[0] - 30 / 2);
+
     function brushed(opacity) {
       const selection = d3.event.selection;
       if (!selection) return;
@@ -412,6 +430,7 @@ class MainChart {
       d3.selectAll(".party").attr("opacity", (_, i, n) =>
         y0 <= +d3.select(n[i]).attr("cy") ? 1 : opacity
       );
+      d3.select(".brush").call(brushHandle, selection);
     }
 
     function brushened(year, initialDates) {
@@ -419,6 +438,7 @@ class MainChart {
       d3.select(".brush")
         .transition()
         .call(brush.move, [year, initialDates[1]].map(y));
+      d3.select(".brush").call(brushHandle, selection);
     }
 
     function getYear(y, initialDates) {
@@ -436,7 +456,7 @@ class MainChart {
     const brush = d3
       .brushY()
       .extent([
-        [margin.left, margin.top],
+        [margin.left + 3, margin.top], // TODO: Magiv value
         [width - margin.right, height - margin.bottom],
       ])
       .on("start", () => {
