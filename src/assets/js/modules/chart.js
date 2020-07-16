@@ -438,7 +438,6 @@ class MainChart {
       d3.select(".brush")
         .transition()
         .call(brush.move, [year, initialDates[1]].map(y));
-      d3.select(".brush").call(brushHandle, selection);
     }
 
     function getYear(y, initialDates) {
@@ -472,7 +471,6 @@ class MainChart {
       .on("end", () => {
         let year = getYear(y, initialDates);
         if (year) {
-          year = d3.min([year, maxDate]);
           this.updateState({ year });
           brushened(year, initialDates);
         }
