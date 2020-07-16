@@ -141,7 +141,8 @@ class MainChart {
     this.drawAxes();
 
     this.computeBeeswarmPositions();
-    this.drawBeeswarms();
+    this.setUpBeeswarms();
+    this.drawBees();
 
     this.addBrush();
   }
@@ -264,7 +265,7 @@ class MainChart {
       }));
   }
 
-  drawBeeswarms() {
+  setUpBeeswarms() {
     const { x } = this.scales;
     const { height, margin } = this.svg;
 
@@ -302,8 +303,6 @@ class MainChart {
       .data(this.data.beeswarms)
       .join("g")
       .attr("class", "beeswarm-pair");
-
-    this.drawBees();
   }
 
   drawBees() {
