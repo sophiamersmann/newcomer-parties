@@ -423,14 +423,14 @@ class MainChart {
     const { y } = this.scales;
     const { initialDates, maxDate } = this.brush;
 
-    const brushHandle = (g, selection) =>
-      g
-        .selectAll(".handle--custom")
-        .data([{ type: "c" }])
+    const brushHandle = (g, selection) => {
+      g.selectAll(".handle--custom")
+        .data([{ type: "s" }])
         .join((enter) =>
           enter
             .append("rect")
             .attr("class", "handle handle--custom")
+            .attr("fill", "white")
             .attr("stroke", "black")
             .attr("stroke-width", 1)
             .attr("cursor", "ns-resize")
@@ -440,6 +440,24 @@ class MainChart {
         .attr("height", 30)
         .attr("x", margin.left - 55)
         .attr("y", selection === null ? null : selection[1] - 30 / 2);
+
+      g.selectAll(".handle--custom-label")
+        .data([{ type: "s" }])
+        .join(
+          (enter) =>
+            enter
+              .append("text")
+              .attr("class", "handle--custom-label")
+              .attr("text-anchor", "middle")
+              .attr("dominant-baseline", "middle")
+              .attr("stroke", "black")
+              .attr("cursor", "ns-resize")
+              .text(this.state.year.getFullYear()),
+          (update) => update.text(this.state.year.getFullYear())
+        )
+        .attr("x", margin.left - 55 / 2)
+        .attr("y", selection === null ? null : selection[1]);
+    };
 
     function brushed(opacity) {
       const selection = d3.event.selection;
