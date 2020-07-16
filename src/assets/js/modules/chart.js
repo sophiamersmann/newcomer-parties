@@ -88,6 +88,27 @@ class MainChart {
       return d;
     });
 
+    const dates = raw.map((d) => d.electionDate).sort(d3.ascending);
+    const dateRange = d3.range(
+      dates[0].getFullYear(),
+      dates[dates.length - 1].getFullYear() + 1
+    );
+    let counts = d3
+      .nest()
+      .key((d) => d.country)
+      .key((d) => d.electionDate.getFullYear())
+      .sortKeys(d3.ascending)
+      .rollup((v) => v.length)
+      .entries(data)
+      .map(({ key: country, values: vals }) => {
+        const mapped = d3.map(vals, (d) => d.key);
+        const values = dateRange.map((date) =>
+          mapped.has(date) ? mapped.get(date).value : 0
+        );
+        return { country, values };
+      });
+    counts = d3.map(counts, (d) => d.country);
+
     const families = [
       "right",
       "lib",
@@ -109,7 +130,7 @@ class MainChart {
 
     const mappings = MainChart.createMappings(data);
 
-    this.data = { raw, families, countries, mappings };
+    this.data = { raw, counts, families, countries, mappings };
   }
 
   draw() {
