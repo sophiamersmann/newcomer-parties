@@ -456,7 +456,7 @@ class MainChart {
         .attr("width", 55)
         .attr("height", 30)
         .attr("x", margin.left - 55)
-        .attr("y", selection === null ? null : selection[1] - 30 / 2);
+        .attr("y", selection === null ? null : selection[1] - 30 / 2 - 2);  // TODO: Magic value
 
       g.selectAll(".handle--custom-label")
         .data([{ type: "s" }])
