@@ -6,9 +6,9 @@ class MainChart {
       height: 650,
       margin: {
         top: 40,
-        right: 20,
+        right: 25,
         bottom: 40,
-        left: 20,
+        left: 25,
       },
     };
 
@@ -209,7 +209,7 @@ class MainChart {
 
     this.svg.bg
       .append("g")
-      .attr("class", "axis x-axis")
+      .attr("class", "axis x-axis x-axis-labels")
       .selectAll(".family-label")
       .data(this.data.families)
       .join("text")
@@ -219,28 +219,38 @@ class MainChart {
         i % 2 == 0 ? margin.top - yOffset : margin.top - yOffset - yOffsetPlus
       )
       .attr("text-anchor", "middle")
-      .attr("alignment-baseline", "hanging")
       .text((familyId) => this.data.mappings.family.get(familyId).familyName);
 
-    this.svg.bg
-      .append("g")
-      .attr("class", "grid grid-y")
-      .selectAll(".grid-line")
-      .data(y.ticks().slice(1, -1))
-      .join("line")
-      .attr("class", "grid-line")
-      .attr("x1", margin.left)
-      .attr("x2", width - margin.right)
-      .attr("y1", (d) => y(d))
-      .attr("y2", (d) => y(d))
-      .attr("stroke-width", 2)
-      .attr("stroke", "whitesmoke");
+    const yTicks = y.ticks();
+    const yTickLabelDiff = y(yTicks[1]) - y(yTicks[0]);
 
     this.svg.bg
       .append("g")
-      .attr("class", "axis axis-y")
-      .attr("transform", `translate(${margin.left})`)
-      .call(d3.axisLeft(y).tickValues(y.ticks().slice(1, -1)));
+      .attr("class", "grid y-grid y-grid-area")
+      .selectAll(".y-grid-area-rect")
+      .data(yTicks.slice(1, -1).filter((d, i) => i % 2 === 0))
+      .join("rect")
+      .attr("class", "y-grid-area-rect")
+      .attr("x", margin.left)
+      .attr("y", (d) => y(d))
+      .attr("width", width - margin.left - margin.right)
+      .attr("height", yTickLabelDiff)
+      .attr("rx", 5)
+      .attr("ry", 5)
+      .attr("fill", "whitesmoke");
+
+    this.svg.bg
+      .append("g")
+      .attr("class", "axis y-axis y-axis-labels")
+      .selectAll(".year-label")
+      .data(yTicks.slice(1, -2))
+      .join("text")
+      .attr("class", "year-label")
+      .attr("x", margin.left - 10)
+      .attr("y", (d) => y(d) + yTickLabelDiff / 2)
+      .attr("text-anchor", "end")
+      .attr("dominant-baseline", "middle")
+      .text((d) => this.time.formatDecade(d));
   }
 
   computeBeeswarmPositions() {
@@ -478,7 +488,9 @@ class MainChart {
       (d) =>
         d.electionDate >= this.state.year &&
         d.share >= this.state.minVoteShare * 100 &&
-        (this.state.country === "Europe" ? true : d.country === this.state.country)
+        (this.state.country === "Europe"
+          ? true
+          : d.country === this.state.country)
     );
     this.templates.parties.view = {
       parties: this.state.parties.sort((a, b) =>
