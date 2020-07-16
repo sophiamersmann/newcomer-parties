@@ -3,8 +3,8 @@
   fill: transparent;
   pointer-events: none; }
 
-.brush .handle--s {
+.brush .handle--n {
   display: none; }
 
-.brush .handle--n {
+.brush .handle--s {
   fill: currentColor; }

@@ -7,7 +7,7 @@ class MainChart {
       margin: {
         top: 40,
         right: 30,
-        bottom: 40,
+        bottom: 60,
         left: 30,
       },
     };
@@ -27,17 +27,15 @@ class MainChart {
 
     this.labels = {
       xOffset: 5,
-      yOffset: 10,
-      yOffsetPlus: 35,
+      yOffset: 35,
     };
 
     this.brush = {
-      initialDates: [new Date(1980, 0, 1), new Date(2020, 0, 1)],
-      maxDate: new Date(2017, 0, 1),
+      initialDates: [new Date(2020, 0, 1), new Date(1980, 0, 1)],
     };
 
     this.state = {
-      year: this.brush.initialDates[0],
+      year: this.brush.initialDates[1],
       minVoteShare: null,
       country: null,
       parties: null,
@@ -190,8 +188,8 @@ class MainChart {
 
     const y = d3
       .scaleTime()
-      .domain([new Date(1940, 0, 1), new Date(2025, 0, 1)])
-      .range([margin.top, height - margin.bottom]);
+      .domain([new Date(1945, 0, 1), new Date(2025, 0, 1)])
+      .range([height - margin.bottom, margin.top]);
 
     const r = d3
       .scaleSqrt()
@@ -204,7 +202,7 @@ class MainChart {
   drawAxes() {
     const { width, margin } = this.svg;
     const { x, y } = this.scales;
-    const { xOffset, yOffset, yOffsetPlus } = this.labels;
+    const { yOffset } = this.labels;
 
     // TODO: Random colors for now
     const color = d3
@@ -225,10 +223,7 @@ class MainChart {
       )
       .join("rect")
       .attr("x", ({ familyId, l }) => x(familyId) - 4.5 * l)
-      .attr(
-        "y",
-        (_, i) => margin.top + yOffset - 18 - (i % 2 === 0 ? 0 : yOffsetPlus)
-      )
+      .attr("y", (_, i) => margin.top - 18 - (i % 2 === 0 ? 0 : yOffset))
       .attr("width", ({ l }) => 9 * l)
       .attr("height", 25)
       .attr("rx", 15)
@@ -245,21 +240,18 @@ class MainChart {
       .join("text")
       .attr("class", "family-label")
       .attr("x", (familyId) => x(familyId))
-      .attr(
-        "y",
-        (_, i) => margin.top + yOffset - (i % 2 === 0 ? 0 : yOffsetPlus)
-      )
+      .attr("y", (_, i) => margin.top - (i % 2 === 0 ? 0 : yOffset))
       .attr("text-anchor", "middle")
       .text((familyId) => this.data.mappings.family.get(familyId).familyName);
 
     const yTicks = y.ticks();
-    const yTickLabelDiff = y(yTicks[1]) - y(yTicks[0]);
+    const yTickLabelDiff = y(yTicks[0]) - y(yTicks[1]);
 
     this.svg.bg
       .append("g")
       .attr("class", "grid y-grid y-grid-area")
       .selectAll(".y-grid-area-rect")
-      .data(yTicks.slice(1, -1).filter((d, i) => i % 2 === 0))
+      .data(yTicks.filter((_, i) => i % 2 === 1))
       .join("rect")
       .attr("class", "y-grid-area-rect")
       .attr("x", margin.left)
@@ -274,11 +266,11 @@ class MainChart {
       .append("g")
       .attr("class", "axis y-axis y-axis-labels")
       .selectAll(".year-label")
-      .data(yTicks.slice(1, -2))
+      .data(yTicks.slice(0, -1))
       .join("text")
       .attr("class", "year-label")
       .attr("x", margin.left - 10)
-      .attr("y", (d) => y(d) + yTickLabelDiff / 2)
+      .attr("y", (d) => y(d) - yTickLabelDiff / 2)
       .attr("text-anchor", "end")
       .attr("dominant-baseline", "middle")
       .text((d) => this.time.formatDecade(d));
@@ -328,11 +320,7 @@ class MainChart {
       .attr("x2", (family) => x(family))
       .attr(
         "y1",
-        (_, i) =>
-          margin.top +
-          this.labels.yOffset +
-          7 -
-          (i % 2 === 0 ? 0 : this.labels.yOffsetPlus)
+        (_, i) => margin.top + 7 - (i % 2 === 0 ? 0 : this.labels.yOffset)
       )
       .attr("y2", height - margin.bottom)
       .attr("stroke-width", 1.5)
@@ -346,8 +334,8 @@ class MainChart {
   }
 
   drawBees() {
-    const { x, y, r } = this.scales;
-    const { selector, padding, transparent, alive, dead } = this.parties;
+    const { y, r } = this.scales;
+    const { selector, transparent, alive, dead } = this.parties;
 
     this.svg.bg
       .selectAll(".beeswarm-pair")
@@ -411,7 +399,7 @@ class MainChart {
               d.isAlive ? this.parties.color(d.familyId) : "transparent"
             )
             .attr("opacity", (d) =>
-              y(this.state.year) <= d.y ? 1 : transparent
+              y(this.state.year) >= d.y ? 1 : transparent
             )
             .call((enter) =>
               enter
@@ -451,14 +439,14 @@ class MainChart {
         .attr("width", 55)
         .attr("height", 30)
         .attr("x", margin.left - 55)
-        .attr("y", selection === null ? null : selection[0] - 30 / 2);
+        .attr("y", selection === null ? null : selection[1] - 30 / 2);
 
     function brushed(opacity) {
       const selection = d3.event.selection;
       if (!selection) return;
-      const y0 = selection[0];
+      const y1 = selection[1];
       d3.selectAll(".party").attr("opacity", (_, i, n) =>
-        y0 <= +d3.select(n[i]).attr("cy") ? 1 : opacity
+        y1 >= +d3.select(n[i]).attr("cy") ? 1 : opacity
       );
       d3.select(".brush").call(brushHandle, selection);
     }
@@ -467,17 +455,17 @@ class MainChart {
       if (!d3.event.sourceEvent) return;
       d3.select(".brush")
         .transition()
-        .call(brush.move, [year, initialDates[1]].map(y));
+        .call(brush.move, [initialDates[0], year].map(y));
     }
 
     function getYear(y, initialDates) {
       const sel = d3.event.selection;
-      return sel ? d3.timeYear.round(y.invert(sel[0])) : initialDates[1];
+      return sel ? d3.timeYear.round(y.invert(sel[1])) : initialDates[1];
     }
 
     function adjustHandleHeight(svg) {
       svg
-        .select(".brush .handle--n")
+        .select(".brush .handle--s")
         .attr("height", 1)
         .attr("transform", "translate(0, 3)"); // TODO: Magic value
     }
