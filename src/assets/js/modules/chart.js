@@ -126,7 +126,7 @@ class MainChart {
       .map(data, (d) => d.country)
       .keys()
       .sort(d3.ascending);
-    countries.push("");
+    countries.unshift("Europe");
 
     const mappings = MainChart.createMappings(data);
 
@@ -479,7 +479,7 @@ class MainChart {
       (d) =>
         d.electionDate >= this.state.year &&
         d.share >= this.state.minVoteShare * 100 &&
-        (this.state.country ? d.country === this.state.country : true)
+        (this.state.country === "Europe" ? true : d.country === this.state.country)
     );
     this.templates.parties.view = {
       parties: this.state.parties.sort((a, b) =>
