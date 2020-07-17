@@ -247,7 +247,7 @@ class MainChart {
       .attr("height", yTickLabelDiff)
       .attr("rx", 5)
       .attr("ry", 5)
-      .attr("fill", "whitesmoke");
+      .attr("fill", "#f8f9fa");
 
     this.svg.bg
       .append("g")

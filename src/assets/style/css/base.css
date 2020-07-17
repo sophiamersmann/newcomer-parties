@@ -1,6 +1,8 @@
 html {
   height: 100%;
-  box-sizing: border-box; }
+  box-sizing: border-box;
+  color: #212529;
+  background-color: #fff; }
   html *,
   html *:after,
   html *:before {
