@@ -9,7 +9,7 @@ class MainChart {
   constructor(selector) {
     this.svg = {
       selector,
-      width: 920,
+      width: 1080,
       height: 650,
       margin: {
         top: 40,
@@ -147,7 +147,7 @@ class MainChart {
       .append("svg")
       .attr("viewBox", `0 0 ${width} ${height}`)
       .append("g")
-      .attr("transform", `translate(${margin.left},${margin.top})`);
+      .attr("transform", `translate(${margin.left / 2},${margin.top})`);
 
     this.svg.bg = this.svg.g.append("g").attr("class", "background");
   }
@@ -250,7 +250,7 @@ class MainChart {
       .attr("class", "y-grid-area-rect")
       .attr("x", 0)
       .attr("y", (d) => y(d))
-      .attr("width", width)
+      .attr("width", width - margin.right)
       .attr("height", yTickLabelDiff)
       .attr("rx", 5)
       .attr("ry", 5)

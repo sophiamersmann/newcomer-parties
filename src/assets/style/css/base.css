@@ -46,7 +46,6 @@ main {
   align-items: center;
   justify-content: center; }
   #chart-wrapper #main-chart {
-    width: 90%;
     max-width: 1200px; }
 
 .form-group input {
