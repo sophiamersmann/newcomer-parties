@@ -1,3 +1,10 @@
+// TODO: This will be importded from _global.scss
+const colors = {
+  black: "#212529",
+  lightgray: "#f8f9fa",
+  white: "#fff",
+};
+
 class MainChart {
   constructor(selector) {
     this.svg = {
@@ -6,9 +13,9 @@ class MainChart {
       height: 650,
       margin: {
         top: 40,
-        right: 30,
+        right: 60,
         bottom: 60,
-        left: 30,
+        left: 60,
       },
     };
 
@@ -241,13 +248,13 @@ class MainChart {
       .data(yTicks.filter((_, i) => i % 2 === 1))
       .join("rect")
       .attr("class", "y-grid-area-rect")
-      .attr("x", margin.left)
+      .attr("x", 0)
       .attr("y", (d) => y(d))
-      .attr("width", width - margin.left - margin.right)
+      .attr("width", width)
       .attr("height", yTickLabelDiff)
       .attr("rx", 5)
       .attr("ry", 5)
-      .attr("fill", "#f8f9fa");
+      .attr("fill", colors.lightgray);
 
     this.svg.bg
       .append("g")
@@ -425,8 +432,10 @@ class MainChart {
   addBrush() {
     const { width, height, margin } = this.svg;
     const { y } = this.scales;
-    const { initialDates, maxDate } = this.brush;
+    const { initialDates } = this.brush;
 
+    const handleWidth = 60;
+    const handleHeight = 30;
     const brushHandle = (g, selection) => {
       g.selectAll(".handle--custom")
         .data([{ type: "s" }])
@@ -435,15 +444,20 @@ class MainChart {
             .append("rect")
             .attr("class", "handle handle--custom")
             .attr("fill", "white")
-            .attr("stroke", "black")
+            .attr("stroke", colors.black)
             .attr("stroke-width", 1)
             .attr("cursor", "ns-resize")
         )
         .attr("display", selection === null ? "none" : null)
-        .attr("width", 55)
-        .attr("height", 30)
-        .attr("x", margin.left - 55)
-        .attr("y", selection === null ? null : selection[1] - 30 / 2 - 2); // TODO: Magic value
+        .attr("width", handleWidth)
+        .attr("height", handleHeight)
+        .attr("x", 0)
+        .attr(
+          "y",
+          selection === null ? null : selection[1] - handleHeight / 2 - 2
+        ) // TODO: Magic value
+        .attr("rx", 4)
+        .attr("ry", 4);
 
       g.selectAll(".handle--custom-label")
         .data([{ type: "s" }])
@@ -454,12 +468,12 @@ class MainChart {
               .attr("class", "handle--custom-label")
               .attr("text-anchor", "middle")
               .attr("dominant-baseline", "middle")
-              .attr("stroke", "black")
+              .attr("stroke", colors.black)
               .attr("cursor", "ns-resize")
               .text(this.time.formatYear(this.state.year)),
           (update) => update.text(this.time.formatYear(this.state.year))
         )
-        .attr("x", margin.left - 55 / 2)
+        .attr("x", handleWidth / 2)
         .attr("y", selection === null ? null : selection[1]);
     };
 
