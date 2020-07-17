@@ -86,15 +86,12 @@ class MainChart {
       return d;
     });
 
-    const dates = raw.map((d) => d.electionDate).sort(d3.ascending);
-    const dateRange = d3.range(
-      dates[0].getFullYear(),
-      dates[dates.length - 1].getFullYear() + 1
-    );
+    const dates = raw.map((d) => d.electionYear).sort(d3.ascending);
+    const dateRange = d3.range(dates[0], dates[dates.length - 1] + 1);
     let counts = d3
       .nest()
       .key((d) => d.country)
-      .key((d) => d.electionDate.getFullYear())
+      .key((d) => d.electionYear)
       .sortKeys(d3.ascending)
       .rollup((v) => v.length)
       .entries(data)
@@ -588,6 +585,8 @@ class MainChart {
       family = "Other";
     }
 
+    const date = d3.timeParse("%Y-%m-%d")(d.election_date);
+    
     return {
       countryId: +d.country_id,
       country: d.country_name,
@@ -598,7 +597,8 @@ class MainChart {
       partyAbbr: d.party_name_short,
 
       electionId: +d.election_id,
-      electionDate: d3.timeParse("%Y-%m-%d")(d.election_date),
+      electionDate: date,
+      electionYear: date.getFullYear(),
 
       familyId: familyId,
       family: family,
