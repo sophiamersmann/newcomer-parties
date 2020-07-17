@@ -71,18 +71,8 @@ class MainChart {
   }
 
   prepareData(data) {
-    const maxDiff = d3.max(
-      d3.extent(data, (d) => d.currentShare - d.share).map(Math.abs)
-    );
-    const angleScale = d3
-      .scaleLinear()
-      .domain([maxDiff, -maxDiff])
-      .range([-60, 60]);
-
     const raw = data.map((d) => {
       d.isAlive = d.currentShare > 0;
-      d.trend = d.currentShare - d.share;
-      d.trendAngle = angleScale(d.trend);
       return d;
     });
 
@@ -562,10 +552,8 @@ class MainChart {
           : d.country === this.state.country)
     );
     this.templates.parties.view = {
-      parties: this.state.parties.sort((a, b) =>
-        d3.descending(a.trend, b.trend)
-      ),
-    };
+      parties: this.state.parties
+    }
 
     if (action) {
       renderTemplate(this.templates.parties);
