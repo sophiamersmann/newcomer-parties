@@ -68,7 +68,7 @@ main {
 
   .party-year {
     // width of svg + left margin of party name
-    margin-left: 21px;
+    margin-left: 26px;
   }
 }
 
@@ -87,5 +87,26 @@ main {
 .form-group {
   input {
     vertical-align: middle;
+  }
+}
+
+.side-lines {
+  width: 90%;
+  margin: 0 auto;
+  overflow: hidden;
+  text-align: center;
+
+  &:before,
+  &:after {
+    content: "";
+    display: inline-block;
+    width: 50%;
+    margin: 0 0.5em 0 -55%;
+    vertical-align: middle;
+    border-bottom: 1px solid;
+  }
+
+  &:after {
+    margin: 0 -55% 0 0.5em;
   }
 }

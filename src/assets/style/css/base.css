@@ -47,7 +47,7 @@ main {
   margin-left: 5px; }
 
 .party-list-group .party-year {
-  margin-left: 21px; }
+  margin-left: 26px; }
 
 #chart-wrapper {
   height: 100vh;
@@ -60,3 +60,18 @@ main {
 
 .form-group input {
   vertical-align: middle; }
+
+.side-lines {
+  width: 90%;
+  margin: 0 auto;
+  overflow: hidden;
+  text-align: center; }
+  .side-lines:before, .side-lines:after {
+    content: "";
+    display: inline-block;
+    width: 50%;
+    margin: 0 0.5em 0 -55%;
+    vertical-align: middle;
+    border-bottom: 1px solid; }
+  .side-lines:after {
+    margin: 0 -55% 0 0.5em; }
