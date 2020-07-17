@@ -569,7 +569,13 @@ class MainChart {
       .nest()
       .key((d) => d.electionYear - (d.electionYear % 10))
       .sortKeys(d3.descending)
-      .sortValues((a, b) => d3.descending(a.electionDate, b.electionDate))
+      .sortValues(
+        (a, b) =>
+          d3.ascending(
+            this.data.families.indexOf(a.familyId),
+            this.data.families.indexOf(b.familyId)
+          ) || d3.descending(a.currentShare, b.currentShare)
+      )
       .entries(this.state.parties)
       .map(({ key, values }) => ({ decade: key, values }));
     this.templates.parties.view = {
@@ -585,6 +591,16 @@ class MainChart {
   }
 
   injectShareCharts() {
+    const pies = d3
+      .map()
+      .set("left", d3.pie().startAngle(-Math.PI).endAngle(0))
+      .set("right", d3.pie().startAngle(Math.PI).endAngle(0));
+
+    const r = d3
+      .scaleSqrt()
+      .domain(d3.extent(this.data.raw, (d) => d.share))
+      .range([4, 10]);
+
     this.state.parties
       .map((d) => d.values)
       .flat()
@@ -595,17 +611,29 @@ class MainChart {
 
         const svg = svgContainer
           .append("svg")
-          .attr("width", 16)
-          .attr("height", 16)
-          .attr("viewBox", [0, 0, 16, 16]);
+          .attr("width", 20)
+          .attr("height", 20)
+          .attr("viewBox", [0, 0, 20, 20]);
 
-        svg
-          .append("circle")
-          .attr("cx", 6)
-          .attr("cy", 8)
-          .attr("r", 6)
-          .attr("transform", "translate(4, 0)")
-          .attr("fill", this.parties.color(d.familyId));
+        const radius = d3
+          .map()
+          .set("left", r(d.share))
+          .set("right", r(d.currentShare));
+
+        (d.isAlive ? ["left", "right"] : ["left"]).forEach((pos) => {
+          svg
+            .selectAll(`.semi-circle-${pos}`)
+            .data(pies.get(pos)([1]))
+            .join("path")
+            .attr("class", `semi-circle-${pos}`)
+            .attr("transform", `translate(${pos === "left" ? 9 : 10}, 8)`)
+            .attr("d", d3.arc().outerRadius(radius.get(pos)).innerRadius(0))
+            .attr(
+              "fill",
+              d.isAlive ? this.parties.color(d.familyId) : "transparent"
+            )
+            .attr("stroke", d.isAlive ? null : this.parties.color(d.familyId));
+        });
       });
   }
 
