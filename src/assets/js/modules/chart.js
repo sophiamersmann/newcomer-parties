@@ -670,10 +670,10 @@ class MainChart {
       share: +d.vote_share,
       currentShare: +d.most_recent_vote_share,
 
-      posLeftRight: d.left_right,
-      posStateMarket: d.state_market,
-      posLibertyAuthority: d.liberty_authority,
-      posEUAntiPro: d.eu_anti_pro,
+      posLeftRight: +d.left_right,
+      posStateMarket: +d.state_market,
+      posLibertyAuthority: +d.liberty_authority,
+      posEUAntiPro: +d.eu_anti_pro,
     };
   }
 
