@@ -583,9 +583,10 @@ class MainChart {
     };
 
     if (action) {
-      renderTemplate(this.templates.parties).then(() =>
-        this.injectShareCharts()
-      );
+      renderTemplate(this.templates.parties).then(() => {
+        this.injectShareCharts();
+        this.injectPositionCharts();
+      });
       this.drawBees();
     }
   }
@@ -637,9 +638,62 @@ class MainChart {
       });
   }
 
+  injectPositionCharts() {
+    const width = 40;
+    const height = 32;
+    const radius = 4;
+
+    const x = d3
+      .scaleLinear()
+      .domain([0, 10])
+      .range([radius, width - radius]);
+
+    this.state.parties
+      .map((d) => d.values)
+      .flat()
+      .forEach((d) => {
+        const svgContainer = d3.select(
+          `#party-list-item-${d.partyId} .party-position-chart`
+        );
+
+        const svg = svgContainer
+          .append("svg")
+          .attr("width", width)
+          .attr("height", height)
+          .attr("viewBox", [0, 0, width, height]);
+
+        svg
+          .selectAll("line")
+          .data([0, width / 2, width])
+          .join("line")
+          .attr("x1", (d) => d)
+          .attr("y1", 0)
+          .attr("x2", (d) => d)
+          .attr("y2", height)
+          .attr("stroke", "black");
+
+        svg
+          .selectAll("circle")
+          .data([
+            d.posLeftRight,
+            d.posLibertyAuthority,
+            d.posStateMarket,
+            d.posEUAntiPro,
+          ])
+          .join("circle")
+          .attr("cx", (d) => x(d))
+          .attr("cy", (_, i) => radius + i * 2 * radius)
+          .attr("r", radius)
+          .attr("fill", "black");
+      });
+  }
+
   renderTemplates() {
     renderTemplate(this.templates.year);
-    renderTemplate(this.templates.parties).then(() => this.injectShareCharts());
+    renderTemplate(this.templates.parties).then(() => {
+      this.injectShareCharts();
+      this.injectPositionCharts();
+    });
   }
 
   static loadDatum(d) {
@@ -673,7 +727,7 @@ class MainChart {
       posLeftRight: +d.left_right,
       posStateMarket: +d.state_market,
       posLibertyAuthority: +d.liberty_authority,
-      posEUAntiPro: +d.eu_anti_pro,
+      posEUAntiPro: 10 - d.eu_anti_pro,
     };
   }
 

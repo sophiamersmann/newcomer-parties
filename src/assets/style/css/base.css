@@ -32,19 +32,19 @@ main {
 .party-list-group:not(:last-child) {
   margin-bottom: 1rem; }
 
-.party-list-group .party-list-item:not(:last-child) {
-  margin-bottom: 0.25rem; }
-
-.party-list-group .party-description {
+.party-list-group .party-list-item {
   display: flex;
-  justify-content: space-between; }
+  justify-content: space-between;
+  align-items: center; }
+  .party-list-group .party-list-item:not(:last-child) {
+    margin-bottom: 0.25rem; }
 
 .party-list-group .party-chart-and-name {
   display: flex; }
 
 .party-list-group .party-name {
   line-height: 1;
-  margin-left: 5px; }
+  margin: 0 5px; }
 
 .party-list-group .party-year {
   margin-left: 26px; }

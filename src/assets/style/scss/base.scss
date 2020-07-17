@@ -47,14 +47,13 @@ main {
   }
 
   .party-list-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
     &:not(:last-child) {
       margin-bottom: $spacing / 8;
     }
-  }
-
-  .party-description {
-    display: flex;
-    justify-content: space-between;
   }
 
   .party-chart-and-name {
@@ -63,7 +62,7 @@ main {
 
   .party-name {
     line-height: 1;
-    margin-left: 5px;
+    margin: 0 5px;
   }
 
   .party-year {
