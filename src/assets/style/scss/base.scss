@@ -39,15 +39,21 @@ main {
   }
 }
 
-.party-list-item {
-  display: flex;
-
-  .party-trend svg {
-    overflow: visible;
+.party-list-group {
+  &:not(:last-child) {
+    margin-bottom: $spacing / 2;
   }
 
-  .party-info {
-    margin-left: $spacing / 4;
+  .party-list-item {
+    display: flex;
+
+    .party-trend svg {
+      overflow: visible;
+    }
+
+    .party-info {
+      margin-left: $spacing / 4;
+    }
   }
 }
 

@@ -27,11 +27,14 @@ main {
     height: calc(100% - 200px);
     overflow: auto; }
 
-.party-list-item {
+.party-list-group:not(:last-child) {
+  margin-bottom: 1rem; }
+
+.party-list-group .party-list-item {
   display: flex; }
-  .party-list-item .party-trend svg {
+  .party-list-group .party-list-item .party-trend svg {
     overflow: visible; }
-  .party-list-item .party-info {
+  .party-list-group .party-list-item .party-info {
     margin-left: 0.5rem; }
 
 #chart-wrapper {

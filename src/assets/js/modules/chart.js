@@ -443,7 +443,7 @@ class MainChart {
         .attr("width", 55)
         .attr("height", 30)
         .attr("x", margin.left - 55)
-        .attr("y", selection === null ? null : selection[1] - 30 / 2 - 2);  // TODO: Magic value
+        .attr("y", selection === null ? null : selection[1] - 30 / 2 - 2); // TODO: Magic value
 
       g.selectAll(".handle--custom-label")
         .data([{ type: "s" }])
@@ -551,9 +551,16 @@ class MainChart {
           ? true
           : d.country === this.state.country)
     );
+    this.state.parties = d3
+      .nest()
+      .key((d) => d.electionYear - (d.electionYear % 10))
+      .sortKeys(d3.descending)
+      .sortValues((a, b) => d3.descending(a.electionDate, b.electionDate))
+      .entries(this.state.parties)
+      .map(({ key, values }) => ({ decade: key, values }));
     this.templates.parties.view = {
-      parties: this.state.parties
-    }
+      parties: this.state.parties,
+    };
 
     if (action) {
       renderTemplate(this.templates.parties);
@@ -574,7 +581,7 @@ class MainChart {
     }
 
     const date = d3.timeParse("%Y-%m-%d")(d.election_date);
-    
+
     return {
       countryId: +d.country_id,
       country: d.country_name,
@@ -597,7 +604,7 @@ class MainChart {
       posLeftRight: d.left_right,
       posStateMarket: d.state_market,
       posLibertyAuthority: d.liberty_authority,
-      posEUAntiPro: d.eu_anti_pro
+      posEUAntiPro: d.eu_anti_pro,
     };
   }
 
