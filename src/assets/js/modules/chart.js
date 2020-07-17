@@ -577,14 +577,41 @@ class MainChart {
     };
 
     if (action) {
-      renderTemplate(this.templates.parties);
+      renderTemplate(this.templates.parties).then(() =>
+        this.injectShareCharts()
+      );
       this.drawBees();
     }
   }
 
+  injectShareCharts() {
+    this.state.parties
+      .map((d) => d.values)
+      .flat()
+      .forEach((d) => {
+        const svgContainer = d3.select(
+          `#party-list-item-${d.partyId} .party-share-chart`
+        );
+
+        const svg = svgContainer
+          .append("svg")
+          .attr("width", 16)
+          .attr("height", 16)
+          .attr("viewBox", [0, 0, 16, 16]);
+
+        svg
+          .append("circle")
+          .attr("cx", 6)
+          .attr("cy", 8)
+          .attr("r", 6)
+          .attr("transform", "translate(4, 0)")
+          .attr("fill", this.parties.color(d.familyId));
+      });
+  }
+
   renderTemplates() {
     renderTemplate(this.templates.year);
-    renderTemplate(this.templates.parties);
+    renderTemplate(this.templates.parties).then(() => this.injectShareCharts());
   }
 
   static loadDatum(d) {
