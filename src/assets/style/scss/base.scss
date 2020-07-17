@@ -47,15 +47,28 @@ main {
   }
 
   .party-list-item {
+    &:not(:last-child) {
+      margin-bottom: $spacing / 8;
+    }
+  }
+
+  .party-description {
     display: flex;
+    justify-content: space-between;
+  }
 
-    .party-trend svg {
-      overflow: visible;
-    }
+  .party-chart-and-name {
+    display: flex;
+  }
 
-    .party-info {
-      margin-left: $spacing / 4;
-    }
+  .party-name {
+    line-height: 1;
+    margin-left: 5px;
+  }
+
+  .party-year {
+    // width of svg + left margin of party name
+    margin-left: 21px;
   }
 }
 

@@ -1,16 +1,25 @@
 {{ #parties }}
 <div class="party-list-group">
-  Decade: {{ decade }}
   {{ #values }}
   <div class="party-list-item">
-    <div class="party-trend">
-      <svg width="34" height="16" viewBox="0 0 40 16">
-        <path d="M 0 8 L 34 8" transform="rotate(0, 17, 8)" stroke-width="4" stroke="black"></path>
-      </svg>
+    <small class="party-year">{{ electionYear }} in {{ country }}</small>
+    <div class="party-description">
+      <div class="party-chart-and-name">
+        <div class="party-share-chart">
+          <svg width="16" height="16" viewBox="0 0 16 16">
+            <circle cx="6" cy="8" r="6" transform="translate(4, 0)" fill="black"></circle>
+          </svg>
+        </div>
+        <div class="party-name">{{ partyOrig }} ({{ partyAbbr }})</div>
+      </div>
+      <div>
+        <svg width="34" height="16" viewBox="0 0 40 16">
+          <circle cx="4" cy="8" r="4" transform="translate(4, 0)" fill="black"></circle>
+          <circle cx="4" cy="8" r="4" transform="translate(12, 0)" fill="red"></circle>
+          <circle cx="4" cy="8" r="4" transform="translate(20, 0)" fill="gold"></circle>
+          <circle cx="4" cy="8" r="4" transform="translate(28, 0)" fill="orange"></circle>
+        </svg>
     </div>
-    <div class="party-info">
-      <div>{{ electionYear }} in {{ country }}</div>
-      <div>{{ partyOrig }} ({{ partyAbbr }})</div>
     </div>
   </div>
   {{ /values }}
