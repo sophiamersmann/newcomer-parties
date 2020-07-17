@@ -594,6 +594,8 @@ class MainChart {
 
       partyId: +d.party_id,
       party: d.party_name_english,
+      partyOrig: d.party_name_ascii,
+      partyAbbr: d.party_name_short,
 
       electionId: +d.election_id,
       electionDate: d3.timeParse("%Y-%m-%d")(d.election_date),
@@ -603,6 +605,11 @@ class MainChart {
 
       share: +d.vote_share,
       currentShare: +d.most_recent_vote_share,
+
+      posLeftRight: d.left_right,
+      posStateMarket: d.state_market,
+      posLibertyAuthority: d.liberty_authority,
+      posEUAntiPro: d.eu_anti_pro
     };
   }
 
