@@ -48,6 +48,10 @@ class MainChart {
       parties: null,
     };
 
+    this.partyProfile = {
+      keys: ["leftRight", "libertyAuthority", "stateMarket", "euProAnti"],
+    };
+
     this.templates = {
       year: {
         template: "year.mustache",
@@ -674,15 +678,17 @@ class MainChart {
 
         svg
           .selectAll("circle")
-          .data([
-            d.posLeftRight,
-            d.posLibertyAuthority,
-            d.posStateMarket,
-            d.posEUAntiPro,
-          ])
+          .data(
+            this.partyProfile.keys
+              .map((key) => ({ type: key, value: d[key] }))
+              .filter((d) => d.value)
+          )
           .join("circle")
-          .attr("cx", (d) => x(d))
-          .attr("cy", (_, i) => radius + i * 2 * radius)
+          .attr("cx", (d) => x(d.value))
+          .attr(
+            "cy",
+            (d) => radius + this.partyProfile.keys.indexOf(d.type) * 2 * radius
+          )
           .attr("r", radius)
           .attr("fill", "black");
       });
@@ -724,10 +730,12 @@ class MainChart {
       share: +d.vote_share,
       currentShare: +d.most_recent_vote_share,
 
-      posLeftRight: +d.left_right,
-      posStateMarket: +d.state_market,
-      posLibertyAuthority: +d.liberty_authority,
-      posEUAntiPro: 10 - d.eu_anti_pro,
+      leftRight: isNull(d.left_right) ? null : +d.left_right,
+      stateMarket: isNull(d.state_market) ? null : +d.state_market,
+      libertyAuthority: isNull(d.liberty_authority)
+        ? null
+        : +d.liberty_authority,
+      euProAnti: isNull(d.eu_anti_pro) ? null : 10 - d.eu_anti_pro,
     };
   }
 

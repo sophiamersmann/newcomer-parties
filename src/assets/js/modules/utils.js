@@ -5,3 +5,7 @@ async function renderTemplate({ template, target, view }) {
       $(target).html(Mustache.render(template, view));
     });
 }
+
+  function isNull(value) {
+    return value == null || value.length === 0;
+  }
