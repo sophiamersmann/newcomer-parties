@@ -10,7 +10,7 @@ class MainChart {
     this.svg = {
       selector,
       width: 1080,
-      height: 650,
+      height: 820,
       margin: {
         top: 40,
         right: 60,
@@ -182,7 +182,7 @@ class MainChart {
 
     const y = d3
       .scaleTime()
-      .domain([new Date(1945, 0, 1), new Date(2025, 0, 1)])
+      .domain([new Date(1900, 0, 1), new Date(2025, 0, 1)])
       .range([height - margin.bottom, margin.top]);
 
     const r = d3
