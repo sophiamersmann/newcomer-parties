@@ -37,8 +37,19 @@
         <div class="form-group">
           in
           <!-- <label for="select-country">Country:</label> -->
-          <input id="select-country" name="country" list="countries" value="Europe" />
+          <input
+            id="select-country"
+            name="country"
+            list="countries"
+            value="Europe"
+          />
           <datalist id="countries"> </datalist>
+        </div>
+
+        <div>
+          <button id="group-north" class="button-group">North</button>
+          <button id="group-north" class="button-group">South</button>
+          <button id="group-east" class="button-group">East</button>
         </div>
 
         <div>
@@ -59,8 +70,7 @@
 
         <div>in an election after <span id="year"></span></div>
       </div>
-      <div id="party-list">
-      </div>
+      <div id="party-list"></div>
     </div>
     <main>
       <div id="chart-wrapper">
