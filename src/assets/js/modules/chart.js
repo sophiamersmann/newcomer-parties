@@ -136,8 +136,8 @@ class MainChart {
     this.setUpScales();
     this.drawAxes();
 
-    this.computeBeeswarmPositions();
     this.setUpBeeswarms();
+    this.computeBeeswarmPositions();
     this.drawBees();
 
     this.addBrush();
@@ -274,6 +274,53 @@ class MainChart {
       .text((d) => this.time.formatDecade(d));
   }
 
+  setUpBeeswarms() {
+    const { x, y } = this.scales;
+    const { height, margin } = this.svg;
+    const { color } = this.parties;
+
+    this.svg.bg
+      .selectAll(".beeswarm-pair")
+      .data(this.data.families)
+      .join("g")
+      .attr("class", "beeswarm-pair");
+
+    this.svg.g
+      .selectAll(".beeswarm-pair")
+      .data(this.data.families)
+      .join("g")
+      .attr("class", "beeswarm-pair")
+      .attr("fill", (d) => color(d.familyId))
+      .append("g")
+      .attr("class", "g-beeswarm-sep")
+      .selectAll(".beeswarm-sep")
+      .data((family, i) => [
+        {
+          family,
+          even: i % 2 === 0,
+          type: "transparent",
+          y2: height - margin.bottom,
+          opacity: this.parties.transparent,
+        },
+        {
+          family,
+          even: i % 2 === 0,
+          type: "responsive",
+          y2: y(this.brush.initialDates[1]),
+          opacity: 1,
+        },
+      ])
+      .join("line")
+      .attr("class", (d) => `beeswarm-sep beeswarm-sep-${d.type}`)
+      .attr("x1", (d) => x(d.family))
+      .attr("x2", (d) => x(d.family))
+      .attr("y1", (d) => margin.top + 7 - (d.even ? 0 : this.labels.yOffset))
+      .attr("y2", (d) => d.y2)
+      .attr("stroke-width", 2)
+      .attr("stroke", (d) => color(d.family))
+      .attr("stroke-opacity", (d) => d.opacity);
+  }
+
   computeBeeswarmPositions() {
     const dodge = (data) =>
       MainChart.dodge(
@@ -296,64 +343,13 @@ class MainChart {
       }));
   }
 
-  setUpBeeswarms() {
-    const { x, y } = this.scales;
-    const { height, margin } = this.svg;
-    const { color } = this.parties;
-
-    const beeswarmPair = this.svg.g
-      .selectAll(".beeswarm-pair")
-      .data(this.data.beeswarms)
-      .join("g")
-      .attr("class", "beeswarm-pair")
-      .attr("fill", (d) => color(d.familyId))
-      .attr("stroke", (d) => color(d.familyId));
-
-    beeswarmPair
-      .selectAll(".g-beeswarm-sep")
-      .data(this.data.families)
-      .join("g")
-      .attr("class", "g-beeswarm-sep")
-      .selectAll(".beeswarm-sep")
-      .data((family, i) => [
-        {
-          family,
-          even: i % 2 === 0,
-          type: "transparent",
-          y2: height - margin.bottom,
-          opacity: 0.05,
-        },
-        {
-          family,
-          even: i % 2 === 0,
-          type: "responsive",
-          y2: y(this.brush.initialDates[1]),
-          opacity: 1,
-        },
-      ])
-      .join("line")
-      .attr("class", (d) => `beeswarm-sep beeswarm-sep-${d.type}`)
-      .attr("x1", (d) => x(d.family))
-      .attr("x2", (d) => x(d.family))
-      .attr("y1", (d) => margin.top + 7 - (d.even ? 0 : this.labels.yOffset))
-      .attr("y2", (d) => d.y2)
-      .attr("stroke-width", 2)
-      .attr("stroke", (d) => color(d.family))
-      .attr("stroke-opacity", (d) => d.opacity);
-
-    this.svg.bg
-      .selectAll(".beeswarm-pair")
-      .data(this.data.beeswarms)
-      .join("g")
-      .attr("class", "beeswarm-pair");
-  }
-
   drawBees() {
     const { y, r } = this.scales;
-    const { selector, transparent, alive, dead } = this.parties;
+    const { selector, color, transparent, alive, dead } = this.parties;
 
     this.svg.bg
       .selectAll(".beeswarm-pair")
+      .data(this.data.beeswarms)
       .selectAll(`${selector}-highlight`)
       .data(({ parties }) =>
         parties.filter(
@@ -368,6 +364,7 @@ class MainChart {
             .attr("cx", (d) => d.x)
             .attr("cy", (d) => d.y)
             .attr("r", ({ data: d }) => r(d.share) * 4)
+            .attr("stroke", ({ data: d }) => color(d.familyId))
             .attr("stroke-width", 0)
             .attr("fill", "url(#radial-gradient)")
             .attr("opacity", ({ data: d }) =>
@@ -388,6 +385,7 @@ class MainChart {
 
     this.svg.g
       .selectAll(".beeswarm-pair")
+      .data(this.data.beeswarms)
       .selectAll(selector)
       .data(({ parties }) =>
         parties.filter(
@@ -409,6 +407,7 @@ class MainChart {
             .attr("cx", (d) => d.x)
             .attr("cy", (d) => d.y)
             .attr("r", ({ data: d }) => r(d.share))
+            .attr("stroke", ({ data: d }) => color(d.familyId))
             .attr("stroke-width", 1)
             .attr("fill", ({ data: d }) =>
               d.isAlive ? this.parties.color(d.familyId) : "transparent"
