@@ -1,18 +1,4 @@
 party_id,country_name_short,country_name,election_date,vote_share,seats,party_name_short,party_name,party_name_english,left_right,country_id,election_id,party_name_ascii,family_name_short,family_name,state_market,liberty_authority,eu_anti_pro,family_id,most_recent_election_id,most_recent_election_date,most_recent_vote_share,most_recent_seats,country_group
-973,AUT,Austria,1919-02-16,40.75,72.0,SPO,Sozialdemokratische Partei Österreichs,Social Democratic Party of Austria,3.7293,59,1030,Sozialdemokratische Partei Oesterreichs,soc,Social democracy,3.4728,3.4766,8.4495,11,1080.0,2019-09-29,21.2,40.0,north
-1013,AUT,Austria,1919-02-16,35.93,69.0,OVP,Österreichische Volkspartei,Austrian People's Party,6.4733,59,1030,Oesterreichische Volkspartei,chr,Christian democracy,6.9485,7.6198,8.8451,3,1080.0,2019-09-29,37.5,71.0,north
-2672,AUT,Austria,1919-02-16,5.85,8.0,DNP,Deutschnationale,German-Nationals,7.4,59,1030,Deutschnationale,con,Conservative,6.4,7.0,7.9,26,,,,,north
-2676,AUT,Austria,1919-02-16,1.9,5.0,GFOP,Deutsche Freiheits und Ordnungspartei,German Freedom and Order Party,8.8,59,1030,Deutsche Freiheits und Ordnungspartei,right,Right-wing,5.9,8.5,2.3,40,,,,,north
-2686,AUT,Austria,1919-02-16,1.49,4.0,one-seat,one-seat,one-seat,,59,1030,one-seat,none,no family,,,,12,,,,,north
-2677,AUT,Austria,1919-02-16,1.58,3.0,SBP,Steirische Bauernpartei,Styrian Farmers' Party,5.3,59,1030,Steirische Bauernpartei,agr,Agrarian,4.9,6.5,5.4,2,,,,,north
-2675,AUT,Austria,1919-02-16,2.16,3.0,DD,Deutschdemokraten,German-Democrats,6.0,59,1030,Deutschdemokraten,lib,Liberal,6.7,3.6,8.7,6,,,,,north
-2673,AUT,Austria,1919-02-16,2.02,2.0,DVP,Deutsche Volkspartei,German People's Party,7.4,59,1030,Deutsche Volkspartei,con,Conservative,6.4,7.0,7.9,26,,,,,north
-2678,AUT,Austria,1919-02-16,1.12,2.0,KB,Kärtner Bauernbund,Carinthian Farmers' Association,5.3,59,1030,Kartner Bauernbund,agr,Agrarian,4.9,6.5,5.4,2,,,,,north
-2689,AUT,Austria,1919-02-16,2.27,1.0,T,Tschechoslowaken,Czechoslovakians,,59,1030,Tschechoslowaken,spec,Special issue,,,,16,,,,,north
-2688,AUT,Austria,1919-02-16,1.64,1.0,BD,Bürgerliche Demokraten,Centrist Democrats,6.0,59,1030,Buergerliche Demokraten,lib,Liberal,6.7,3.6,8.7,6,,,,,north
-2674,AUT,Austria,1920-10-17,17.25,21.0,GDVP,Großdeutsche Volkspartei,Greater German People's Party,7.4,59,1026,Grossdeutsche Volkspartei,con,Conservative,6.4,7.0,7.9,26,,,,,north
-2681,AUT,Austria,1927-04-24,6.32,9.0,L,Landbund für Österreich,Rural Federation,8.8,59,1028,Landbund fuer Oesterreich,right,Right-wing,5.9,8.5,2.3,40,,,,,north
-2685,AUT,Austria,1930-11-09,6.17,8.0,HB,Heimatblock,Homeland Block,8.8,59,1029,Heimatblock,right,Right-wing,5.9,8.5,2.3,40,,,,,north
 769,AUT,Austria,1945-11-25,5.4,4.0,KPO,Kommunistische Partei Österreichs,Communist Party of Austria,0.5,59,402,Kommunistische Partei Oesterreichs,com,Communist/Socialist,1.4,3.0,0.0,14,,,,,north
 50,AUT,Austria,1949-10-09,11.7,16.0,FPO,Freiheitliche Partei Österreichs,Freedom Party of Austria,8.3494,59,67,Freiheitliche Partei Oesterreichs,right,Right-wing,6.3291,8.5149,1.9815,40,1080.0,2019-09-29,16.2,31.0,north
 1429,AUT,Austria,1986-11-23,4.8,8.0,Gruene,Die Grünen – Die Grüne Alternative,The Greens -- The Green Alternative,2.4604,59,235,Die Gruenen -- Die Gruene Alternative,eco,Green/Ecologist,2.7489,1.4308,6.6845,19,1080.0,2019-09-29,13.9,26.0,north
@@ -21,18 +7,6 @@ party_id,country_name_short,country_name,election_date,vote_share,seats,party_na
 2150,AUT,Austria,2013-09-29,5.7,11.0,TS,Team Stronach,Team Stronach,6.0,59,802,Team Stronach,lib,Liberal,6.7,3.6,8.7,6,,,,,north
 2255,AUT,Austria,2013-09-29,5.0,9.0,NEOS,NEOS – Das Neue Österreich,NEOS -- The New Austria,6.0,59,802,NEOS -- Das Neue Oesterreich,lib,Liberal,6.7,3.6,8.7,6,1080.0,2019-09-29,8.1,15.0,north
 2651,AUT,Austria,2017-10-15,4.4,8.0,PILZ,JETZT – Liste Pilz,JETZT -- Pilz List,2.5,59,1019,JETZT -- Liste Pilz,eco,Green/Ecologist,2.5,1.8,6.5,19,,,,,north
-2423,BEL,Belgium,1900-05-27,48.5,86.0,KP-PC,Katholieke Partij – Parti catholique,Catholic Party,6.2,64,868,Katholieke Partij -- Parti catholique,chr,Christian democracy,5.7,7.1,8.3,3,,,,,north
-2422,BEL,Belgium,1900-05-27,22.5,32.0,BWP-POB,Belgische Werkliedenpartij – Parti Ouvrier Belge,Belgian Labour Party,3.3,64,868,Belgische Werkliedenpartij -- Parti Ouvrier Belge,soc,Social democracy,3.5,3.5,8.1,11,,,,,north
-63,BEL,Belgium,1900-05-27,22.7,31.0,LP-PL,Liberale Partij – Parti libéral,Liberal Party,6.0,64,868,Liberale Partij -- Parti liberal,lib,Liberal,6.7,3.6,8.7,6,,,,,north
-2481,BEL,Belgium,1900-05-27,2.5,1.0,CV,Christene Volkspartij,Christian Peoples' Party [Daens],6.2,64,868,Christene Volkspartij,chr,Christian democracy,5.7,7.1,8.3,3,,,,,north
-1335,BEL,Belgium,1906-05-27,19.1,14.0,KLS,Kartel Liberale en Socialistische,Cartel of Liberals and Socialists,3.3,64,871,Kartel Liberale en Socialistische,soc,Social democracy,3.5,3.5,8.1,11,,,,,north
-2424,BEL,Belgium,1919-11-16,3.5,5.0,FP|VNV,Frontpartij | Vlaams Nationaal Verbond,Front Party | Flemish National Union,3.3,64,876,Frontpartij | Vlaams Nationaal Verbond,soc,Social democracy,3.5,3.5,8.1,11,,,,,north
-2564,BEL,Belgium,1921-11-20,4.3,4.0,CD,Catholic Dissidents,Catholic Dissidents,6.2,64,877,Catholic Dissidents,chr,Christian democracy,5.7,7.1,8.3,3,,,,,north
-2488,BEL,Belgium,1925-08-05,2.5,3.0,etc,others,others,,64,878,others,none,no family,,,,12,,,,,north
-708,BEL,Belgium,1925-08-05,1.6,2.0,KPB-PCB,Kommunistische Partij – Parti Communiste,Communist Party,1.4,64,878,Kommunistische Partij -- Parti Communiste,com,Communist/Socialist,1.4,3.0,4.45,14,,,,,north
-2425,BEL,Belgium,1936-05-24,11.5,21.0,Rex,Parti Rexiste,Rexist Party,8.8,64,881,Parti Rexiste,right,Right-wing,5.9,8.5,2.3,40,,,,,north
-2569,BEL,Belgium,1936-05-24,0.94,2.0,DC,Démocrates Chrétiens, Christian Democrats,6.2,64,881,Democrates Chretiens,chr,Christian democracy,5.7,7.1,8.3,3,,,,,north
-2486,BEL,Belgium,1939-04-02,3.2,6.0,KVV,Katholieke Vlaamse Volkspartij,Catholic Flemish People's Party,6.2,64,882,Katholieke Vlaamse Volkspartij,chr,Christian democracy,5.7,7.1,8.3,3,,,,,north
 1051,BEL,Belgium,1946-02-17,42.54,92.0,PSC-CVP,Parti Social Chrétien – Christelijke Volkspartij,Francophone Christian Social Party and Flemish Christian People's Party,6.2,64,19,Parti Social Chretien -- Christelijke Volkspartij,chr,Christian democracy,5.7,7.1,8.3,3,,,,,north
 167,BEL,Belgium,1946-02-17,31.6,66.0,BSP-PSB,Belgische Socialistische Partij – Parti Socialiste Belge,Belgian Socialist Party,2.5,64,19,Belgische Socialistische Partij -- Parti Socialiste Belge,soc,Social democracy,3.5,3.5,8.1,11,,,,,north
 1181,BEL,Belgium,1946-02-17,2.16,1.0,UDB,Union Democratique Belge,Belgian Democratic Union,,64,19,Union Democratique Belge,code,to be coded,,,,28,,,,,north
@@ -79,15 +53,6 @@ party_id,country_name_short,country_name,election_date,vote_share,seats,party_na
 2362,BGR,Bulgaria,2014-10-05,5.69,15.0,BBZ,Balgarija bes Zensura,Bulgaria Without Censorship,7.4,10,840,Balgarija bes Zensura,con,Conservative,6.4,7.0,7.9,26,,,,,east
 2364,BGR,Bulgaria,2014-10-05,4.15,11.0,ABV,Alternativa za balgarsko vazrazhdane,Alternative for Bulgarian Revival,3.3,10,840,Alternativa za balgarsko vazrazhdane,soc,Social democracy,3.5,3.5,8.1,11,,,,,east
 2637,BGR,Bulgaria,2017-03-26,4.26,12.0,Volya,Volya,Will,6.0,10,1011,Volya,lib,Liberal,6.7,3.6,8.7,6,1011.0,2017-03-26,4.26,12.0,east
-26,CHE,Switzerland,1902-10-26,50.39,100.0,FDP-PRD,Freisinnig-Demokratische Partei der Schweiz – Parti Radical-Democratique Suisse,Radical Democratic Party,6.3249,40,982,Freisinnig-Demokratische Partei der Schweiz -- Parti Radical-Democratique Suisse,lib,Liberal,8.0105,3.4159,6.4439,6,1083.0,2019-10-20,15.11,29.0,north
-531,CHE,Switzerland,1902-10-26,23.09,36.0,KK/CVP,Katholische Konservative / Christlichdemokratische Volkspartei – Conservateurs catholiques  /  Parti démocrate-chrétien,Catholic Conservative / Christian Democratic Peoples Party,4.7288,40,982,Katholische Konservative / Christlichdemokratische Volkspartei -- Conservateurs catholiques  /  Parti democrate-chretien,chr,Christian democracy,5.6421,7.1414,6.3386,3,1083.0,2019-10-20,11.38,25.0,north
-458,CHE,Switzerland,1902-10-26,8.58,20.0,LPS,Liberale Partei der Schweiz – Parti liberal suisse,Liberal Party of Switzerland,7.2961,40,982,Liberale Partei der Schweiz -- Parti liberal suisse,lib,Liberal,8.477,4.2441,7.6667,6,,,,,north
-35,CHE,Switzerland,1902-10-26,12.6,7.0,SP-PS,Sozialdemokratische Partei der Schweiz – Parti Socialiste Suisse,Social Democratic Party of Switzerland,1.8319,40,982,Sozialdemokratische Partei der Schweiz -- Parti Socialiste Suisse,soc,Social democracy,1.7579,1.2281,9.0614,11,1083.0,2019-10-20,16.84,39.0,north
-886,CHE,Switzerland,1902-10-26,3.7,4.0,DG,Gruppe der Demokraten – Groupe des democrates,Democratic Group,3.3,40,982,Gruppe der Demokraten -- Groupe des democrates,soc,Social democracy,3.5,3.5,8.1,11,,,,,north
-750,CHE,Switzerland,1919-10-26,15.3,30.0,SVP-UDC,Schweizerische Volkspartei – Union Démocratique du Centre,Swiss People's Party,7.3575,40,770,Schweizerische Volkspartei -- Union Democratique du Centre,agr,Agrarian,8.9684,8.3385,0.6368,2,1083.0,2019-10-20,25.59,53.0,north
-602,CHE,Switzerland,1919-10-26,0.8,1.0,EVP-PEP,Evangelische Volkspartei der Schweiz – Parti Populaire Evangelique Suisse,Protestant Peoples Party,4.9248,40,770,Evangelische Volkspartei der Schweiz -- Parti Populaire Evangelique Suisse,chr,Christian democracy,4.4498,7.5812,5.0504,3,1083.0,2019-10-20,2.08,3.0,north
-1167,CHE,Switzerland,1922-10-29,1.8,2.0,PdA,Partei der Arbeit der Schweiz,Swiss Party of Labour,0.5263,40,773,Partei der Arbeit der Schweiz,com,Communist/Socialist,0.5835,1.6148,6.8893,14,1083.0,2019-10-20,1.05,1.0,north
-1264,CHE,Switzerland,1935-10-27,4.1,7.0,LdU-ADI,Landesring der Unabhängigen – Alliance des Indépendants,Independents Alliance,3.3,40,769,Landesring der Unabhaengigen -- Alliance des Independants,soc,Social democracy,3.5,3.5,8.1,11,,,,,north
 628,CHE,Switzerland,1967-10-29,0.6,1.0,NA|SD,Nationale Aktion – Action Nationale | Schweizer Demokraten – Démocrates Suisses,National Action -- Swiss Democrats,9.4247,40,373,Nationale Aktion -- Action Nationale | Schweizer Demokraten -- Democrates Suisses,right,Right-wing,6.2573,9.0409,0.2384,40,,,,,north
 564,CHE,Switzerland,1971-10-31,4.3,7.0,RB,Republikanische Bewegung,Republican Movement,8.8,40,176,Republikanische Bewegung,right,Right-wing,5.9,8.5,2.3,40,,,,,north
 224,CHE,Switzerland,1975-10-26,0.3,1.0,PSA,Partito socialista autonomo,Autonomous Socialist Party,1.3,40,371,Partito socialista autonomo,com,Communist/Socialist,1.4,3.0,5.0,14,,,,,north
@@ -133,29 +98,6 @@ party_id,country_name_short,country_name,election_date,vote_share,seats,party_na
 2261,CZE,Czech Republic,2017-10-21,10.79,22.0,Pi,Ceska piratska strana,Czech Pirate Party,,68,1020,Ceska piratska strana,spec,Special issue,,,,16,1020.0,2017-10-21,10.79,22.0,east
 2654,CZE,Czech Republic,2017-10-21,10.64,22.0,SPD,Svoboda a p?ímá demokracie Tomio Okamura,Freedom and Direct Democracy Tomio Okamura,8.8,68,1020,Svoboda a prima demokracie Tomio Okamura,right,Right-wing,5.9,8.5,2.3,40,1020.0,2017-10-21,10.64,22.0,east
 2024,CZE,Czech Republic,2017-10-21,5.18,6.0,STAN,Starostové a nezávislí,Mayors and Independents,,68,1020,Starostove a nezavisli,spec,Special issue,,,,16,1020.0,2017-10-21,5.18,6.0,east
-558,DEU,Germany,1919-01-19,37.87,165.0,SPD,Sozialdemokratische Partei Deutschlands,Social Democratic Party of Germany,3.6451,54,1031,Sozialdemokratische Partei Deutschlands,soc,Social democracy,3.8443,3.9791,7.9318,11,1016.0,2017-09-24,20.5,153.0,north
-2691,DEU,Germany,1919-01-19,18.32,74.0,DDP,Deutsche Demokratische Partei,German Democratic Party,6.0,54,1031,Deutsche Demokratische Partei,lib,Liberal,6.7,3.6,8.7,6,,,,,north
-137,DEU,Germany,1919-01-19,15.45,73.0,DZ,Deutsche Zentrumspartei,Centre Party,6.2,54,1031,Deutsche Zentrumspartei,chr,Christian democracy,5.7,7.1,8.3,3,,,,,north
-2692,DEU,Germany,1919-01-19,10.26,41.0,DNVP,Deutschnationale Volkspartei,German National People's Party,8.8,54,1031,Deutschnationale Volkspartei,right,Right-wing,5.9,8.5,2.3,40,,,,,north
-2693,DEU,Germany,1919-01-19,4.66,23.0,DVP,Deutsche Volkspartei,German People's Party,7.4,54,1031,Deutsche Volkspartei,con,Conservative,6.4,7.0,7.9,26,,,,,north
-2690,DEU,Germany,1919-01-19,7.63,22.0,USPD,Unabhängige Sozialdemokratische Partei Deutschland,Independent Social Democratic Party of Germany,1.3,54,1031,Unabhaengige Sozialdemokratische Partei Deutschland,com,Communist/Socialist,1.4,3.0,3.3,14,,,,,north
-2697,DEU,Germany,1919-01-19,3.77,16.0,BVP,Bayerische Volkspartei,Bavarian People's Party,6.2,54,1031,Bayerische Volkspartei,chr,Christian democracy,5.7,7.1,8.3,3,,,,,north
-2701,DEU,Germany,1919-01-19,0.9,4.0,BBB,Bayerischer Bauernbund,Bavarian Peasants' League,6.0,54,1031,Bayerischer Bauernbund,lib,Liberal,6.7,3.6,8.7,6,,,,,north
-2696,DEU,Germany,1919-01-19,0.7,3.0,DHP,Deutsch-Hannoversche Partei,German-Hanoverian Party,7.4,54,1031,Deutsch-Hannoversche Partei,con,Conservative,6.4,7.0,7.9,26,,,,,north
-2703,DEU,Germany,1920-06-06,0.69,3.0,BWB,Bauern- und Weingärtnerbund,Farmers' and winegrowers' association,5.3,54,1033,Bauern- und Weingaertnerbund,agr,Agrarian,4.9,6.5,5.4,2,,,,,north
-2704,DEU,Germany,1920-06-06,0.63,3.0,LBT,Landbund Thüringen,Rural Federation Thuringia,5.3,54,1033,Landbund Thueringen,agr,Agrarian,4.9,6.5,5.4,2,,,,,north
-649,DEU,Germany,1920-06-06,1.7,2.0,KPD,Kommunistische Partei Deutschlands,Communist Party of Germany,0.9570000000000001,54,1033,Kommunistische Partei Deutschlands,com,Communist/Socialist,0.3618,2.6754,1.9649,14,,,,,north
-2695,DEU,Germany,1924-05-04,6.53,32.0,NSDAP,Nationalsozialistische Deutsche Arbeiterpartei,National Socialist German Workers' Party,8.8,54,1034,Nationalsozialistische Deutsche Arbeiterpartei,right,Right-wing,5.9,8.5,2.3,40,,,,,north
-2698,DEU,Germany,1924-05-04,1.69,7.0,WP,Wirtschaftspartei,Economic Party,7.4,54,1034,Wirtschaftspartei,con,Conservative,6.4,7.0,7.9,26,,,,,north
-2705,DEU,Germany,1924-05-04,1.15,4.0,DSP,Deutschsoziale Partei,German Social Party,8.8,54,1034,Deutschsoziale Partei,right,Right-wing,5.9,8.5,2.3,40,,,,,north
-2706,DEU,Germany,1924-05-04,0.3,2.0,HBB,Hessischer Bauernbund,Hessian Farmers' Federation,5.3,54,1034,Hessischer Bauernbund,agr,Agrarian,4.9,6.5,5.4,2,,,,,north
-2707,DEU,Germany,1924-05-04,0.24,1.0,BLB,Badischer Landbund,Baden Rural Federation,5.3,54,1034,Badischer Landbund,agr,Agrarian,4.9,6.5,5.4,2,,,,,north
-2709,DEU,Germany,1928-05-20,1.86,9.0,CNBL,Christlich-Nationale Bauern- und Landvolkpartei,Christian-National Peasants' and Farmers' Party,6.2,54,1036,Christlich-Nationale Bauern- und Landvolkpartei,chr,Christian democracy,5.7,7.1,8.3,3,,,,,north
-2708,DEU,Germany,1928-05-20,0.42,2.0,SLV,Sächsisches Landvolk,Saxon Peasants,5.3,54,1036,Saechsisches Landvolk,agr,Agrarian,4.9,6.5,5.4,2,,,,,north
-2710,DEU,Germany,1928-05-20,1.57,2.0,VRP,Reichspartei für Volksrecht und Aufwertung,Reich Party for Civil Rights and Deflation,,54,1036,Reichspartei fuer Volksrecht und Aufwertung,spec,Special issue,,,,16,,,,,north
-2712,DEU,Germany,1928-05-20,0.39,1.0,DBP,Deutsche Bauernpartei,German Farmers' Party,5.3,54,1036,Deutsche Bauernpartei,agr,Agrarian,4.9,6.5,5.4,2,,,,,north
-2700,DEU,Germany,1930-09-14,2.48,14.0,CSVD,Christlich-Sozialer Volksdienst,Christian Social People's Service,6.2,54,1037,Christlich-Sozialer Volksdienst,chr,Christian democracy,5.7,7.1,8.3,3,,,,,north
-2711,DEU,Germany,1930-09-14,0.83,4.0,KVP,Konservative Volkspartei,Conservative Peoples' Party,7.4,54,1037,Konservative Volkspartei,con,Conservative,6.4,7.0,7.9,26,,,,,north
 808,DEU,Germany,1949-08-14,25.2,115.0,CDU,Christlich Demokratische Union,Christian Democratic Union,6.2503,54,581,Christlich Demokratische Union,chr,Christian democracy,6.3498,6.9333,8.5024,3,1016.0,2017-09-24,26.8,200.0,north
 543,DEU,Germany,1949-08-14,11.9,52.0,FDP,Freie Demokratische Partei,Free Democratic Party,5.9233,54,581,Freie Demokratische Partei,lib,Liberal,8.2173,3.0695,8.4855,6,1016.0,2017-09-24,10.7,80.0,north
 1180,DEU,Germany,1949-08-14,5.8,24.0,CSU,Christlich Soziale Union,Christian Social Union,7.2871,54,581,Christlich Soziale Union,chr,Christian democracy,6.5615,7.8675,6.667999999999999,3,1016.0,2017-09-24,6.2,46.0,north
@@ -168,18 +110,6 @@ party_id,country_name_short,country_name,election_date,vote_share,seats,party_na
 791,DEU,Germany,1990-12-02,2.4,17.0,PDS|Li,PDS | Die Linke,PDS | The Left,1.2152,54,445,PDS | Die Linke,com,Communist/Socialist,1.0617,3.205,4.3508,14,1016.0,2017-09-24,9.2,69.0,north
 255,DEU,Germany,1990-12-02,1.2,8.0,B90/Gr,Bündnis 90 / Grüne – BürgerInnenbewegung,Alliance 90 / Greens -- Citizens' Movement,2.5,54,445,Buendnis 90 / Gruene -- BuergerInnenbewegung,eco,Green/Ecologist,2.5,1.8,6.5,19,,,,,north
 2253,DEU,Germany,2017-09-24,12.6,94.0,AfD,Alternative für Deutschland,Alternative for Germany,8.8,54,1016,Alternative fuer Deutschland,right,Right-wing,5.9,8.5,2.3,40,1016.0,2017-09-24,12.6,94.0,north
-1605,DNK,Denmark,1901-04-03,42.87,76.0,V,Venstre,Liberal Party,7.292000000000001,21,886,Venstre,lib,Liberal,7.3696,4.9957,9.0268,6,1077.0,2019-06-05,23.4,43.0,north
-2430,DNK,Denmark,1901-04-03,11.4,16.0,MV,Moderate Venstre,Moderate Liberals ,6.0,21,886,Moderate Venstre,lib,Liberal,6.7,3.6,8.7,6,,,,,north
-1629,DNK,Denmark,1901-04-03,17.06,14.0,Sd,Socialdemokraterne,Social Democrats,3.8011,21,886,Socialdemokraterne,soc,Social democracy,3.5292,4.2722,7.4311,11,1077.0,2019-06-05,25.9,48.0,north
-590,DNK,Denmark,1901-04-03,24.04,8.0,KF,Konservative,Conservatives,7.2186,21,886,Konservative,con,Conservative,7.2931,6.5055,7.7791,26,1077.0,2019-06-05,6.6,12.0,north
-211,DNK,Denmark,1906-05-29,12.6,9.0,RV,Det Radikale Venstre,Danish Social Liberal Party,4.8736,21,888,Det Radikale Venstre,lib,Liberal,5.318,2.3903,7.8594,6,1077.0,2019-06-05,8.6,16.0,north
-2429,DNK,Denmark,1918-04-22,1.3,1.0,EP,Erhvervspartiet,Industry Party ,6.0,21,892,Erhvervspartiet,lib,Liberal,6.7,3.6,8.7,6,,,,,north
-812,DNK,Denmark,1920-09-21,0.6,1.0,SP,Slesvigsk Parti,Schleswig Party,,21,894,Slesvigsk Parti,spec,Special issue,,,,16,,,,,north
-1606,DNK,Denmark,1926-12-02,1.3,2.0,RF,Retsforbund,Justice Party,6.0,21,896,Retsforbund,lib,Liberal,6.7,3.6,0.2333,6,,,,,north
-1239,DNK,Denmark,1932-11-16,1.1,2.0,DKP,Danmarks Kommunistiske Parti,Communist Party of Denmark,1.0,21,898,Danmarks Kommunistiske Parti,com,Communist/Socialist,1.4,3.0,0.4167,14,,,,,north
-2428,DNK,Denmark,1935-10-22,3.2,5.0,Bo,Bondepartiet,Farmers' Party ,5.3,21,899,Bondepartiet,agr,Agrarian,4.9,6.5,5.4,2,,,,,north
-2432,DNK,Denmark,1939-04-03,1.8,3.0,DNSAP,Danmarks Nationalsocialistiske Arbejderparti,National Socialist Workers' Party of Denmark,8.8,21,900,Danmarks Nationalsocialistiske Arbejderparti,right,Right-wing,5.9,8.5,2.3,40,,,,,north
-412,DNK,Denmark,1939-04-03,0.5,1.0,DS,Dansk Samling,Danish Union,8.8,21,900,Dansk Samling,right,Right-wing,5.9,8.5,2.3,40,,,,,north
 1644,DNK,Denmark,1960-11-15,6.1,11.0,SF,Socialistisk Folkeparti,Socialist Peoples Party,2.1347,21,73,Socialistisk Folkeparti,eco,Green/Ecologist,2.1035,2.1476,3.5917,19,1077.0,2019-06-05,7.7,14.0,north
 538,DNK,Denmark,1960-11-15,3.3,6.0,DU,De Uafhængige,Independents Party,6.0,21,73,De Uafhaengige,lib,Liberal,6.7,3.6,8.7,6,,,,,north
 1478,DNK,Denmark,1966-11-22,2.5,4.0,LC,Liberalt Centrum,Liberal Centre,6.0,21,97,Liberalt Centrum,lib,Liberal,6.7,3.6,8.7,6,,,,,north
@@ -248,19 +178,6 @@ party_id,country_name_short,country_name,election_date,vote_share,seats,party_na
 1597,EST,Estonia,2007-03-04,17.9,19.0,IRL,Erakond Isamaa ja Res Publica Liit,Union of Pro Patria and Res Publica,8.4962,75,83,Erakond Isamaa ja Res Publica Liit,con,Conservative,8.2456,6.1053,9.2632,26,1044.0,2019-03-03,11.4,12.0,east
 219,EST,Estonia,2007-03-04,7.1,6.0,EER,Erakond Eestimaa Rohelised,Estonian Greens,2.5,75,83,Erakond Eestimaa Rohelised,eco,Green/Ecologist,2.5,1.8,6.5,19,,,,,east
 2409,EST,Estonia,2015-03-01,8.69,8.0,EV,Eesti Vabaerakond,Free Party,7.4,75,853,Eesti Vabaerakond,con,Conservative,6.4,7.0,7.9,26,,,,,east
-395,FIN,Finland,1917-10-02,44.79,92.0,SSDP,Suomen Sosialidemokraattinen Puolue – Finlands Socialdemokratiska Parti,Social Democratic Party of Finland,3.5595,67,902,Suomen Sosialidemokraattinen Puolue -- Finlands Socialdemokratiska Parti,soc,Social democracy,3.5454,4.2417,8.621,11,1045.0,2019-04-14,17.7,40.0,north
-2434,FIN,Finland,1917-10-02,30.17,32.0,SP-V,Suomalainen puolue – Vanhasuomalaiset,Finnish Party -- Old Finns,7.4,67,902,Suomalainen puolue -- Vanhasuomalaiset,con,Conservative,6.4,7.0,7.9,26,,,,,north
-94,FIN,Finland,1917-10-02,12.38,26.0,KESK,Keskusta,Centre Party,5.8027,67,902,Keskusta,agr,Agrarian,4.9349,7.2203,5.5267,2,1045.0,2019-04-14,13.8,31.0,north
-585,FIN,Finland,1917-10-02,10.9,21.0,RKP-SFP,Ruotsalainen Kansanpuolue – Svenska Folkepartiet i Finland,Swedish People's Party,6.3906,67,902,Ruotsalainen Kansanpuolue -- Svenska Folkepartiet i Finland,lib,Liberal,6.7295,3.8385,8.5284,6,1045.0,2019-04-14,4.5,9.0,north
-1118,FIN,Finland,1919-03-03,15.7,28.0,KOK,Kansallinen Kokoomus – Samlingspartiet,National Coalition Party,7.2451,67,903,Kansallinen Kokoomus -- Samlingspartiet,con,Conservative,7.6408,5.5872,9.0846,26,1045.0,2019-04-14,17.0,38.0,north
-1219,FIN,Finland,1919-03-03,12.8,26.0,KE|SLK,Kansallinen Edistyspuolue | [Suomen] Liberaalinen Kansanpuolue,National Progressive Party | [Finnish] Liberal People's Party,5.7167,67,903,Kansallinen Edistyspuolue | [Suomen] Liberaalinen Kansanpuolue,lib,Liberal,6.7,3.6,9.05,6,,,,,north
-2433,FIN,Finland,1919-03-03,1.5,2.0,SKrTL,Suomen Kristillisen Työväen Liitto –  Finlands kristliga arbetarförbund,Christian Workers' Union of Finland,3.3,67,903,Suomen Kristillisen Tyovaen Liitto -- Finlands kristliga arbetarforbund,soc,Social democracy,3.5,3.5,8.1,11,,,,,north
-1292,FIN,Finland,1922-07-03,14.8,27.0,DL|VAS,Demokraattinen Liitto – Demokratiska Förbundet | Vasemmistoliitto – Vänsterförbundet ,Democratic Union | Left Alliance,2.1843,67,904,Demokraattinen Liitto -- Demokratiska Forbundet | Vasemmistoliitto -- Vansterforbundet ,com,Communist/Socialist,1.8661,3.3406,5.165,14,1045.0,2019-04-14,8.2,16.0,north
-920,FIN,Finland,1930-10-01,1.8,1.0,SPP,Suomen Pienviljelijäin Puolue – Finska Småbrukarpartiet,Finnish Small Farmers' Party,5.3,67,269,Suomen Pienviljelijain Puolue -- Finska Smabrukarpartiet,agr,Agrarian,4.9,6.5,5.4,2,,,,,north
-1565,FIN,Finland,1930-10-01,0.82,1.0,SV,Ruotsalainen vasemmisto – Svensk vänster,Swedish Left,1.3,67,269,Ruotsalainen vasemmisto -- Svensk vanster,com,Communist/Socialist,1.4,3.0,3.3,14,,,,,north
-2292,FIN,Finland,1933-07-01,0.85,2.0,Ka,Kansanpuolue,People's Party,5.3,67,689,Kansanpuolue,agr,Agrarian,4.9,6.5,5.4,2,,,,,north
-957,FIN,Finland,1936-07-01,8.3,14.0,IK,Isänmaallinen Kansanliike – Fosterländska Folkrörelsen,Patriotic People's Movement,7.4,67,142,Isanmaallinen Kansanliike -- Fosterlandska Folkrorelsen,con,Conservative,6.4,7.0,7.9,26,,,,,north
-2293,FIN,Finland,1939-07-01,2.14,2.0,PMP,Pienviljelijäin ja maalaiskansan puolue,Party of Smallholders and Rural People,5.3,67,297,Pienviljelijain ja maalaiskansan puolue,agr,Agrarian,4.9,6.5,5.4,2,,,,,north
 66,FIN,Finland,1948-07-02,0.4,1.0,AS,Åländsk Samlingin ääntä – Åländsk Samling,Aland Coalition,,67,187,Alandsk Samlingin aanta -- Alandsk Samling,spec,Special issue,,,,16,1045.0,2019-04-14,0.38,1.0,north
 1108,FIN,Finland,1958-07-07,1.7,3.0,TPSL,Tyäväen ja Pienviljelijäin Sosialdemokraattinen Liitto – Arbetarnas och Småbrukarnas Socialdemokratiska Förbund,Social Democratic League of Workers and Smallholders,3.3,67,616,Tyavaen ja Pienviljelijain Sosialdemokraattinen Liitto -- Arbetarnas och Smabrukarnas Socialdemokratiska Forbund,soc,Social democracy,3.5,3.5,8.1,11,,,,,north
 1109,FIN,Finland,1962-02-05,0.52,1.0,VL,Vapaamielisten Liitto – De Frisinnades Förbund,Liberal League,6.0,67,354,Vapaamielisten Liitto -- De Frisinnades Forbund,lib,Liberal,6.7,3.6,8.7,6,,,,,north
@@ -274,19 +191,6 @@ party_id,country_name_short,country_name,election_date,vote_share,seats,party_na
 1105,FIN,Finland,1995-03-19,0.3,1.0,Eko,Ekologinen puolue – Ekologiska partiet,Ecological Party,4.75,67,24,Ekologinen puolue -- Ekologiska partiet,eco,Green/Ecologist,4.5,3.75,2.5,19,,,,,north
 638,FIN,Finland,1999-03-21,1.1,1.0,Rt,Remonttiryhmä,Reform Group,6.6,67,15,Remonttiryhma,spec,Special issue,5.8,6.8,5.0,16,,,,,north
 2801,FIN,Finland,2019-04-14,2.25,1.0,LN,Liike Nyt,Movement Now,6.0,67,1045,Liike Nyt,lib,Liberal,6.7,3.6,8.7,6,1045.0,2019-04-14,2.25,1.0,north
-2587,FRA,France,1902-05-11,29.73,175.0,RepG,Républicaine gauche ,Left Republican ,6.0,43,987,Republicaine gauche ,lib,Liberal,6.7,3.6,8.7,6,,,,,south
-2589,FRA,France,1902-05-11,14.12,145.0,C,Conservateurs,Conservatives,7.4,43,987,Conservateurs,con,Conservative,6.4,7.0,7.9,26,,,,,south
-2585,FRA,France,1902-05-11,16.81,117.0,RI,Radicaux indépendants,Independent Radicals,7.4,43,987,Radicaux independants,con,Conservative,6.4,7.0,7.9,26,,,,,south
-401,FRA,France,1902-05-11,10.14,75.0,PR,Parti radical-socialiste ,Radical Socialist Party,3.9896,43,987,Parti radical-socialiste ,con,Conservative,4.1676,4.2381,7.9361,26,,,,,south
-1539,FRA,France,1902-05-11,6.31,45.0,PS,Parti socialiste,Socialist Party,3.2493,43,987,Parti socialiste,soc,Social democracy,3.248,2.9367,7.9448,11,1014.0,2017-06-18,7.44,30.0,south
-2592,FRA,France,1902-05-11,4.59,18.0,Rep,Republicans,Republicans,6.0,43,987,Republicans,lib,Liberal,6.7,3.6,8.7,6,,,,,south
-2586,FRA,France,1906-05-20,14.06,67.0,RP,Républicains progressistes,Progressive Republicans,7.4,43,986,Republicains progressistes,con,Conservative,6.4,7.0,7.9,26,,,,,south
-2590,FRA,France,1906-05-20,2.33,18.0,SI,Socialistes indépendants,Independent Socialists,1.3,43,986,Socialistes independants,com,Communist/Socialist,1.4,3.0,3.3,14,,,,,south
-2594,FRA,France,1910-05-08,20.45,145.0,RS,Parti républicain socialiste,Republican Socialist Party,3.3,43,988,Parti Republicain Socialist,soc,Social democracy,3.5,3.5,8.1,11,,,,,south
-2581,FRA,France,1910-05-08,17.43,137.0,UR,Union républicaine,Republican Union,8.8,43,988,Union republicaine,right,Right-wing,5.9,8.5,2.3,40,,,,,south
-686,FRA,France,1924-05-25,9.82,26.0,PCF,Parti communiste française,French Communist Party,1.3741,43,991,Parti communiste francais,com,Communist/Socialist,1.056,4.5083,2.3595,14,1014.0,2017-06-18,2.72,10.0,south
-2583,FRA,France,1932-05-08,3.23,16.0,PDP,Parti démocrate populaire,Popular Democratic Party,6.2,43,984,Parti democrate populaire,chr,Christian democracy,5.7,7.1,8.3,3,,,,,south
-2584,FRA,France,1932-05-08,0.82,11.0,PUP,Parti de l'Unité Prolétarienne, Proletarian Unity Party,1.3,43,984,Parti de l'Unite Proletarienne,com,Communist/Socialist,1.4,3.0,3.3,14,,,,,south
 1086,FRA,France,1945-10-21,24.91,141.0,MRP,Mouvement républicain populaire,Popular Republican Movement,8.2,43,471,Mouvement republicain populaire,chr,Christian democracy,5.7,7.1,8.3,3,,,,,south
 1297,FRA,France,1945-10-21,13.27,62.0,PRL,Parti républicain de la liberté,Conservatives,7.5636,43,471,Parti republicain de la liberte,con,Conservative,6.4495,7.2219,7.2286,26,,,,,south
 890,FRA,France,1946-06-02,11.5,39.0,RGR,Rassemblement des gauches républicaines,Rally of Republican Lefts,7.4,43,348,Rassemblement des gauches republicaines,con,Conservative,6.4,7.0,7.9,26,,,,,south
@@ -319,24 +223,6 @@ party_id,country_name_short,country_name,election_date,vote_share,seats,party_na
 2273,FRA,France,2017-06-18,3.03,18.0,UDI,Union des démocrates et indépendants,Union of Democrats and Independents,7.4,43,1014,Union des democrates et independants,con,Conservative,6.4,7.0,7.9,26,1014.0,2017-06-18,3.03,18.0,south
 2644,FRA,France,2017-06-18,11.03,17.0,FI,La France Insoumise,Unbowed France,1.3,43,1014,La France Insoumise,com,Communist/Socialist,1.4,3.0,3.3,14,1014.0,2017-06-18,11.03,17.0,south
 2399,FRA,France,2017-06-18,1.17,1.0,DLR|DLF,Debout la république | Debout la France,Republic Arise | France Arise,7.4,43,1014,Debout la republique | Debout la France,con,Conservative,6.4,7.0,7.9,26,1014.0,2017-06-18,1.17,1.0,south
-773,GBR,United Kingdom,1918-12-14,32.5,332.0,Con,Conservatives,Conservatives,7.4261,44,905,Conservatives,con,Conservative,7.5725,7.1901,2.3243,26,1086.0,2019-12-12,43.63,365.0,north
-2501,GBR,United Kingdom,1918-12-14,12.6,127.0,CoLib,Coalition Liberal,Coalition Liberal,6.0,44,905,Coalition Liberal,lib,Liberal,6.7,3.6,8.7,6,,,,,north
-689,GBR,United Kingdom,1918-12-14,4.6,73.0,SF,Sinn Féin,Sinn Fein,1.3,44,905,Sinn Fein,com,Communist/Socialist,1.4,3.0,3.3,14,1086.0,2019-12-12,0.57,7.0,north
-1556,GBR,United Kingdom,1918-12-14,20.8,57.0,Lab,Labour Party,Labour,4.3562,44,905,Labour Party,soc,Social democracy,4.5741,4.2779,6.9923,11,1086.0,2019-12-12,32.16,203.0,north
-2719,GBR,United Kingdom,1918-12-14,5.9,50.0,Con-18,Conservatives [no coupon],Conservatives,7.4,44,905,Conservatives,con,Conservative,6.4,7.0,7.9,26,,,,,north
-659,GBR,United Kingdom,1918-12-14,13.0,36.0,Lib,Liberals,Liberals,4.2875,44,905,Liberals,lib,Liberal,4.1064,2.6109,9.2231,6,1086.0,2019-12-12,11.55,11.0,north
-2503,GBR,United Kingdom,1918-12-14,1.45,9.0,NDP,National Democratic and Labour Party ,National Democratic and Labour Party ,8.8,44,905,National Democratic and Labour Party ,right,Right-wing,5.9,8.5,2.3,40,,,,,north
-332,GBR,United Kingdom,1918-12-14,2.21,7.0,N,Nationalist Party,Nationalist Party,3.3,44,905,Nationalist Party,soc,Social democracy,3.5,3.5,8.1,11,,,,,north
-2508,GBR,United Kingdom,1918-12-14,0.5,4.0,CoLab,Coalition Labour,Coalition Labour,3.3,44,905,Coalition Labour,soc,Social democracy,3.5,3.5,8.1,11,,,,,north
-2504,GBR,United Kingdom,1918-12-14,0.9,2.0,NP,National Party,National Party,8.8,44,905,National Party,right,Right-wing,5.9,8.5,2.3,40,,,,,north
-1017,GBR,United Kingdom,1922-11-15,10.22,53.0,NLP,National Liberal Party,National Liberal Party,6.0,44,906,National Liberal Party,lib,Liberal,6.7,3.6,8.7,6,,,,,north
-453,GBR,United Kingdom,1922-11-15,2.62,10.0,etc,others,others,,44,906,others,none,no family,,,,12,,,,,north
-2514,GBR,United Kingdom,1922-11-15,0.1,1.0,C,Constitutionalist,Constitutionalist,7.4,44,906,Constitutionalist,con,Conservative,6.4,7.0,7.9,26,,,,,north
-1276,GBR,United Kingdom,1924-10-29,0.33,1.0,CPGB,Communist Party of Great Britain,Communist Party of Great Britain,1.3,44,908,Communist Party of Great Britain,com,Communist/Socialist,1.4,3.0,3.3,14,,,,,north
-2479,GBR,United Kingdom,1931-10-27,1.58,13.0,NLO,National Labour Organisation,National Labour Organisation,3.3,44,910,National Labour Organisation,soc,Social democracy,3.5,3.5,8.1,11,,,,,north
-2517,GBR,United Kingdom,1931-10-27,0.48,4.0,IL,Independent Liberal ,Independent Liberal,6.0,44,910,Independent Liberal ,lib,Liberal,6.7,3.6,8.7,6,,,,,north
-2518,GBR,United Kingdom,1931-10-27,0.05,4.0,Na,National,National,7.4,44,910,National,con,Conservative,6.4,7.0,7.9,26,,,,,north
-1205,GBR,United Kingdom,1935-11-14,0.63,4.0,ILP,Independent Labour Party,Independent Labour Party,1.3,44,911,Independent Labour Party,com,Communist/Socialist,1.4,3.0,3.3,14,,,,,north
 1092,GBR,United Kingdom,1966-03-31,0.1,1.0,RepLP,Republican Labour Party,Republican Labour Party,,44,583,Republican Labour Party,code,to be coded,,,,28,,,,,north
 349,GBR,United Kingdom,1970-06-18,0.5,2.0,U,Unity,Unity,,44,311,Unity,spec,Special issue,,,,16,,,,,north
 1284,GBR,United Kingdom,1970-06-18,1.1,1.0,SNP,Scottish National Party – Pàrtaidh Nàiseanta na h-Alba,Scottish National Party,3.5871,44,311,Scottish National Party -- Partaidh Naiseanta na h-Alba,soc,Social democracy,3.0627,3.9623,7.8641,11,1086.0,2019-12-12,3.88,48.0,north
@@ -403,19 +289,6 @@ party_id,country_name_short,country_name,election_date,vote_share,seats,party_na
 403,HUN,Hungary,2010-04-25,7.48,16.0,LMP,Lehet Más a Politika,Politics Can Be Different,2.5,39,688,Lehet Mas a Politika,eco,Green/Ecologist,2.5,1.8,6.5,19,1023.0,2018-04-08,7.06,8.0,east
 1970,HUN,Hungary,2018-04-08,5.37,9.0,DK,Demokratikus Koalíció,Democratic Coalition,3.3,39,1023,Demokratikus Koalicio,soc,Social democracy,3.5,3.5,8.1,11,1023.0,2018-04-08,5.37,9.0,east
 2318,HUN,Hungary,2018-04-08,0.66,1.0,Egyutt,Együtt – A Korszakváltók Pártja,Together -- Party for a New Era,3.3,39,1023,Egyutt -- A Korszakvaltok Partja,soc,Social democracy,3.5,3.5,8.1,11,1023.0,2018-04-08,0.66,1.0,east
-2447,IRL,Ireland,1922-06-22,38.5,58.0,CG,Cumann na nGaedheal,Society of the Gaels,7.4,37,912,Cumann na nGaedheal,con,Conservative,6.4,7.0,7.9,26,,,,,north
-280,IRL,Ireland,1922-06-22,21.8,36.0,FF,Fianna Fáil,Fianna Fail,6.0713,37,912,Fianna Fail,con,Conservative,5.8991,6.9898,7.8389,26,1088.0,2020-02-08,22.18,38.0,north
-318,IRL,Ireland,1922-06-22,21.3,17.0,Lab,Labour Party,Labour Party,3.6252,37,912,Labour Party,soc,Social democracy,3.353,3.1071,7.1292,11,1088.0,2020-02-08,4.38,6.0,north
-2563,IRL,Ireland,1922-06-22,7.8,7.0,FP,Farmers' Party,Farmers' Party,5.3,37,912,Farmers' Party,agr,Agrarian,4.9,6.5,5.4,2,,,,,north
-2523,IRL,Ireland,1922-06-22,2.3,1.0,BP,Business and Professional Group,Business and Professional Group,6.0,37,912,Business and Professional Group,lib,Liberal,6.7,3.6,8.7,6,,,,,north
-2525,IRL,Ireland,1923-08-27,0.3,2.0,CPA,Cork Progressive Association,Cork Progressive Association,7.4,37,913,Cork Progressive Association,con,Conservative,6.4,7.0,7.9,26,,,,,north
-2443,IRL,Ireland,1927-06-09,7.3,8.0,NLP,National League Party,National League Party,7.4,37,914,National League Party,con,Conservative,6.4,7.0,7.9,26,,,,,north
-433,IRL,Ireland,1927-06-09,3.6,5.0,SFWP,Sinn Féin The Workers' Party,Sinn Fein The Workers' Party,1.3,37,914,Sinn Fein The Workers' Party,com,Communist/Socialist,1.4,3.0,3.3,14,,,,,north
-2526,IRL,Ireland,1927-09-15,1.1,1.0,IWL,Irish Worker League,Irish Worker League,1.3,37,915,Irish Worker League,com,Communist/Socialist,1.4,3.0,3.3,14,,,,,north
-2442,IRL,Ireland,1933-01-24,9.2,11.0,NCP,National Centre Party,National Centre Party,7.4,37,918,National Centre Party,con,Conservative,6.4,7.0,7.9,26,,,,,north
-1393,IRL,Ireland,1937-07-01,34.8,48.0,FG,Fine Gael,Fine Gael (Familiy of the Irish),6.4372,37,919,Fine Gael,chr,Christian democracy,6.1603,5.787000000000001,9.1708,3,1088.0,2020-02-08,20.86,35.0,north
-923,IRL,Ireland,1943-06-23,9.8,10.0,CnT,Clann na Talmhan,Party of the Land,5.3,37,921,Clann na Talmhan,agr,Agrarian,4.9,6.5,5.4,2,,,,,north
-156,IRL,Ireland,1944-05-30,2.7,4.0,NL,National Labour Party,National Labour Party,3.3,37,122,National Labour Party,soc,Social democracy,3.5,3.5,8.1,11,,,,,north
 92,IRL,Ireland,1948-02-04,13.21,10.0,CnP,Clann na Poblachta,Republican Party,7.4,37,60,Clann na Poblachta,con,Conservative,6.4,7.0,7.9,26,,,,,north
 523,IRL,Ireland,1961-10-04,0.98,2.0,NPD,National Progressive Democrats – Daonlathaithe Forchéimnitheacha Náisiúnta,National Progressive Democrats,1.3,37,413,National Progressive Democrats -- Daonlathaithe Forcheimnitheacha Naisiunta,com,Communist/Socialist,1.4,3.0,3.3,14,,,,,north
 1323,IRL,Ireland,1981-06-11,2.4290000000000003,2.0,H-B,Anti H-Block,Anti H-Block,,37,47,Anti H-Block,spec,Special issue,,,,16,,,,,north
@@ -432,15 +305,6 @@ party_id,country_name_short,country_name,election_date,vote_share,seats,party_na
 2619,IRL,Ireland,2016-02-26,3.01,3.0,DS,Daonlathaigh Shóisialta,Social Democrats ,3.3,37,1002,Daonlathaigh Shoisialta,soc,Social democracy,3.5,3.5,8.1,11,1088.0,2020-02-08,2.9,6.0,north
 2776,IRL,Ireland,2020-02-08,2.63,5.0,D-PRB,Dlúthphartíocht – Pobal Roimh Bhrabús,Solidarity -- People Before Profit,1.3,37,1088,Dluthphartiocht -- Pobal Roimh Bhrabus,com,Communist/Socialist,1.4,3.0,3.3,14,1088.0,2020-02-08,2.63,5.0,north
 2795,IRL,Ireland,2020-02-08,1.9,1.0,A,Aontú,Aontu,7.4,37,1088,Aontu,con,Conservative,6.4,7.0,7.9,26,1088.0,2020-02-08,1.9,1.0,north
-2440,ISL,Iceland,1919-11-15,45.8,16.0,He,Heimastjórnarflokkurinn,Home Rule Party ,6.0,56,922,Heimastjrnarflokkurinn,lib,Liberal,6.7,3.6,,6,,,,,north
-2561,ISL,Iceland,1919-11-15,25.3,13.0,Sj-07,Sjálfstæðisflokkurinn – 1907,Independence Party -- 1907,7.4,56,922,Sjalfstaedisflokkurinn -- 1907,con,Conservative,6.4,7.0,,26,,,,,north
-1455,ISL,Iceland,1919-11-15,22.2,11.0,F,Framsóknarflokkurinn,Progressive Party,5.0365,56,922,Framsoknarflokkurinn,agr,Agrarian,5.6579,3.8596,,2,1021.0,2017-10-28,10.7,8.0,north
-1342,ISL,Iceland,1923-10-27,53.6,23.0,Sj,Sjálfstæðisflokkurinn,Independence Party,7.4854,56,923,Sjalfstaedisflokkurinn,con,Conservative,7.6316,4.0351,,26,1021.0,2017-10-28,25.2,16.0,north
-228,ISL,Iceland,1923-10-27,16.2,1.0,A,Alþýðuflokkurinn,Social Democratic Party,4.4444,56,923,Althyduflokkurinn,soc,Social democracy,3.5,3.5,,11,,,,,north
-2441,ISL,Iceland,1927-07-09,5.8,1.0,FF,Frjálslyndi flokkurinn,Liberal Party ,6.0,56,924,Frjlslyndi flokkurinn,lib,Liberal,6.7,3.6,,6,,,,,north
-2439,ISL,Iceland,1934-06-24,6.4,3.0,Ba,Bændaflokkur,Farmers' Party,5.3,56,927,Bndaflokkur,agr,Agrarian,4.9,6.5,,2,,,,,north
-2437,ISL,Iceland,1937-06-29,8.4,3.0,Komm,Kommtinistaflokkur,Communist Party,1.3,56,928,Kommtinistaflokkur,com,Communist/Socialist,1.4,3.0,,14,,,,,north
-1319,ISL,Iceland,1942-07-05,16.2,6.0,SA-S,Sameiningarflokkur alþýðu – Sósíalistaflokkurinn,United Socialist Party,1.3,56,929,Sameiningarflokkur althyou -- Sosialistaflokkurinn,com,Communist/Socialist,1.4,3.0,,14,,,,,north
 1172,ISL,Iceland,1953-06-28,6.0,2.0,Thva,Þjóðvarnarflokkurinn,National Preservation Party,6.0,56,88,Thjodvarnarflokkurinn,lib,Liberal,6.7,3.6,,6,,,,,north
 1360,ISL,Iceland,1956-06-24,19.2,8.0,Ab,Alþýðubandalagið,People's Alliance,2.2222,56,665,Althydubandalagid,com,Communist/Socialist,1.4,3.0,,14,,,,,north
 53,ISL,Iceland,1971-06-13,8.9,5.0,Sfvm,Samtök frjálslyndra og vinstri manna,Union of Liberals and Leftist,1.3,56,225,Samtok frjalslyndra og vinstri manna,com,Communist/Socialist,1.4,3.0,,14,,,,,north
@@ -543,24 +407,6 @@ party_id,country_name_short,country_name,election_date,vote_share,seats,party_na
 2121,LTU,Lithuania,2012-10-14,7.99,7.0,DK,Dr?sos kelias,The Way of Courage,,15,786,Drasos kelias,spec,Special issue,,,,16,,,,,east
 2635,LTU,Lithuania,2016-10-09,6.32,1.0,LCP,Lietuvos Centro Partija,Lithuanian Centre Party,8.8,15,1009,Lietuvos Centro Partija,right,Right-wing,5.9,8.5,2.3,40,1009.0,2016-10-09,6.32,1.0,east
 21,LTU,Lithuania,2016-10-09,2.03,1.0,LZP,Lietuvos žalioji partija,Lithuanian Green Party,2.5,15,1009,Lietuvos zalioji partija,eco,Green/Ecologist,2.5,1.8,6.5,19,1009.0,2016-10-09,2.03,1.0,east
-2527,LUX,Luxembourg,1919-10-26,52.8,27.0,PD,Rietspartei,Party of the Right,8.8,7,930,Rietspartei,right,Right-wing,5.9,8.5,,40,,,,,north
-701,LUX,Luxembourg,1919-10-26,15.6,8.0,LSAP,Lëtzebuerger Sozialistesch Aarbechterpartei,Luxembourg Socialist Workers' Party,3.2895,7,930,Letzebuerger Sozialistesch Aarbechterpartei,soc,Social democracy,3.9474,1.3158,,11,1043.0,2018-10-14,15.72,10.0,north
-2453,LUX,Luxembourg,1919-10-26,14.2,7.0,LL,Liberal Liga,Liberal League ,6.0,7,930,Liberal Liga,lib,Liberal,6.7,3.6,,6,,,,,north
-2450,LUX,Luxembourg,1919-10-26,6.6,3.0,ONP,Onofhängeg Nationalpartei ,Independent National Party ,8.8,7,930,Onofhangeg Nationalpartei,right,Right-wing,5.9,8.5,,40,,,,,north
-2451,LUX,Luxembourg,1919-10-26,6.2,2.0,FV,Fräi Vollekspartei,Independent People's Party,,7,930,Frai Vollekspartei,code,to be coded,,,,28,,,,,north
-2456,LUX,Luxembourg,1925-03-01,9.6,5.0,RSP,Radikal-Sozialistesch Partei,Radical Socialist Party ,6.0,7,932,Radikal-Sozialistesch Partei,lib,Liberal,6.7,3.6,,6,,,,,north
-2533,LUX,Luxembourg,1925-03-01,4.8,3.0,RP,Gauche radicale / Parti radical,Radical Left / Radical Party,6.0,7,932,Gauche radicale / Parti radical,lib,Liberal,6.7,3.6,,6,,,,,north
-2529,LUX,Luxembourg,1925-03-01,7.3,2.0,ONV,Onofhängeg National Vereenegung,National Independent Union,8.8,7,932,Onofhangeg National Vereenegung,right,Right-wing,5.9,8.5,,40,,,,,north
-2452,LUX,Luxembourg,1925-03-01,5.3,2.0,PIE,Parti des Indépendants de l'Est,Independents of the East,,7,932,Parti des Indpendants de l'Est,none,no family,,,,12,,,,,north
-2531,LUX,Luxembourg,1925-03-01,2.8,1.0,LiLe,Liberal Lénk,Left Liberals,6.0,7,932,Left Liberals,lib,Liberal,6.7,3.6,,6,,,,,north
-2536,LUX,Luxembourg,1925-03-01,2.4,1.0,BMP,Baueren- a Mëttelstandspartei,Party of Farmers and the Middle Class,5.3,7,932,Baueren- a Mettelstandspartei,agr,Agrarian,4.9,6.5,,2,,,,,north
-2535,LUX,Luxembourg,1931-06-07,7.9,2.0,RPMC,Radikal Partei (Marcel Cahen),Radical Party (Marcel Cahen),6.0,7,934,Radikal Partei (Marcel Cahen),lib,Liberal,6.7,3.6,,6,,,,,north
-2538,LUX,Luxembourg,1931-06-07,5.3,1.0,PDPN,Fortschrëttlech-demokratesch Partei,Progressive Democratic Party of the North,6.0,7,934,Fortschrettlech-demokratesch Partei,lib,Liberal,6.7,3.6,,6,,,,,north
-2455,LUX,Luxembourg,1934-06-03,10.3,7.0,PRL,Radikal-Liberal Partei,Radical Liberal Party ,6.0,7,935,Radikal-Liberal Partei,lib,Liberal,6.7,3.6,,6,,,,,north
-151,LUX,Luxembourg,1934-06-03,5.2,1.0,KPL,Kommunistesch Partei Lëtzebuerg,Communist Party of Luxembourg,1.3,7,935,Kommunistesch Partei Letzebuerg,com,Communist/Socialist,1.4,3.0,,14,,,,,north
-2448,LUX,Luxembourg,1937-06-06,9.8,2.0,DeLe,Demokratesch Lëscht,Democratic List ,6.0,7,936,Demokratesch Lescht,lib,Liberal,6.7,3.6,,6,,,,,north
-2449,LUX,Luxembourg,1937-06-06,4.2,1.0,PBMA,"Partei vun de Baueren, dem Mëttelstand an den Aarbechter","Free List of Peasants, Middle Classes and Workers",,7,936,"Partei vun de Baueren, dem Mettelstand an den Aarbechter",none,no family,,,,12,,,,,north
-2140,LUX,Luxembourg,1937-06-06,3.6,1.0,PL ,Parti Libéral,Liberal Party,6.0,7,936,Parti Liberal,lib,Liberal,6.7,3.6,,6,,,,,north
 1234,LUX,Luxembourg,1945-10-21,41.4146018709,25.0,CSV,Chrëschtlech Sozial Vollekspartei,Christian Social People's Party,6.4474,7,144,Chreschtlech Sozial Vollekspartei,chr,Christian democracy,6.7105,7.5,,3,1043.0,2018-10-14,27.08,21.0,north
 967,LUX,Luxembourg,1945-10-21,16.74,9.0,DP,Demokratesch Partei,Democratic Party,6.5789,7,144,Demokratesch Partei,lib,Liberal,7.3684,2.7632,,6,1043.0,2018-10-14,16.4,12.0,north
 1462,LUX,Luxembourg,1964-06-07,6.01,2.0,MIP,Mouvement indépendant populaire,Popular Independent Movement,,7,579,Mouvement independant populaire,spec,Special issue,,,,16,,,,,north
@@ -614,24 +460,6 @@ party_id,country_name_short,country_name,election_date,vote_share,seats,party_na
 393,MLT,Malta,1962-02-19,9.27,4.0,PDN,Partit Democratiku Nazzjonalista,Democratic Nationalist Party,3.3,72,658,Partit Democratiku Nazzjonalista,soc,Social democracy,3.5,3.5,,11,,,,,south
 1225,MLT,Malta,1962-02-19,9.49,4.0,PHN,Partit Haddiema Nsara,Christian Workers' Party,3.3,72,658,Partit Haddiema Nsara,soc,Social democracy,3.5,3.5,,11,,,,,south
 217,MLT,Malta,1962-02-19,4.84,1.0,PKP,Partit Kostituzzjonali Progressiv,Progressive Constitutionalist Party,7.4,72,658,Partit Kostituzzjonali Progressiv,con,Conservative,6.4,7.0,,26,,,,,south
-2539,NLD,Netherlands,1918-07-03,30.0,30.0,RKP,Roomsch Katholieke Partij,Roman Catholic Party,6.2,8,937,Roomsch Katholieke Partij,chr,Christian democracy,5.7,7.1,8.3,3,,,,,north
-1451,NLD,Netherlands,1918-07-03,22.0,22.0,SDAP,Sociaal Democratische Arbeiders Partij,Social Democratic Workers' Party,3.3,8,937,Sociaal Democratische Arbeiders Partij,soc,Social democracy,3.5,3.5,8.1,11,,,,,north
-300,NLD,Netherlands,1918-07-03,13.4,13.0,ARP,Anti-Revolutionaire Partij,Anti-Revolutionary Party,5.8067,8,937,Anti-Revolutionaire Partij,chr,Christian democracy,5.6933,6.7724,8.2894,3,,,,,north
-405,NLD,Netherlands,1918-07-03,6.5,7.0,CHU,Christelijk-Historische Unie,Christian Historical Union,5.8067,8,937,Christelijk-Historische Unie,chr,Christian democracy,5.6933,6.7724,8.2894,3,,,,,north
-2462,NLD,Netherlands,1918-07-03,6.2,6.0,LU,Liberale Unie,Liberal Union ,6.0,8,937,Liberale Unie,lib,Liberal,6.7,3.6,8.7,6,,,,,north
-944,NLD,Netherlands,1918-07-03,5.3,5.0,VDB,Vrijzinnig Democratische Bond,Free-thinking Democratic League,6.0,8,937,Vrijzinnig Democratische Bond,lib,Liberal,6.7,3.6,8.7,6,,,,,north
-2459,NLD,Netherlands,1918-07-03,3.8,4.0,BVL,Bond van Vrije Liberalen,League of Free Liberals,6.0,8,937,Bond van Vrije Liberalen,lib,Liberal,6.7,3.6,8.7,6,,,,,north
-2457,NLD,Netherlands,1918-07-03,3.1,3.0,EB,Economische Bond,Economic League ,6.0,8,937,Economische Bond,lib,Liberal,6.7,3.6,8.7,6,,,,,north
-1194,NLD,Netherlands,1918-07-03,2.3,2.0,CPN,Communistische Partij Nederland,Communist Party of the Netherlands,0.8,8,937,Communistische Partij Nederland,com,Communist/Socialist,1.4,3.0,5.0,14,,,,,north
-2458,NLD,Netherlands,1918-07-03,0.4,1.0,PB|NBTM,"Peasants' League | Nationale Boeren-, Tuinders- en Middenstandspartij","Plattelandersbond | National Farmers', Horticulturists' and Middle Class Party",5.3,8,937,"Peasants' League | Nationale Boeren-, Tuinders- en Middenstandspartij",agr,Agrarian,4.9,6.5,5.4,2,,,,,north
-2461,NLD,Netherlands,1922-07-05,9.3,10.0,LSP,"Liberale Staatspartij ""de Vrijheidsbond""","Liberal State Party ""The Freedom League""",6.0,8,938,"Liberale Staatspartij ""de Vrijheidsbond""",lib,Liberal,6.7,3.6,8.7,6,,,,,north
-1251,NLD,Netherlands,1922-07-05,0.9,1.0,SGP,Staatkundig Gereformeerde Partij,Political Reformed Party,8.7531,8,938,Staatkundig Gereformeerde Partij,con,Conservative,6.3487,9.7744,2.9307,26,1012.0,2017-03-15,2.1,3.0,north
-2466,NLD,Netherlands,1925-07-01,1.2,1.0,RKVP,Roomsch-Katholieke Volkspartij,Roman Catholic People's Party,6.2,8,939,Roomsch-Katholieke Volkspartij,chr,Christian democracy,5.7,7.1,8.3,3,,,,,north
-2464,NLD,Netherlands,1925-07-01,1.0,1.0,HGS,Hervormd Gereformeerde Staatspartij,New Reformed State Party ,6.2,8,939,Hervormd Gereformeerde Staatspartij,chr,Christian democracy,5.7,7.1,8.3,3,,,,,north
-2714,NLD,Netherlands,1929-07-03,1.2,1.0,MPSL,Middenpartij voor Stad en Land,Middle Party for City and Country,6.0,8,940,Middenpartij voor Stad en Land,lib,Liberal,6.7,3.6,8.7,6,,,,,north
-2465,NLD,Netherlands,1933-04-26,1.3,1.0,RSP,Revolutionair Socialistische Partij,Revolutionary Socialist Party ,1.3,8,941,Revolutionair Socialistische Partij,com,Communist/Socialist,1.4,3.0,3.3,14,,,,,north
-2542,NLD,Netherlands,1933-04-26,1.0,1.0,CDU,Christelijk-Democratische Unie,Christian Democratic Union,6.2,8,941,Christelijk-Democratische Unie,chr,Christian democracy,5.7,7.1,8.3,3,,,,,north
-2463,NLD,Netherlands,1937-05-26,4.2,4.0,NSB,Nationaal-Socialistische Beweging in Nederland,National Socialist Movement in the Netherlands,8.8,8,942,Nationaal-Socialistische Beweging in Nederland,right,Right-wing,5.9,8.5,2.3,40,,,,,north
 451,NLD,Netherlands,1946-05-17,30.81,32.0,KVP,Katholieke Volkspartij,Catholic Peoples Party,5.9473,8,182,Katholieke Volkspartij,chr,Christian democracy,5.8848,6.6882,7.7157,3,,,,,north
 742,NLD,Netherlands,1946-05-17,28.31,29.0,PvdA,Partij van de Arbeid,Labour Party,3.6118,8,182,Partij van de Arbeid,soc,Social democracy,3.8680000000000003,3.2028,7.9904,11,1012.0,2017-03-15,5.7,9.0,north
 1409,NLD,Netherlands,1946-05-17,6.41,6.0,VVD,Volkspartij voor Vrijheid en Democratie,People's Party for Freedom and Democracy,7.3482,8,182,Volkspartij voor Vrijheid en Democratie,lib,Liberal,7.8979,4.3887,5.9471,6,1012.0,2017-03-15,21.3,33.0,north
@@ -658,16 +486,6 @@ party_id,country_name_short,country_name,election_date,vote_share,seats,party_na
 2109,NLD,Netherlands,2012-09-12,1.88,2.0,50,50PLUS,50PLUS,6.0,8,785,50PLUS,lib,Liberal,6.7,3.6,8.7,6,1012.0,2017-03-15,3.1,4.0,north
 2641,NLD,Netherlands,2017-03-15,2.1,3.0,DENK,Beweging DENK,Think,6.0,8,1012,Beweging DENK,lib,Liberal,6.7,3.6,8.7,6,1012.0,2017-03-15,2.1,3.0,north
 2642,NLD,Netherlands,2017-03-15,1.8,2.0,FvD,Forum voor Democratie,Forum for Democracy,7.4,8,1012,Forum voor Democratie,con,Conservative,6.4,7.0,7.9,26,1012.0,2017-03-15,1.8,2.0,north
-647,NOR,Norway,1900-07-01,54.0,77.0,V,Venstre,Liberal Party of Norway,5.1467,9,943,Venstre,lib,Liberal,5.9148,3.2581,4.0766,6,1017.0,2017-09-11,4.4,8.0,north
-1435,NOR,Norway,1900-07-01,40.8,31.0,H,Høyre,Conservative Party,7.8994,9,943,Hoyre,con,Conservative,8.2957,3.5839999999999996,9.5074,26,1017.0,2017-09-11,25.0,45.0,north
-104,NOR,Norway,1903-09-16,9.7,5.0,DNA,Det norske Arbeiderparti,Norwegian Labour Party,3.3706,9,944,Det norske Arbeiderparti,soc,Social democracy,2.9574,2.7105,8.2933,11,1017.0,2017-09-11,27.4,49.0,north
-2415,NOR,Norway,1906-08-27,4.8,4.0,DRF,Det radikale Folkeparti, Radical People's Party,1.3,9,945,Det radikale Folkeparti,com,Communist/Socialist,1.4,3.0,3.3,14,,,,,north
-702,NOR,Norway,1915-10-21,1.0,1.0,Sp,Senterpartiet,Centre Party,4.6565,9,948,Senterpartiet,agr,Agrarian,2.807,5.7644,0.188,2,1017.0,2017-09-11,10.3,19.0,north
-2474,NOR,Norway,1921-10-24,9.2,8.0,NSA,Norges Socialdemokratiske Arbeiderparti,Social Democratic Labour Party of Norway,3.3,9,950,Norges Socialdemokratiske Arbeiderparti,soc,Social democracy,3.5,3.5,8.1,11,,,,,north
-27,NOR,Norway,1924-10-21,6.1,6.0,NKP,Norges Kommunistiske Parti,Communist Party of Norway,1.3,9,951,Norges Kommunistiske Parti,com,Communist/Socialist,1.4,3.0,0.0,14,,,,,north
-2472,NOR,Norway,1927-10-17,1.44,1.0,FV,Frisinnede Venstre,Liberal Left Party,6.0,9,867,Frisinnede Venstre,lib,Liberal,6.7,3.6,8.7,6,,,,,north
-1538,NOR,Norway,1933-10-16,0.82,1.0,KrF,Kristelig Folkeparti,Christian Democratic Party,5.8516,9,865,Kristelig Folkeparti,chr,Christian democracy,4.5865,9.198,3.1003,3,1017.0,2017-09-11,4.2,8.0,north
-2420,NOR,Norway,1933-10-16,1.5,1.0,Soc,Samfundspartiet,Society Party,6.2,9,865,Samfundspartiet,chr,Christian democracy,5.7,7.1,8.3,3,,,,,north
 2194,NOR,Norway,1949-10-10,6.14,9.0,FeBo,Felleslister borgerlige,Electoral lists Conservatives,7.4,9,478,Felleslister borgerlige,con,Conservative,6.4,7.0,7.9,26,,,,,north
 1773,NOR,Norway,1961-09-11,2.4,2.0,SF,Sosialistisk Folkeparti,Socialist People's Party,1.3,9,622,Sosialistisk Folkeparti,com,Communist/Socialist,1.4,3.0,3.3,14,,,,,north
 81,NOR,Norway,1973-09-09,11.23,16.0,SV,Sosialistisk Venstreparti,Socialist Left Party,1.5839,9,523,Sosialistisk Venstreparti,com,Communist/Socialist,1.3534,1.5038,1.1568,14,1017.0,2017-09-11,6.0,11.0,north
@@ -785,16 +603,6 @@ party_id,country_name_short,country_name,election_date,vote_share,seats,party_na
 2337,SVN,Slovenia,2014-07-13,4.38,4.0,ZaAB,Zavezništvo Alenke Bratušek,Alliance of Alenka Bratusek,3.3,60,817,Zaveznistvo Alenke Bratusek,soc,Social democracy,3.5,3.5,8.1,11,1025.0,2018-06-03,5.11,5.0,east
 2668,SVN,Slovenia,2018-06-03,12.6,13.0,LMS,Lista Marjana Šarca,List of Marjan Sarec,3.3,60,1025,Lista Marjana Sarca,soc,Social democracy,3.5,3.5,8.1,11,1025.0,2018-06-03,12.6,13.0,east
 2670,SVN,Slovenia,2018-06-03,9.33,9.0,L,Levica,The Left,1.3,60,1025,Levica,com,Communist/Socialist,1.4,3.0,3.3,14,1025.0,2018-06-03,9.33,9.0,east
-892,SWE,Sweden,1911-09-24,40.2,102.0,FP,Folkpartiet,People's Party,6.2906,35,961,Folkpartiet,lib,Liberal,7.3062,2.8515,9.4643,6,1041.0,2018-09-09,5.49,20.0,north
-657,SWE,Sweden,1911-09-24,31.2,64.0,M,Moderaterna,Moderate Party,7.8907,35,961,Moderaterna,con,Conservative,8.4089,5.6977,8.5872,26,1041.0,2018-09-09,19.84,70.0,north
-904,SWE,Sweden,1911-09-24,28.5,64.0,SAP,Socialdemokraterna,Social Democrats,3.4447,35,961,Socialdemokraterna,soc,Social democracy,3.5655,4.4407,7.4445,11,1041.0,2018-09-09,28.26,100.0,north
-1461,SWE,Sweden,1917-09-16,5.3,9.0,C,Centerpartiet,Centre Party,5.8084,35,964,Centerpartiet,agr,Agrarian,5.9903,6.0583,5.5679,2,1041.0,2018-09-09,8.61,31.0,north
-2556,SWE,Sweden,1917-09-16,3.1,3.0,JR,Jordbrukarnas Riksförbund,National Farmers' Union,5.3,35,964,Jordbrukarnas Riksforbund,agr,Agrarian,4.9,6.5,5.4,2,,,,,north
-882,SWE,Sweden,1920-09-17,6.4,7.0,V,Vänsterpartiet (kommunisterna),Left Party (Communists),1.5464,35,965,Vansterpartiet (kommunisterna),com,Communist/Socialist,1.4121,2.4562,1.2042,14,1041.0,2018-09-09,8.0,28.0,north
-2557,SWE,Sweden,1921-09-26,3.2,6.0,SSV-21,Sverges Socialdemokratiska Vänsterparti – 1921,Social Democratic Left Party of Sweden -- 1921,1.3,35,966,Sverges Socialdemokratiska Vansterparti -- 1921,com,Communist/Socialist,1.4,3.0,3.3,14,,,,,north
-2477,SWE,Sweden,1924-09-21,3.9,5.0,SLP,Sveriges Liberala Parti,Liberal Party of Sweden,6.0,35,967,Sveriges Liberala Parti,lib,Liberal,6.7,3.6,8.7,6,,,,,north
-2475,SWE,Sweden,1924-09-21,1.5,1.0,SKP-H,Sveriges Kommunistiska Parti [Höglund],Communist Party of Sweden [Hoglund],1.3,35,967,Sveriges Kommunistiska Parti [Hoglund],com,Communist/Socialist,1.4,3.0,3.3,14,,,,,north
-2478,SWE,Sweden,1932-09-18,5.3,6.0,SP,Socialistiska partiet,Socialist Party ,1.3,35,969,Socialistiska partiet,com,Communist/Socialist,1.4,3.0,3.3,14,,,,,north
 802,SWE,Sweden,1964-09-20,1.5,3.0,MbS,Medborgerlig samling,Citizens Coalition,7.4,35,41,Medborgerlig samling,con,Conservative,6.4,7.0,7.9,26,,,,,north
 1010,SWE,Sweden,1964-09-20,0.3,2.0,Mi,Mittenpartierna,Middle Parties,6.0,35,41,Mittenpartierna,lib,Liberal,6.7,3.6,8.7,6,,,,,north
 1154,SWE,Sweden,1988-09-18,5.5,20.0,MP,Miljöpartiet de Gröna,Greens,3.3789,35,428,Miljopartiet de Grona,eco,Green/Ecologist,3.3866,2.5198,0.9875,19,1041.0,2018-09-09,4.41,16.0,north
