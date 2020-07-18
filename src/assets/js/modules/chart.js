@@ -546,18 +546,18 @@ class MainChart {
   }
 
   updateState({ year, minVoteShare, country, action = true } = {}) {
-    if (year != null && year !== this.state.year) {
+    if (!isNull(year) && year !== this.state.year) {
       this.state.year = year;
       this.templates.year.view = { year: year.getFullYear() };
 
       if (action) renderTemplate(this.templates.year);
     }
 
-    if (minVoteShare != null && minVoteShare !== this.state.minVoteShare) {
+    if (!isNull(minVoteShare) && minVoteShare !== this.state.minVoteShare) {
       this.state.minVoteShare = minVoteShare;
     }
 
-    if (country != null && country !== this.state.country) {
+    if (!isNull(country) && country !== this.state.country) {
       this.state.country = country;
     }
 
