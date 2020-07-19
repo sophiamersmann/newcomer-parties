@@ -5,6 +5,12 @@ $(document).ready(() => {
   const selectCountry = $("#select-country");
   const country = selectCountry.val();
 
+  const buttonGroup = $(".button-group");
+  buttonGroup.click(() => {
+    buttonGroup.removeClass("active");
+    $(event.target).toggleClass("active");
+  });
+
   renderMinVoteShare = renderMinVoteShare.bind(inputVoteShare);
   renderMinVoteShare();
 

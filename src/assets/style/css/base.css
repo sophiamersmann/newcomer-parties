@@ -75,3 +75,6 @@ main {
     border-bottom: 1px solid; }
   .side-lines:after {
     margin: 0 -55% 0 0.5em; }
+
+.button-group.active {
+  background-color: lavender; }
