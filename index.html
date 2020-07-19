@@ -34,25 +34,17 @@
       <div class="overview">
         <h1>Newcomer Parties</h1>
 
-        <div class="form-group">
-          in
-          <!-- <label for="select-country">Country:</label> -->
-          <input
-            id="select-country"
-            name="country"
-            list="countries"
-            value="Europe"
-          />
-          <datalist id="countries"> </datalist>
-        </div>
-
         <div>
-          <button class="button-country-group active" data-group="all">
-            All
-          </button>
-          <button class="button-country-group" data-group="north">North</button>
-          <button class="button-country-group" data-group="south">South</button>
-          <button class="button-country-group" data-group="east">East</button>
+          <div class="group-buttons">
+            <button class="active" data-group="all">
+              All
+            </button>
+            <button data-group="north">North</button>
+            <button data-group="south">South</button>
+            <button data-group="east">East</button>
+          </div>
+
+          <div id="country-buttons"></div>
         </div>
 
         <div>

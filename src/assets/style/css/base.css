@@ -23,7 +23,7 @@ main {
   padding: 1rem; }
   .panel .overview {
     background-color: aliceblue;
-    height: 200px; }
+    height: 300px; }
   .panel #party-list {
     background-color: lavender;
     height: calc(100% - 200px);
@@ -76,5 +76,8 @@ main {
   .side-lines:after {
     margin: 0 -55% 0 0.5em; }
 
-.button-country-group.active {
+.group-buttons .active {
   background-color: lavender; }
+
+.country-buttons.hide {
+  display: none; }

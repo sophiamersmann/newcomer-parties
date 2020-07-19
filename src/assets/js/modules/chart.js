@@ -796,6 +796,15 @@ class MainChart {
         })),
         (d) => d.familyId
       ),
+      countryGroups: d3
+        .nest()
+        .key((d) => d.countryGroup)
+        .rollup((v) => v.map((d) => d.country))
+        .entries(data)
+        .map(({ key, value }) => ({
+          group: key,
+          countries: [...new Set(value)],
+        })),
     };
   }
 

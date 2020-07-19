@@ -31,7 +31,7 @@ main {
 
   .overview {
     background-color: aliceblue;
-    height: 200px;
+    height: 300px;
   }
 
   #party-list {
@@ -110,6 +110,10 @@ main {
   }
 }
 
-.button-country-group.active {
+.group-buttons .active {
   background-color: lavender;
+}
+
+.country-buttons.hide {
+  display: none;
 }
