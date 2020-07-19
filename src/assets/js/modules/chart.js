@@ -280,10 +280,10 @@ class MainChart {
     const { color } = this.parties;
 
     this.svg.bg
-      .selectAll(".beeswarm-pair")
+      .selectAll(".bg-beeswarm-pair")
       .data(this.data.families)
       .join("g")
-      .attr("class", "beeswarm-pair");
+      .attr("class", "bg-beeswarm-pair");
 
     this.svg.g
       .selectAll(".beeswarm-pair")
@@ -347,42 +347,6 @@ class MainChart {
     const { y, r } = this.scales;
     const { selector, color, transparent, alive, dead } = this.parties;
 
-    this.svg.bg
-      .selectAll(".beeswarm-pair")
-      .data(this.data.beeswarms)
-      .selectAll(`${selector}-highlight`)
-      .data(({ parties }) =>
-        parties.filter(
-          ({ data: d }) => d.share >= this.state.minVoteShare * 100
-        )
-      )
-      .join(
-        (enter) =>
-          enter
-            .append("circle")
-            .attr("class", `${selector.slice(1)}-highlight`)
-            .attr("cx", (d) => d.x)
-            .attr("cy", (d) => d.y)
-            .attr("r", ({ data: d }) => r(d.share) * 4)
-            .attr("stroke", ({ data: d }) => color(d.familyId))
-            .attr("stroke-width", 0)
-            .attr("fill", "url(#radial-gradient)")
-            .attr("opacity", ({ data: d }) =>
-              d.country === this.state.country &&
-              d.electionDate >= this.state.year
-                ? 1
-                : 0
-            ),
-        (update) =>
-          update.attr("opacity", ({ data: d }) =>
-            d.country === this.state.country &&
-            d.electionDate >= this.state.year
-              ? 1
-              : 0
-          ),
-        (exit) => exit.remove()
-      );
-
     this.svg.g
       .selectAll(".beeswarm-pair")
       .data(this.data.beeswarms)
@@ -428,6 +392,47 @@ class MainChart {
                 )
             ),
         (update) => update,
+        (exit) => exit.remove()
+      );
+  }
+
+  highlightBees() {
+    const { r } = this.scales;
+    const { selector, color } = this.parties;
+
+    this.svg.bg
+      .selectAll(".bg-beeswarm-pair")
+      .data(this.data.beeswarms)
+      .selectAll(`${selector}-highlight`)
+      .data(({ parties }) =>
+        parties.filter(
+          ({ data: d }) => d.share >= this.state.minVoteShare * 100
+        )
+      )
+      .join(
+        (enter) =>
+          enter
+            .append("circle")
+            .attr("class", `${selector.slice(1)}-highlight`)
+            .attr("cx", (d) => d.x)
+            .attr("cy", (d) => d.y)
+            .attr("r", ({ data: d }) => r(d.share) * 4)
+            .attr("stroke", ({ data: d }) => color(d.familyId))
+            .attr("stroke-width", 0)
+            .attr("fill", "url(#radial-gradient)")
+            .attr("opacity", ({ data: d }) =>
+              d.country === this.state.country &&
+              d.electionDate >= this.state.year
+                ? 1
+                : 0
+            ),
+        (update) =>
+          update.attr("opacity", ({ data: d }) =>
+            d.country === this.state.country &&
+            d.electionDate >= this.state.year
+              ? 1
+              : 0
+          ),
         (exit) => exit.remove()
       );
   }
@@ -548,16 +553,23 @@ class MainChart {
     if (!isNull(year) && year !== this.state.year) {
       this.state.year = year;
       this.templates.year.view = { year: year.getFullYear() };
-
-      if (action) renderTemplate(this.templates.year);
+      if (action) {
+        renderTemplate(this.templates.year);
+        this.highlightBees();
+      }
     }
 
     if (!isNull(minVoteShare) && minVoteShare !== this.state.minVoteShare) {
       this.state.minVoteShare = minVoteShare;
+      if (action) {
+        this.drawBees();
+        this.highlightBees();
+      }
     }
 
     if (!isNull(country) && country !== this.state.country) {
       this.state.country = country;
+      if (action) this.highlightBees();
     }
 
     this.state.parties = this.data.raw.filter(
@@ -590,7 +602,6 @@ class MainChart {
         this.injectShareCharts();
         this.injectPositionCharts();
       });
-      this.drawBees();
     }
   }
 
