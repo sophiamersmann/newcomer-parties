@@ -336,7 +336,7 @@ class MainChart {
         this.scales
       );
 
-    this.data.beeswarms = d3
+    this.state.beeswarms = d3
       .nest()
       .key((d) => d.familyId)
       .entries(this.state.parties)
@@ -355,12 +355,14 @@ class MainChart {
 
     this.svg.g
       .selectAll(".beeswarm-pair")
-      .data(this.data.beeswarms)
+      .data(this.state.beeswarms)
       .selectAll(selector)
-      .data(({ parties }) =>
-        parties.filter(
-          ({ data: d }) => d.share >= this.state.minVoteShare * 100
-        )
+      .data(
+        ({ parties }) =>
+          parties.filter(
+            ({ data: d }) => d.share >= this.state.minVoteShare * 100
+          ),
+        ({ data: d }) => d.partyId
       )
       .join(
         (enter) =>
@@ -397,51 +399,55 @@ class MainChart {
                     }) - now, ${d.currentShare}%`
                 )
             ),
-        (update) => update,
+        (update) => update.attr("cx", (d) => d.x),
         (exit) => exit.remove()
       );
   }
 
-  highlightBees() {
-    const { r } = this.scales;
-    const { selector, color } = this.parties;
+  // highlightBees() {
+  //   const { r } = this.scales;
+  //   const { selector, color } = this.parties;
 
-    this.svg.bg
-      .selectAll(".bg-beeswarm-pair")
-      .data(this.data.beeswarms)
-      .selectAll(`${selector}-highlight`)
-      .data(({ parties }) =>
-        parties.filter(
-          ({ data: d }) => d.share >= this.state.minVoteShare * 100
-        )
-      )
-      .join(
-        (enter) =>
-          enter
-            .append("circle")
-            .attr("class", `${selector.slice(1)}-highlight`)
-            .attr("cx", (d) => d.x)
-            .attr("cy", (d) => d.y)
-            .attr("r", ({ data: d }) => r(d.share) * 4)
-            .attr("stroke", ({ data: d }) => color(d.familyId))
-            .attr("stroke-width", 0)
-            .attr("fill", "url(#radial-gradient)")
-            .attr("opacity", ({ data: d }) =>
-              d.country === this.state.country &&
-              d.electionDate >= this.state.year
-                ? 1
-                : 0
-            ),
-        (update) =>
-          update.attr("opacity", ({ data: d }) =>
-            d.country === this.state.country &&
-            d.electionDate >= this.state.year
-              ? 1
-              : 0
-          ),
-        (exit) => exit.remove()
-      );
-  }
+  //   this.svg.bg
+  //     .selectAll(".bg-beeswarm-pair")
+  //     .data(this.state.beeswarms)
+  //     .selectAll(`${selector}-highlight`)
+  //     .data(
+  //       ({ parties }) =>
+  //         parties.filter(
+  //           ({ data: d }) => d.share >= this.state.minVoteShare * 100
+  //         ),
+  //       ({ data: d }) => d.partyId
+  //     )
+  //     .join(
+  //       (enter) =>
+  //         enter
+  //           .append("circle")
+  //           .attr("class", `${selector.slice(1)}-highlight`)
+  //           .attr("cx", (d) => d.x)
+  //           .attr("cy", (d) => d.y)
+  //           .attr("r", ({ data: d }) => r(d.share) * 4)
+  //           .attr("stroke", ({ data: d }) => color(d.familyId))
+  //           .attr("stroke-width", 0)
+  //           .attr("fill", "url(#radial-gradient)")
+  //           .attr("opacity", ({ data: d }) =>
+  //             d.country === this.state.country &&
+  //             d.electionDate >= this.state.year
+  //               ? 1
+  //               : 0
+  //           ),
+  //       (update) =>
+  //         update
+  //           .attr("cx", (d) => d.x)
+  //           .attr("opacity", ({ data: d }) =>
+  //             d.country === this.state.country &&
+  //             d.electionDate >= this.state.year
+  //               ? 1
+  //               : 0
+  //           ),
+  //       (exit) => exit.remove()
+  //     );
+  // }
 
   addBrush() {
     const { width, height, margin } = this.svg;
@@ -575,6 +581,7 @@ class MainChart {
       if (action) {
         this.computeBeeswarms();
         this.drawBees();
+        // this.highlightBees();
       }
     }
 
@@ -583,7 +590,7 @@ class MainChart {
       this.templates.year.view = { year: year.getFullYear() };
       if (action) {
         renderTemplate(this.templates.year);
-        this.highlightBees();
+        // this.highlightBees();
       }
     }
 
@@ -591,17 +598,19 @@ class MainChart {
       this.state.minVoteShare = minVoteShare;
       if (action) {
         this.drawBees();
-        this.highlightBees();
+        // this.highlightBees();
       }
     }
 
     if (!isNull(country) && country !== this.state.country) {
       this.state.country = country;
-      if (action) this.highlightBees();
+      // if (action) this.highlightBees();
     }
 
     this.state.panelParties = this.data.raw.filter(
       (d) =>
+        (this.state.countryGroup === "all" ||
+          d.countryGroup === this.state.countryGroup) &&
         d.electionDate >= this.state.year &&
         d.share >= this.state.minVoteShare * 100 &&
         (this.state.country === "Europe"
@@ -752,6 +761,7 @@ class MainChart {
     return {
       countryId: +d.country_id,
       country: d.country_name,
+      countryGroup: d.country_group,
 
       partyId: +d.party_id,
       party: d.party_name_english,

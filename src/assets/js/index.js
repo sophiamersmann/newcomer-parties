@@ -5,18 +5,23 @@ $(document).ready(() => {
   const selectCountry = $("#select-country");
   const country = selectCountry.val();
 
-  const buttonGroup = $(".button-group");
-  buttonGroup.click(() => {
-    buttonGroup.removeClass("active");
-    $(event.target).toggleClass("active");
-  });
+  const countryGroupButton = $(".button-country-group");
+  const countryGroup = countryGroupButton.filter(".active").data("group");
 
   renderMinVoteShare = renderMinVoteShare.bind(inputVoteShare);
   renderMinVoteShare();
 
   const mainChart = new MainChart("#main-chart");
-  mainChart.init({ minVoteShare, country }).then(() => {
+  mainChart.init({ countryGroup, minVoteShare, country }).then(() => {
     renderCountries(mainChart.data.countries);
+
+    countryGroupButton.click(() => {
+      countryGroupButton.removeClass("active");
+      $(event.target).toggleClass("active");
+
+      const countryGroup = $(event.target).data("group");
+      mainChart.updateState({ countryGroup });
+    });
 
     inputVoteShare.on("input", () => {
       renderMinVoteShare();
