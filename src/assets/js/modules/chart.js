@@ -43,6 +43,8 @@ class MainChart {
 
     this.state = {
       year: this.brush.initialDates[1],
+      countryGroup: null,
+      parties: null,
       minVoteShare: null,
       country: null,
       panelParties: null,
@@ -71,11 +73,15 @@ class MainChart {
     };
   }
 
-  async init({ minVoteShare = 0.05, country = "Europe" } = {}) {
+  async init({
+    countryGroup = "all",
+    minVoteShare = 0.05,
+    country = "Europe",
+  } = {}) {
     const filename = d3.select(this.svg.selector).attr("data-src");
     return d3.csv(filename, MainChart.loadDatum).then((data) => {
       this.prepareData(data);
-      this.updateState({ minVoteShare, country, action: false });
+      this.updateState({ countryGroup, minVoteShare, country, action: false });
       this.draw();
       this.renderTemplates();
     });
@@ -333,7 +339,7 @@ class MainChart {
     this.data.beeswarms = d3
       .nest()
       .key((d) => d.familyId)
-      .entries(this.data.raw)
+      .entries(this.state.parties)
       .map(({ key: familyId, values: parties }) => ({
         familyId,
         family: parties[0].family,
@@ -549,7 +555,29 @@ class MainChart {
     adjustHandleHeight(this.svg.g);
   }
 
-  updateState({ year, minVoteShare, country, action = true } = {}) {
+  updateState({
+    countryGroup,
+    year,
+    minVoteShare,
+    country,
+    action = true,
+  } = {}) {
+    if (!isNull(countryGroup) && countryGroup != this.state.countryGroup) {
+      this.state.countryGroup = countryGroup;
+      this.state.parties = this.data.raw;
+
+      if (this.state.countryGroup !== "all") {
+        this.state.parties = this.data.raw.filter(
+          (d) => d.countryGroup === this.state.countryGroup
+        );
+      }
+
+      if (action) {
+        this.computeBeeswarms();
+        this.drawBees();
+      }
+    }
+
     if (!isNull(year) && year !== this.state.year) {
       this.state.year = year;
       this.templates.year.view = { year: year.getFullYear() };
