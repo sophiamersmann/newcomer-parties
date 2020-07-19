@@ -45,7 +45,7 @@ class MainChart {
       year: this.brush.initialDates[1],
       minVoteShare: null,
       country: null,
-      parties: null,
+      panelParties: null,
     };
 
     this.partyProfile = {
@@ -58,7 +58,7 @@ class MainChart {
         target: "#year",
         view: { year: this.state.year.getFullYear() },
       },
-      parties: {
+      panelParties: {
         template: "parties.mustache",
         target: "#party-list",
         view: { parties: null },
@@ -137,7 +137,7 @@ class MainChart {
     this.drawAxes();
 
     this.setUpBeeswarms();
-    this.computeBeeswarmPositions();
+    this.computeBeeswarms();
     this.drawBees();
 
     this.addBrush();
@@ -321,7 +321,7 @@ class MainChart {
       .attr("stroke-opacity", (d) => d.opacity);
   }
 
-  computeBeeswarmPositions() {
+  computeBeeswarms() {
     const dodge = (data) =>
       MainChart.dodge(
         data,
@@ -572,7 +572,7 @@ class MainChart {
       if (action) this.highlightBees();
     }
 
-    this.state.parties = this.data.raw.filter(
+    this.state.panelParties = this.data.raw.filter(
       (d) =>
         d.electionDate >= this.state.year &&
         d.share >= this.state.minVoteShare * 100 &&
@@ -580,7 +580,7 @@ class MainChart {
           ? true
           : d.country === this.state.country)
     );
-    this.state.parties = d3
+    this.state.panelParties = d3
       .nest()
       .key((d) => d.electionYear - (d.electionYear % 10))
       .sortKeys(d3.descending)
@@ -591,14 +591,14 @@ class MainChart {
             this.data.families.indexOf(b.familyId)
           ) || d3.descending(a.currentShare, b.currentShare)
       )
-      .entries(this.state.parties)
+      .entries(this.state.panelParties)
       .map(({ key, values }) => ({ decade: key, values }));
-    this.templates.parties.view = {
-      parties: this.state.parties,
+    this.templates.panelParties.view = {
+      parties: this.state.panelParties,
     };
 
     if (action) {
-      renderTemplate(this.templates.parties).then(() => {
+      renderTemplate(this.templates.panelParties).then(() => {
         this.injectShareCharts();
         this.injectPositionCharts();
       });
@@ -616,7 +616,7 @@ class MainChart {
       .domain(d3.extent(this.data.raw, (d) => d.share))
       .range([4, 10]);
 
-    this.state.parties
+    this.state.panelParties
       .map((d) => d.values)
       .flat()
       .forEach((d) => {
@@ -662,7 +662,7 @@ class MainChart {
       .domain([0, 10])
       .range([radius, width - radius]);
 
-    this.state.parties
+    this.state.panelParties
       .map((d) => d.values)
       .flat()
       .forEach((d) => {
@@ -706,7 +706,7 @@ class MainChart {
 
   renderTemplates() {
     renderTemplate(this.templates.year);
-    renderTemplate(this.templates.parties).then(() => {
+    renderTemplate(this.templates.panelParties).then(() => {
       this.injectShareCharts();
       this.injectPositionCharts();
     });
