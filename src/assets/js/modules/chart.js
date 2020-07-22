@@ -425,20 +425,24 @@ class MainChart {
             .attr("stroke", ({ data: d }) => color(d.familyId))
             .attr("stroke-width", 0)
             .attr("fill", "url(#radial-gradient)")
-            .attr("opacity", ({ data: d }) =>
-              d.country === this.state.country &&
-              d.electionDate >= this.state.year
-                ? 1
-                : 0
+            .attr(
+              "opacity",
+              ({ data: d }) =>
+                +(
+                  d.country === this.state.country &&
+                  d.electionDate >= this.state.year
+                )
             ),
         (update) =>
           update
             .attr("cx", (d) => d.x)
-            .attr("opacity", ({ data: d }) =>
-              d.country === this.state.country &&
-              d.electionDate >= this.state.year
-                ? 1
-                : 0
+            .attr(
+              "opacity",
+              ({ data: d }) =>
+                +(
+                  d.country === this.state.country &&
+                  d.electionDate >= this.state.year
+                )
             ),
         (exit) => exit.remove()
       );
