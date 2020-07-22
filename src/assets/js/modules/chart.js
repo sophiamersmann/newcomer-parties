@@ -73,7 +73,11 @@ class MainChart {
     };
   }
 
-  async init({ countryGroup = "all", minVoteShare = 0.05, country = 0 } = {}) {
+  async init({
+    countryGroup = "all",
+    minVoteShare = 0.05,
+    country = null,
+  } = {}) {
     const filename = d3.select(this.svg.selector).attr("data-src");
     return d3.csv(filename, MainChart.loadDatum).then((data) => {
       this.prepareData(data);
@@ -567,7 +571,10 @@ class MainChart {
     country,
     action = true,
   } = {}) {
-    if (!isNull(countryGroup) && countryGroup != this.state.countryGroup) {
+    if (
+      countryGroup !== undefined &&
+      countryGroup !== this.state.countryGroup
+    ) {
       this.state.countryGroup = countryGroup;
       this.state.parties = this.data.raw;
       this.state.country = 0;
@@ -585,7 +592,7 @@ class MainChart {
       }
     }
 
-    if (!isNull(year) && year !== this.state.year) {
+    if (year !== undefined && year !== this.state.year) {
       this.state.year = year;
       this.templates.year.view = { year: year.getFullYear() };
       if (action) {
@@ -594,7 +601,10 @@ class MainChart {
       }
     }
 
-    if (!isNull(minVoteShare) && minVoteShare !== this.state.minVoteShare) {
+    if (
+      minVoteShare !== undefined &&
+      minVoteShare !== this.state.minVoteShare
+    ) {
       this.state.minVoteShare = minVoteShare;
       if (action) {
         this.drawBees();
@@ -602,7 +612,7 @@ class MainChart {
       }
     }
 
-    if (!isNull(country) && country !== this.state.country) {
+    if (country !== undefined && country !== this.state.country) {
       this.state.country = country;
       if (action) this.highlightBees();
     }

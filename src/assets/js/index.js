@@ -32,7 +32,7 @@ $(document).ready(() => {
           $(`#countries-${countryGroup}`).removeClass("hide");
         }
 
-        mainChart.updateState({ countryGroup, country: 0 });
+        mainChart.updateState({ countryGroup, country: null });
       });
 
       countryButton.click((event) => {
