@@ -1,7 +1,7 @@
 {{ #countryGroups }}
-<div class="country-buttons hide" id="country-buttons-{{ group }}">
+<div class="hide" id="countries-{{ group }}">
   {{ #countries }}
-    <button id="button-{{.}}" data-country={{.}}>{{.}}</button>
+    <button data-country="{{ . }}">{{.}}</button>
   {{ /countries }}
 </div>
 {{ /countryGroups }}

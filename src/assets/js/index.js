@@ -2,38 +2,58 @@ $(document).ready(() => {
   const inputVoteShare = $("#input-vote-share");
   const minVoteShare = +inputVoteShare.val();
 
-  const countryGroupButton = $(".group-buttons > button");
+  const countryGroupButton = $(".country-groups > button");
   const countryGroup = countryGroupButton.filter(".active").data("group");
 
   renderMinVoteShare = renderMinVoteShare.bind(inputVoteShare);
   renderMinVoteShare();
 
   const mainChart = new MainChart("#main-chart");
-  mainChart.init({ countryGroup, minVoteShare }).then(() => {
-    renderCountryButtons(mainChart.data.mappings.countryGroups);
+  mainChart
+    .init({ countryGroup, minVoteShare })
+    .then(() => renderCountryButtons(mainChart.data.mappings.countryGroups))
+    .then(() => {
+      const divCountries = $("#countries > div");
+      const countryButton = $("#countries button");
 
-    countryGroupButton.click(() => {
-      countryGroupButton.removeClass("active");
-      $(event.target).toggleClass("active");
+      countryGroupButton.click((event) => {
+        const target = $(event.target);
+        const countryGroup = target.data("group");
 
-      const countryGroup = $(event.target).data("group");
-      mainChart.updateState({ countryGroup });
+        countryButton.removeClass("active");
 
-      $(".country-buttons").addClass("hide");
-      if (countryGroup !== "all") {
-        $(`#country-buttons-${countryGroup}`).removeClass("hide");
-      }
+        if (!target.hasClass("active")) {
+          countryGroupButton.removeClass("active");
+          target.toggleClass("active");
+        }
+
+        divCountries.addClass("hide");
+        if (countryGroup !== "all") {
+          $(`#countries-${countryGroup}`).removeClass("hide");
+        }
+
+        mainChart.updateState({ countryGroup, country: 0 });
+      });
+
+      countryButton.click((event) => {
+        const target = $(event.target);
+        const country = target.data("country");
+
+        countryButton.removeClass("active");
+        target.toggleClass("active");
+
+        mainChart.updateState({ country });
+      });
+
+      inputVoteShare.on("input", (event) => {
+        renderMinVoteShare();
+        mainChart.updateState({ minVoteShare: +$(event.target).val() });
+      });
     });
-
-    inputVoteShare.on("input", () => {
-      renderMinVoteShare();
-      mainChart.updateState({ minVoteShare: +$(event.currentTarget).val() });
-    });
-  });
 });
 
 function renderMinVoteShare() {
-  renderTemplate({
+  return renderTemplate({
     template: "input-vote-share.mustache",
     target: "#input-vote-share-label",
     view: { minVoteShare: this.val() },
@@ -41,7 +61,7 @@ function renderMinVoteShare() {
 }
 
 function renderParties(parties) {
-  renderTemplate({
+  return renderTemplate({
     template: "parties.mustache",
     target: "#party-list",
     view: { parties },
@@ -49,9 +69,9 @@ function renderParties(parties) {
 }
 
 function renderCountryButtons(countryGroups) {
-  renderTemplate({
+  return renderTemplate({
     template: "country-buttons.mustache",
-    target: "#country-buttons",
+    target: "#countries",
     view: { countryGroups },
   });
 }

@@ -110,10 +110,20 @@ main {
   }
 }
 
-.group-buttons .active {
-  background-color: lavender;
+.select-countries {
+  .country-groups {
+    .active {
+      background-color: lavender;
+    }
+  }
+
+  #countries {
+    .active {
+      background-color: khaki;
+    }
+  }
 }
 
-.country-buttons.hide {
+.hide {
   display: none;
 }

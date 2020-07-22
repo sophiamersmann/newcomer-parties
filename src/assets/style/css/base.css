@@ -76,8 +76,11 @@ main {
   .side-lines:after {
     margin: 0 -55% 0 0.5em; }
 
-.group-buttons .active {
+.select-countries .country-groups .active {
   background-color: lavender; }
 
-.country-buttons.hide {
+.select-countries #countries .active {
+  background-color: khaki; }
+
+.hide {
   display: none; }
