@@ -6,6 +6,6 @@ async function renderTemplate({ template, target, view }) {
     });
 }
 
-  function isNull(value) {
-    return value == null || value.length === 0;
-  }
+function isNull(value) {
+  return value == null || value.length === 0;
+}
