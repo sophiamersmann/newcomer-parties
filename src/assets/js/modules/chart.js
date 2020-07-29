@@ -6,11 +6,11 @@ const colors = {
 };
 
 class MainChart {
-  constructor(selector) {
+  constructor(selector, width, height) {
     this.svg = {
       selector,
-      width: 1400,
-      height: 700,
+      width: width,
+      height: height,
       margin: {
         top: 40,
         right: 60,
