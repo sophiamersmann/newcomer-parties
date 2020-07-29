@@ -21,7 +21,7 @@ class MainChart {
 
     this.parties = {
       selector: ".party",
-      radius: { active: 3, inactive: 1, highlight: 12 },
+      radius: { active: 4, inactive: 1, highlight: 12 },
       padding: 1.5,
       transparent: 0.25,
       alive: {
@@ -373,7 +373,12 @@ class MainChart {
             )
             .attr("cx", (d) => d.x)
             .attr("cy", (d) => d.y)
-            .attr("r", radius.active)
+            .attr("r", ({ data: d }) =>
+              this.state.countryGroup == "all" ||
+              this.state.countryGroup === d.countryGroup
+                ? radius.active
+                : radius.inactive
+            )
             .attr("stroke", ({ data: d }) => color(d.familyId))
             .attr("stroke-width", 1)
             .attr("fill", ({ data: d }) =>
@@ -394,13 +399,23 @@ class MainChart {
                     }) - now, ${d.currentShare}%`
                 )
             ),
-        (update) => update.attr("cx", (d) => d.x),
+        (update) =>
+          update
+            .transition()
+            .duration(400)
+            .ease(d3.easeCubicInOut)
+            .attr("r", ({ data: d }) =>
+              this.state.countryGroup == "all" ||
+              this.state.countryGroup === d.countryGroup
+                ? radius.active
+                : radius.inactive
+            ),
         (exit) => exit.remove()
       );
   }
 
   highlightBees() {
-    const { selector, color, radius } = this.parties;
+    const { selector, radius } = this.parties;
 
     this.svg.bg
       .selectAll(".bg-beeswarm-pair")
@@ -421,7 +436,6 @@ class MainChart {
             .attr("cx", (d) => d.x)
             .attr("cy", (d) => d.y)
             .attr("r", radius.highlight)
-            // .attr("stroke", ({ data: d }) => color(d.familyId))
             .attr("stroke-width", 0)
             .attr("fill", "url(#radial-gradient)")
             .attr(
@@ -581,7 +595,6 @@ class MainChart {
       }
 
       if (action) {
-        this.computeBeeswarms();
         this.drawBees();
         this.highlightBees();
       }
