@@ -18,7 +18,7 @@ main {
   flex: 1 0 80vw; }
   main .overview {
     background-color: aliceblue;
-    height: 150px;
+    height: 100px;
     padding: 1rem 2rem; }
     main .overview h1 {
       display: inline; }
@@ -29,27 +29,30 @@ main {
   padding: 1rem; }
 
 #party-list {
-  background-color: lavender;
   height: 100%;
   overflow: auto; }
-  #party-list .party-list-group:not(:last-child) {
-    margin-bottom: 1rem; }
-  #party-list .party-list-group .party-list-item {
-    display: flex;
-    justify-content: space-between;
-    align-items: center; }
-    #party-list .party-list-group .party-list-item:not(:last-child) {
-      margin-bottom: 0.25rem; }
-  #party-list .party-list-group .party-chart-and-name {
-    display: flex; }
-  #party-list .party-list-group .party-name {
-    line-height: 1;
-    margin: 0 5px; }
-  #party-list .party-list-group .party-year {
-    margin-left: 21px; }
+  #party-list .party-list-group {
+    padding: 0.5rem;
+    border-radius: 10px;
+    background-color: #f8f9fa; }
+    #party-list .party-list-group:not(:last-child) {
+      margin-bottom: 2rem; }
+    #party-list .party-list-group .party-list-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center; }
+      #party-list .party-list-group .party-list-item:not(:last-child) {
+        margin-bottom: 0.25rem; }
+    #party-list .party-list-group .party-chart-and-name {
+      display: flex; }
+    #party-list .party-list-group .party-name {
+      line-height: 1;
+      margin: 0 5px; }
+    #party-list .party-list-group .party-year {
+      margin-left: 21px; }
 
 #chart-wrapper {
-  height: calc(100% - 150px);
+  height: calc(100% - 100px);
   display: flex;
   justify-content: center;
   align-items: center; }

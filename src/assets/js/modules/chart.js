@@ -21,7 +21,7 @@ class MainChart {
 
     this.parties = {
       selector: ".party",
-      radius: { active: 4, inactive: 1 },
+      radius: { active: 3, inactive: 1 },
       padding: 1.5,
       transparent: 0.25,
       alive: {

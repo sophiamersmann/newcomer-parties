@@ -12,8 +12,8 @@ $(document).ready(() => {
 
   const mainChart = new MainChart(
     "#main-chart",
-    chartWrapper.width(),
-    chartWrapper.height()
+    chartWrapper.width() - 100,
+    chartWrapper.height() - 100
   );
   mainChart
     .init({ countryGroup, minVoteShare })
