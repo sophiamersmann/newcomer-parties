@@ -75,7 +75,7 @@ class MainChart {
 
   async init({
     countryGroup = "all",
-    minVoteShare = 0.05,
+    minVoteShare = 0,
     country = null,
   } = {}) {
     const filename = d3.select(this.svg.selector).attr("data-src");
