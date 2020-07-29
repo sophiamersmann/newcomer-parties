@@ -659,50 +659,25 @@ class MainChart {
   }
 
   injectShareCharts() {
-    const pies = d3
-      .map()
-      .set("left", d3.pie().startAngle(-Math.PI).endAngle(0))
-      .set("right", d3.pie().startAngle(Math.PI).endAngle(0));
+    const parties = this.state.panelParties.map((d) => d.values).flat();
 
-    const r = d3
-      .scaleSqrt()
-      .domain(d3.extent(this.data.raw, (d) => d.share))
-      .range([4, 10]);
+    const svg = d3
+      .selectAll(".party-share-chart")
+      .data(parties)
+      .append("svg")
+      .attr("width", 16)
+      .attr("height", 16)
+      .attr("viewBox", [-8, -8, 16, 16]);
 
-    this.state.panelParties
-      .map((d) => d.values)
-      .flat()
-      .forEach((d) => {
-        const svgContainer = d3.select(
-          `#party-list-item-${d.partyId} .party-share-chart`
-        );
-
-        const svg = svgContainer
-          .append("svg")
-          .attr("width", 20)
-          .attr("height", 20)
-          .attr("viewBox", [0, 0, 20, 20]);
-
-        const radius = d3
-          .map()
-          .set("left", r(d.share))
-          .set("right", r(d.currentShare));
-
-        (d.isAlive ? ["left", "right"] : ["left"]).forEach((pos) => {
-          svg
-            .selectAll(`.semi-circle-${pos}`)
-            .data(pies.get(pos)([1]))
-            .join("path")
-            .attr("class", `semi-circle-${pos}`)
-            .attr("transform", `translate(${pos === "left" ? 9 : 10}, 8)`)
-            .attr("d", d3.arc().outerRadius(radius.get(pos)).innerRadius(0))
-            .attr(
-              "fill",
-              d.isAlive ? this.parties.color(d.familyId) : "transparent"
-            )
-            .attr("stroke", d.isAlive ? null : this.parties.color(d.familyId));
-        });
-      });
+    svg
+      .append("circle")
+      .attr("r", this.parties.radius.active)
+      .attr("fill", (d) =>
+        d.isAlive ? this.parties.color(d.familyId) : "transparent"
+      )
+      .attr("stroke", (d) =>
+        d.isAlive ? null : this.parties.color(d.familyId)
+      );
   }
 
   injectPositionCharts() {
