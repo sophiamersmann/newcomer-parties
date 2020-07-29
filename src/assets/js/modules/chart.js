@@ -21,7 +21,7 @@ class MainChart {
 
     this.parties = {
       selector: ".party",
-      radiusRange: [1, 8],
+      radius: { active: 3, inactive: 1, highlight: 12 },
       padding: 1.5,
       transparent: 0.25,
       alive: {
@@ -194,12 +194,7 @@ class MainChart {
       .domain([new Date(1945, 0, 1), new Date(2025, 0, 1)])
       .range([height - margin.bottom, margin.top]);
 
-    const r = d3
-      .scaleSqrt()
-      .domain(d3.extent(this.data.raw, (d) => d.share))
-      .range(this.parties.radiusRange);
-
-    this.scales = { x, y, r };
+    this.scales = { x, y };
   }
 
   drawAxes() {
@@ -331,6 +326,7 @@ class MainChart {
       MainChart.dodge(
         data,
         this.parties.padding,
+        this.parties.radius.active,
         { pos: "electionDate", size: "share" },
         this.scales
       );
@@ -349,8 +345,8 @@ class MainChart {
   }
 
   drawBees() {
-    const { y, r } = this.scales;
-    const { selector, color, transparent, alive, dead } = this.parties;
+    const { y } = this.scales;
+    const { selector, radius, color, transparent, alive, dead } = this.parties;
 
     this.svg.g
       .selectAll(".beeswarm-pair")
@@ -377,7 +373,7 @@ class MainChart {
             )
             .attr("cx", (d) => d.x)
             .attr("cy", (d) => d.y)
-            .attr("r", ({ data: d }) => r(d.share))
+            .attr("r", radius.active)
             .attr("stroke", ({ data: d }) => color(d.familyId))
             .attr("stroke-width", 1)
             .attr("fill", ({ data: d }) =>
@@ -404,8 +400,7 @@ class MainChart {
   }
 
   highlightBees() {
-    const { r } = this.scales;
-    const { selector, color } = this.parties;
+    const { selector, color, radius } = this.parties;
 
     this.svg.bg
       .selectAll(".bg-beeswarm-pair")
@@ -425,8 +420,8 @@ class MainChart {
             .attr("class", `${selector.slice(1)}-highlight`)
             .attr("cx", (d) => d.x)
             .attr("cy", (d) => d.y)
-            .attr("r", ({ data: d }) => r(d.share) * 4)
-            .attr("stroke", ({ data: d }) => color(d.familyId))
+            .attr("r", radius.highlight)
+            // .attr("stroke", ({ data: d }) => color(d.familyId))
             .attr("stroke-width", 0)
             .attr("fill", "url(#radial-gradient)")
             .attr(
@@ -817,13 +812,14 @@ class MainChart {
   }
 
   // Adapted from https://observablehq.com/@d3/beeswarm and https://observablehq.com/@tomwhite/beeswarm-bubbles
-  static dodge(data, padding, properties, scales) {
+  // TODO: function can be simplified
+  static dodge(data, padding, radius, properties, scales) {
     const { pos, size } = properties;
-    const { x, y, r } = scales;
+    const { x, y } = scales;
 
     const circles = data
-      .map((d) => ({ y: y(d[pos]), r: r(d[size]), data: d }))
-      .sort((a, b) => b.r - a.r);
+      .map((d) => ({ y: y(d[pos]), data: d }))
+      .sort((a, b) => b.data[size] - a.data[size]);
     const epsilon = 1e-3;
     let head = null,
       tail = null;
@@ -832,7 +828,7 @@ class MainChart {
     function intersects(x, y, r) {
       let a = head;
       while (a) {
-        const radius2 = (a.r + r + padding) ** 2;
+        const radius2 = (radius + r + padding) ** 2;
         if (radius2 - epsilon > (a.x - x) ** 2 + (a.y - y) ** 2) {
           return true;
         }
@@ -847,13 +843,14 @@ class MainChart {
       // while (head && head.y < b.y - radius2) head = head.next;
 
       // Choose the minimum non-intersecting tangent.
-      if (intersects((b.x = b.r), b.y, b.r)) {
+      if (intersects((b.x = radius), b.y, radius)) {
         let a = head;
         b.x = Infinity;
         do {
           let x =
-            a.x + Math.sqrt((a.r + b.r + padding) ** 2 - (a.y - b.y) ** 2);
-          if (x < b.x && !intersects(x, b.y, b.r)) b.x = x;
+            a.x +
+            Math.sqrt((radius + radius + padding) ** 2 - (a.y - b.y) ** 2);
+          if (x < b.x && !intersects(x, b.y, radius)) b.x = x;
           a = a.next;
         } while (a);
       }
