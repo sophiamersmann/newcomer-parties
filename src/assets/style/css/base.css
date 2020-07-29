@@ -26,7 +26,7 @@ main {
     height: 300px; }
   .panel #party-list {
     background-color: lavender;
-    height: calc(100% - 200px);
+    height: calc(100% - 300px);
     overflow: auto; }
 
 .party-list-group:not(:last-child) {

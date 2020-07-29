@@ -10,7 +10,7 @@ class MainChart {
     this.svg = {
       selector,
       width: 1080,
-      height: 820,
+      height: 720,
       margin: {
         top: 40,
         right: 60,
