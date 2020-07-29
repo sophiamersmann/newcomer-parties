@@ -21,66 +21,61 @@ body {
 }
 
 main {
-  flex: 1 0 75vw;
-}
-
-.panel {
-  border-right: 1px solid black;
-  flex: 0 1 25vw;
-  padding: $spacing / 2;
+  flex: 1 0 80vw;
 
   .overview {
     background-color: aliceblue;
-    height: 300px;
-  }
-
-  #party-list {
-    background-color: lavender;
-    height: calc(100% - 300px);
-    overflow: auto;
+    height: 150px;
   }
 }
 
-.party-list-group {
-  &:not(:last-child) {
-    margin-bottom: $spacing / 2;
-  }
+.panel {
+  border-left: 1px solid black;
+  flex: 0 1 20vw;
+  padding: $spacing / 2;
+}
 
-  .party-list-item {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+#party-list {
+  background-color: lavender;
+  height: 100%;
+  overflow: auto;
 
+  .party-list-group {
     &:not(:last-child) {
-      margin-bottom: $spacing / 8;
+      margin-bottom: $spacing / 2;
     }
-  }
 
-  .party-chart-and-name {
-    display: flex;
-  }
+    .party-list-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
 
-  .party-name {
-    line-height: 1;
-    margin: 0 5px;
-  }
+      &:not(:last-child) {
+        margin-bottom: $spacing / 8;
+      }
+    }
 
-  .party-year {
-    // width of svg + left margin of party name
-    margin-left: 21px;
+    .party-chart-and-name {
+      display: flex;
+    }
+
+    .party-name {
+      line-height: 1;
+      margin: 0 5px;
+    }
+
+    .party-year {
+      // width of svg + left margin of party name
+      margin-left: 21px;
+    }
   }
 }
 
 #chart-wrapper {
-  height: 100vh;
+  height: calc(100% - 150px);
   display: flex;
-  flex-direction: column;
-  align-items: center;
   justify-content: center;
-
-  #main-chart {
-    max-width: 1200px;
-  }
+  align-items: center;
 }
 
 .form-group {

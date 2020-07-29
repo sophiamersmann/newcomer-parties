@@ -9,8 +9,8 @@ class MainChart {
   constructor(selector) {
     this.svg = {
       selector,
-      width: 1080,
-      height: 720,
+      width: 1400,
+      height: 700,
       margin: {
         top: 40,
         right: 60,
