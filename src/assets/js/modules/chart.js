@@ -21,7 +21,7 @@ class MainChart {
 
     this.parties = {
       selector: ".party",
-      radius: { active: 4, inactive: 1, highlight: 12 },
+      radius: { active: 4, inactive: 1 },
       padding: 1.5,
       transparent: 0.25,
       alive: {
@@ -73,11 +73,7 @@ class MainChart {
     };
   }
 
-  async init({
-    countryGroup = "all",
-    minVoteShare = 0,
-    country = null,
-  } = {}) {
+  async init({ countryGroup = "all", minVoteShare = 0, country = null } = {}) {
     const filename = d3.select(this.svg.selector).attr("data-src");
     return d3.csv(filename, MainChart.loadDatum).then((data) => {
       this.prepareData(data);
@@ -348,6 +344,12 @@ class MainChart {
     const { y } = this.scales;
     const { selector, radius, color, transparent, alive, dead } = this.parties;
 
+    const isActive = (d) =>
+      this.state.country !== null
+        ? this.state.country === d.country
+        : this.state.countryGroup === "all" ||
+          this.state.countryGroup === d.countryGroup;
+
     this.svg.g
       .selectAll(".beeswarm-pair")
       .data(this.state.beeswarms)
@@ -374,10 +376,7 @@ class MainChart {
             .attr("cx", (d) => d.x)
             .attr("cy", (d) => d.y)
             .attr("r", ({ data: d }) =>
-              this.state.countryGroup == "all" ||
-              this.state.countryGroup === d.countryGroup
-                ? radius.active
-                : radius.inactive
+              isActive(d) ? radius.active : radius.inactive
             )
             .attr("stroke", ({ data: d }) => color(d.familyId))
             .attr("stroke-width", 1)
@@ -405,57 +404,7 @@ class MainChart {
             .duration(400)
             .ease(d3.easeCubicInOut)
             .attr("r", ({ data: d }) =>
-              this.state.countryGroup == "all" ||
-              this.state.countryGroup === d.countryGroup
-                ? radius.active
-                : radius.inactive
-            ),
-        (exit) => exit.remove()
-      );
-  }
-
-  highlightBees() {
-    const { selector, radius } = this.parties;
-
-    this.svg.bg
-      .selectAll(".bg-beeswarm-pair")
-      .data(this.state.beeswarms)
-      .selectAll(`${selector}-highlight`)
-      .data(
-        ({ parties }) =>
-          parties.filter(
-            ({ data: d }) => d.share >= this.state.minVoteShare * 100
-          ),
-        ({ data: d }) => d.partyId
-      )
-      .join(
-        (enter) =>
-          enter
-            .append("circle")
-            .attr("class", `${selector.slice(1)}-highlight`)
-            .attr("cx", (d) => d.x)
-            .attr("cy", (d) => d.y)
-            .attr("r", radius.highlight)
-            .attr("stroke-width", 0)
-            .attr("fill", "url(#radial-gradient)")
-            .attr(
-              "opacity",
-              ({ data: d }) =>
-                +(
-                  d.country === this.state.country &&
-                  d.electionDate >= this.state.year
-                )
-            ),
-        (update) =>
-          update
-            .attr("cx", (d) => d.x)
-            .attr(
-              "opacity",
-              ({ data: d }) =>
-                +(
-                  d.country === this.state.country &&
-                  d.electionDate >= this.state.year
-                )
+              isActive(d) ? radius.active : radius.inactive
             ),
         (exit) => exit.remove()
       );
@@ -594,19 +543,13 @@ class MainChart {
         );
       }
 
-      if (action) {
-        this.drawBees();
-        this.highlightBees();
-      }
+      if (action) this.drawBees();
     }
 
     if (year !== undefined && year !== this.state.year) {
       this.state.year = year;
       this.templates.year.view = { year: year.getFullYear() };
-      if (action) {
-        renderTemplate(this.templates.year);
-        this.highlightBees();
-      }
+      if (action) renderTemplate(this.templates.year);
     }
 
     if (
@@ -614,15 +557,12 @@ class MainChart {
       minVoteShare !== this.state.minVoteShare
     ) {
       this.state.minVoteShare = minVoteShare;
-      if (action) {
-        this.drawBees();
-        this.highlightBees();
-      }
+      if (action) this.drawBees();
     }
 
     if (country !== undefined && country !== this.state.country) {
       this.state.country = country;
-      if (action) this.highlightBees();
+      if (action) this.drawBees();
     }
 
     this.state.panelParties = this.data.raw.filter(
