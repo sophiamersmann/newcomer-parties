@@ -32,23 +32,12 @@
   <body>
     <main>
       <div class="overview">
-        <h1>Newcomer Parties</h1>
+        <h1>
+          Newcomer Parties in European Parliaments after <span id="year"></span>
+        </h1>
 
-        <div class="select-countries">
-          <div class="country-groups">
-            <button class="active" data-group="all">
-              All
-            </button>
-            <button data-group="north">North</button>
-            <button data-group="south">South</button>
-            <button data-group="east">East</button>
-          </div>
-
-          <div id="countries"></div>
-        </div>
-
-        <div>
-          winning at leat
+        <div id="select-vote-share">
+          winning at least
           <div class="form-group">
             <input
               type="range"
@@ -63,7 +52,18 @@
           </div>
         </div>
 
-        <div>in an election after <span id="year"></span></div>
+        <div class="select-countries">
+          <div class="country-groups">
+            <button class="active" data-group="all">
+              All
+            </button>
+            <button data-group="north">North</button>
+            <button data-group="south">South</button>
+            <button data-group="east">East</button>
+          </div>
+
+          <div id="countries"></div>
+        </div>
       </div>
 
       <div id="chart-wrapper">

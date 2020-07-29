@@ -26,6 +26,11 @@ main {
   .overview {
     background-color: aliceblue;
     height: 150px;
+    padding: $spacing / 2 $spacing;
+
+    h1 {
+      display: inline;
+    }
   }
 }
 
@@ -78,9 +83,15 @@ main {
   align-items: center;
 }
 
-.form-group {
-  input {
-    vertical-align: middle;
+#select-vote-share {
+  display: inline;
+
+  .form-group {
+    display: inline-block;
+
+    input {
+      vertical-align: middle;
+    }
   }
 }
 
@@ -121,4 +132,8 @@ main {
 
 .hide {
   display: none;
+}
+
+h1 {
+  font-size: 1.6rem;
 }

@@ -18,7 +18,10 @@ main {
   flex: 1 0 80vw; }
   main .overview {
     background-color: aliceblue;
-    height: 150px; }
+    height: 150px;
+    padding: 1rem 2rem; }
+    main .overview h1 {
+      display: inline; }
 
 .panel {
   border-left: 1px solid black;
@@ -51,8 +54,12 @@ main {
   justify-content: center;
   align-items: center; }
 
-.form-group input {
-  vertical-align: middle; }
+#select-vote-share {
+  display: inline; }
+  #select-vote-share .form-group {
+    display: inline-block; }
+    #select-vote-share .form-group input {
+      vertical-align: middle; }
 
 .side-lines {
   width: 90%;
@@ -77,3 +84,6 @@ main {
 
 .hide {
   display: none; }
+
+h1 {
+  font-size: 1.6rem; }
