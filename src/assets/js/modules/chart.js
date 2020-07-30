@@ -21,7 +21,7 @@ class MainChart {
 
     this.parties = {
       selector: ".party",
-      radius: { active: 3, inactive: 1 },
+      radius: { active: 3, inactive: 1, selected: 5 },
       padding: 1.5,
       transparent: 0.25,
       alive: {
@@ -350,6 +350,15 @@ class MainChart {
         : this.state.countryGroup === "all" ||
           this.state.countryGroup === d.countryGroup;
 
+    const onHover = (d, i, n, r) => {
+      if (!isActive(d)) return;
+      d3.select(n[i])
+        .transition()
+        .duration(400)
+        .ease(d3.easeCubicOut)
+        .attr("r", r);
+    };
+
     this.svg.g
       .selectAll(".beeswarm-pair")
       .data(this.state.beeswarms)
@@ -386,6 +395,12 @@ class MainChart {
             .attr("opacity", (d) =>
               y(this.state.year) >= d.y ? 1 : transparent
             )
+            .on("mouseover", ({ data: d }, i, n) =>
+              onHover(d, i, n, radius.selected)
+            )
+            .on("mouseout", ({ data: d }, i, n) =>
+              onHover(d, i, n, radius.active)
+            )
             .call((enter) =>
               enter
                 .append("title")
@@ -400,6 +415,12 @@ class MainChart {
             ),
         (update) =>
           update
+            .on("mouseover", ({ data: d }, i, n) =>
+              onHover(d, i, n, radius.selected)
+            )
+            .on("mouseout", ({ data: d }, i, n) =>
+              onHover(d, i, n, radius.active)
+            )
             .transition()
             .duration(400)
             .ease(d3.easeCubicInOut)
