@@ -66,14 +66,6 @@ function renderMinVoteShare() {
   });
 }
 
-function renderParties(parties) {
-  return renderTemplate({
-    template: "parties.mustache",
-    target: "#party-list",
-    view: { parties },
-  });
-}
-
 function renderCountryButtons(countryGroups) {
   return renderTemplate({
     template: "country-buttons.mustache",

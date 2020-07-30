@@ -350,9 +350,6 @@ class MainChart {
         : this.state.countryGroup === "all" ||
           this.state.countryGroup === d.countryGroup;
 
-    const updateRadius = (sel, r) =>
-      sel.transition().duration(400).ease(d3.easeCubicOut).attr("r", r);
-
     const isVisible = function (elem, container) {
       const elemTop = elem.offsetTop;
       const elemBottom = elemTop + elem.clientHeight;
@@ -370,7 +367,7 @@ class MainChart {
       const partyList = d3.select("#party-list").node();
       let partyInfo = d3.select(`#party-list-item-${d.partyId}`);
 
-      updateRadius(party, radius.selected);
+      MainChart.updateRadius(party, radius.selected);
       partyInfo.classed("active", true);
 
       partyInfo = partyInfo.node();
@@ -385,7 +382,7 @@ class MainChart {
       const party = d3.select(n[i]);
       const partyInfo = d3.select(`#party-list-item-${d.partyId}`);
 
-      updateRadius(party, radius.active);
+      MainChart.updateRadius(party, radius.active);
       partyInfo.classed("active", false);
     };
 
@@ -404,6 +401,7 @@ class MainChart {
         (enter) =>
           enter
             .append("circle")
+            .attr("id", ({ data: d }) => `party-${d.partyId}`)
             .attr(
               "class",
               ({ data: d }) =>
@@ -624,10 +622,7 @@ class MainChart {
     };
 
     if (action) {
-      renderTemplate(this.templates.panelParties).then(() => {
-        this.injectShareCharts();
-        this.injectPositionCharts();
-      });
+      this.renderPanelParties();
     }
   }
 
@@ -707,10 +702,34 @@ class MainChart {
 
   renderTemplates() {
     renderTemplate(this.templates.year);
+    this.renderPanelParties();
+  }
+
+  renderPanelParties() {
     renderTemplate(this.templates.panelParties).then(() => {
+      d3.selectAll(".party-list-item")
+        .on("mouseenter", (_, i, n) => {
+          const partyId = d3.select(n[i]).attr("data-party-id");
+          const party = d3.select(`#party-${partyId}`);
+          MainChart.updateRadius(party, this.parties.radius.selected);
+        })
+        .on("mouseleave", (_, i, n) => {
+          const partyId = d3.select(n[i]).attr("data-party-id");
+          const party = d3.select(`#party-${partyId}`);
+          MainChart.updateRadius(party, this.parties.radius.active);
+        });
+
       this.injectShareCharts();
       this.injectPositionCharts();
     });
+  }
+
+  static updateRadius(selection, radius) {
+    selection
+      .transition()
+      .duration(400)
+      .ease(d3.easeCubicOut)
+      .attr("r", radius);
   }
 
   static loadDatum(d) {

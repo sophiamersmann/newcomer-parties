@@ -1,7 +1,7 @@
 {{ #parties }}
 <div class="party-list-group">
   {{ #values }}
-  <div id="party-list-item-{{ partyId }}" class="party-list-item">
+  <div id="party-list-item-{{ partyId }}" class="party-list-item" data-party-id="{{ partyId }}">
     <div>
       <small class="party-year">{{ electionYear }} in {{ country }}</small>
       <div class="party-description">

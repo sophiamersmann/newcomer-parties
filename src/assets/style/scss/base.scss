@@ -60,11 +60,15 @@ main {
       padding: $spacing / 8;
       border-radius: 10px;
 
+      & > * {
+        pointer-events: none;
+      }
+
       &:not(:last-child) {
         margin-bottom: $spacing / 8;
       }
 
-      &.active {
+      &:is(.active, :hover) {
         background-color: bisque;
       }
     }
