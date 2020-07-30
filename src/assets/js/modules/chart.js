@@ -459,9 +459,14 @@ class MainChart {
           update
             .attr("cx", (d) => d.x)
             .attr("cy", (d) => d.y)
-            .attr("r", this.parties.radius.highlight)
-            .attr("opacity", 1)
-            .attr("fill", "url(#radial-gradient)"),
+            .attr("fill", "url(#radial-gradient)")
+            .call((update) =>
+              update
+                .transition()
+                .duration(400)
+                .ease(d3.easeCubicOut)
+                .attr("r", this.parties.radius.highlight)
+            ),
         (exit) => exit.remove()
       );
   }
@@ -472,7 +477,13 @@ class MainChart {
       .duration(400)
       .ease(d3.easeCubicOut)
       .attr("r", this.parties.radius.active);
-    this.svg.bg.select("#party-highlight").attr("opacity", 0);
+
+    this.svg.bg
+      .select("#party-highlight")
+      .transition()
+      .duration(400)
+      .ease(d3.easeCubicOut)
+      .attr("r", 0);
   }
 
   addBrush() {
