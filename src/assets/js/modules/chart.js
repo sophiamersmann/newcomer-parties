@@ -701,7 +701,7 @@ class MainChart {
   }
 
   injectPositionCharts() {
-    const width = 40;
+    const width = 32;
     const height = 32;
     const radius = 4;
 
@@ -725,14 +725,15 @@ class MainChart {
           .attr("viewBox", [0, 0, width, height]);
 
         svg
-          .selectAll("line")
-          .data([0, width / 2, width])
+          .selectAll(".vertical-line")
+          .data([width / 2])
           .join("line")
+          .attr("class", "vertical-line")
           .attr("x1", (d) => d)
           .attr("y1", 0)
           .attr("x2", (d) => d)
           .attr("y2", height)
-          .attr("stroke", "black");
+          .attr("stroke", "gray");
 
         svg
           .selectAll("circle")
