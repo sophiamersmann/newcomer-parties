@@ -21,7 +21,7 @@ class MainChart {
 
     this.parties = {
       selector: ".party",
-      radius: { active: 3.5, inactive: 0.5, selected: 5 },
+      radius: { active: 3.5, inactive: 0.5, selected: 5, highlight: 30 },
       padding: 1.5,
       transparent: 0.25,
       alive: {
@@ -140,6 +140,7 @@ class MainChart {
     this.setUpBeeswarms();
     this.computeBeeswarms();
     this.drawBees();
+    this.initBeeHighlight();
 
     this.addBrush();
   }
@@ -360,30 +361,29 @@ class MainChart {
       return elemTop >= containerTop && elemBottom <= containerBottom;
     };
 
-    const onMouseover = ({ data: d }, i, n) => {
-      if (!isActive(d)) return;
+    const onMouseover = (d, i, n) => {
+      if (!isActive(d.data) || this.scales.y(this.state.year) < d.y) return;
 
       const party = d3.select(n[i]);
+      this.highlightBee(party);
+
       const partyList = d3.select("#party-list").node();
-      let partyInfo = d3.select(`#party-list-item-${d.partyId}`);
+      const partyInfo = d3.select(`#party-list-item-${d.data.partyId}`).node();
 
-      MainChart.updateRadius(party, radius.selected);
-      partyInfo.classed("active", true);
-
-      partyInfo = partyInfo.node();
+      partyInfo.classList.add("active");
       if (!isVisible(partyInfo, partyList)) {
         partyList.scrollTop = partyInfo.offsetTop - 50; // TODO: Magic value
       }
     };
 
-    const onMouseout = ({ data: d }, i, n) => {
-      if (!isActive(d)) return;
+    const onMouseout = (d, i, n) => {
+      if (!isActive(d.data) || this.scales.y(this.state.year) < d.y) return;
 
       const party = d3.select(n[i]);
-      const partyInfo = d3.select(`#party-list-item-${d.partyId}`);
+      this.removeBeeHighlight(party);
 
-      MainChart.updateRadius(party, radius.active);
-      partyInfo.classed("active", false);
+      const partyInfo = d3.select(`#party-list-item-${d.data.partyId}`).node();
+      partyInfo.classList.remove("active");
     };
 
     this.svg.g
@@ -437,6 +437,42 @@ class MainChart {
             ),
         (exit) => exit.remove()
       );
+  }
+
+  initBeeHighlight() {
+    this.svg.bg.append("circle").attr("id", "party-highlight");
+  }
+
+  highlightBee(selection) {
+    selection
+      .transition()
+      .duration(400)
+      .ease(d3.easeCubicOut)
+      .attr("r", this.parties.radius.selected);
+
+    this.svg.bg
+      .select("#party-highlight")
+      .datum(selection.datum())
+      .join(
+        (enter) => enter,
+        (update) =>
+          update
+            .attr("cx", (d) => d.x)
+            .attr("cy", (d) => d.y)
+            .attr("r", this.parties.radius.highlight)
+            .attr("opacity", 1)
+            .attr("fill", "url(#radial-gradient)"),
+        (exit) => exit.remove()
+      );
+  }
+
+  removeBeeHighlight(selection) {
+    selection
+      .transition()
+      .duration(400)
+      .ease(d3.easeCubicOut)
+      .attr("r", this.parties.radius.active);
+    this.svg.bg.select("#party-highlight").attr("opacity", 0);
   }
 
   addBrush() {
@@ -711,25 +747,17 @@ class MainChart {
         .on("mouseenter", (_, i, n) => {
           const partyId = d3.select(n[i]).attr("data-party-id");
           const party = d3.select(`#party-${partyId}`);
-          MainChart.updateRadius(party, this.parties.radius.selected);
+          this.highlightBee(party);
         })
         .on("mouseleave", (_, i, n) => {
           const partyId = d3.select(n[i]).attr("data-party-id");
           const party = d3.select(`#party-${partyId}`);
-          MainChart.updateRadius(party, this.parties.radius.active);
+          this.removeBeeHighlight(party);
         });
 
       this.injectShareCharts();
       this.injectPositionCharts();
     });
-  }
-
-  static updateRadius(selection, radius) {
-    selection
-      .transition()
-      .duration(400)
-      .ease(d3.easeCubicOut)
-      .attr("r", radius);
   }
 
   static loadDatum(d) {
