@@ -43,9 +43,9 @@ main {
 #party-list {
   height: 100%;
   overflow: auto;
+  scroll-behavior: smooth;
 
   .party-list-group {
-    padding: $spacing / 4;
     border-radius: 10px;
     background-color: $lightgray;
 
@@ -57,9 +57,15 @@ main {
       display: flex;
       justify-content: space-between;
       align-items: center;
+      padding: $spacing / 8;
+      border-radius: 10px;
 
       &:not(:last-child) {
         margin-bottom: $spacing / 8;
+      }
+
+      &.active {
+        background-color: bisque;
       }
     }
 

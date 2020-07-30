@@ -30,9 +30,9 @@ main {
 
 #party-list {
   height: 100%;
-  overflow: auto; }
+  overflow: auto;
+  scroll-behavior: smooth; }
   #party-list .party-list-group {
-    padding: 0.5rem;
     border-radius: 10px;
     background-color: #f8f9fa; }
     #party-list .party-list-group:not(:last-child) {
@@ -40,9 +40,13 @@ main {
     #party-list .party-list-group .party-list-item {
       display: flex;
       justify-content: space-between;
-      align-items: center; }
+      align-items: center;
+      padding: 0.25rem;
+      border-radius: 10px; }
       #party-list .party-list-group .party-list-item:not(:last-child) {
         margin-bottom: 0.25rem; }
+      #party-list .party-list-group .party-list-item.active {
+        background-color: bisque; }
     #party-list .party-list-group .party-chart-and-name {
       display: flex; }
     #party-list .party-list-group .party-name {

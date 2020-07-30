@@ -21,7 +21,7 @@ class MainChart {
 
     this.parties = {
       selector: ".party",
-      radius: { active: 3, inactive: 1, selected: 5 },
+      radius: { active: 3.5, inactive: 0.5, selected: 5 },
       padding: 1.5,
       transparent: 0.25,
       alive: {
@@ -350,13 +350,43 @@ class MainChart {
         : this.state.countryGroup === "all" ||
           this.state.countryGroup === d.countryGroup;
 
-    const onHover = (d, i, n, r) => {
+    const updateRadius = (sel, r) =>
+      sel.transition().duration(400).ease(d3.easeCubicOut).attr("r", r);
+
+    const isVisible = function (elem, container) {
+      const elemTop = elem.offsetTop;
+      const elemBottom = elemTop + elem.clientHeight;
+
+      const containerTop = container.scrollTop;
+      const containerBottom = containerTop + container.clientHeight;
+
+      return elemTop >= containerTop && elemBottom <= containerBottom;
+    };
+
+    const onMouseover = ({ data: d }, i, n) => {
       if (!isActive(d)) return;
-      d3.select(n[i])
-        .transition()
-        .duration(400)
-        .ease(d3.easeCubicOut)
-        .attr("r", r);
+
+      const party = d3.select(n[i]);
+      const partyList = d3.select("#party-list").node();
+      let partyInfo = d3.select(`#party-list-item-${d.partyId}`);
+
+      updateRadius(party, radius.selected);
+      partyInfo.classed("active", true);
+
+      partyInfo = partyInfo.node();
+      if (!isVisible(partyInfo, partyList)) {
+        partyList.scrollTop = partyInfo.offsetTop - 50; // TODO: Magic value
+      }
+    };
+
+    const onMouseout = ({ data: d }, i, n) => {
+      if (!isActive(d)) return;
+
+      const party = d3.select(n[i]);
+      const partyInfo = d3.select(`#party-list-item-${d.partyId}`);
+
+      updateRadius(party, radius.active);
+      partyInfo.classed("active", false);
     };
 
     this.svg.g
@@ -395,32 +425,12 @@ class MainChart {
             .attr("opacity", (d) =>
               y(this.state.year) >= d.y ? 1 : transparent
             )
-            .on("mouseover", ({ data: d }, i, n) =>
-              onHover(d, i, n, radius.selected)
-            )
-            .on("mouseout", ({ data: d }, i, n) =>
-              onHover(d, i, n, radius.active)
-            )
-            .call((enter) =>
-              enter
-                .append("title")
-                .text(
-                  ({ data: d }) =>
-                    `${d.party} winning ${
-                      d.share
-                    }% of votes in ${this.time.formatYear(d.electionDate)} (${
-                      d.country
-                    }) - now, ${d.currentShare}%`
-                )
-            ),
+            .on("mouseover", onMouseover)
+            .on("mouseout", onMouseout),
         (update) =>
           update
-            .on("mouseover", ({ data: d }, i, n) =>
-              onHover(d, i, n, radius.selected)
-            )
-            .on("mouseout", ({ data: d }, i, n) =>
-              onHover(d, i, n, radius.active)
-            )
+            .on("mouseover", onMouseover)
+            .on("mouseout", onMouseout)
             .transition()
             .duration(400)
             .ease(d3.easeCubicInOut)
@@ -603,7 +613,9 @@ class MainChart {
           d3.ascending(
             this.data.families.indexOf(a.familyId),
             this.data.families.indexOf(b.familyId)
-          ) || d3.descending(a.currentShare, b.currentShare)
+          ) ||
+          d3.descending(a.isAlive, b.isAlive) ||
+          d3.descending(a.electionYear, b.electionYear)
       )
       .entries(this.state.panelParties)
       .map(({ key, values }) => ({ decade: key, values }));
