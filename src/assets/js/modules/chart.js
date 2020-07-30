@@ -788,6 +788,7 @@ class MainChart {
     return {
       countryId: +d.country_id,
       country: d.country_name,
+      countryCode: d.country_code,
       countryGroup: d.country_group,
 
       partyId: +d.party_id,
@@ -815,24 +816,33 @@ class MainChart {
   }
 
   static createMappings(data) {
-    return {
-      family: d3.map(
-        data.map(({ familyId, family: familyName }) => ({
-          familyId,
-          familyName,
+    const family = d3.map(
+      data.map(({ familyId, family: familyName }) => ({
+        familyId,
+        familyName,
+      })),
+      (d) => d.familyId
+    );
+
+    const countryCode = d3.map(
+      data.map(({ country, countryCode }) => ({ country, countryCode })),
+      (d) => d.country
+    );
+
+    const countryGroups = d3
+      .nest()
+      .key((d) => d.countryGroup)
+      .rollup((v) => v.map((d) => d.country))
+      .entries(data)
+      .map(({ key, value }) => ({
+        group: key,
+        countries: [...new Set(value)].map((country) => ({
+          country,
+          countryCode: countryCode.get(country).countryCode,
         })),
-        (d) => d.familyId
-      ),
-      countryGroups: d3
-        .nest()
-        .key((d) => d.countryGroup)
-        .rollup((v) => v.map((d) => d.country))
-        .entries(data)
-        .map(({ key, value }) => ({
-          group: key,
-          countries: [...new Set(value)],
-        })),
-    };
+      }));
+
+    return { family, countryCode, countryGroups };
   }
 
   // Adapted from https://observablehq.com/@d3/beeswarm and https://observablehq.com/@tomwhite/beeswarm-bubbles

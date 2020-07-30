@@ -67,17 +67,9 @@ function renderMinVoteShare() {
 }
 
 function renderCountryButtons(countryGroups) {
-  countryGroups = JSON.parse(JSON.stringify(countryGroups));
-  countryGroups.map((g) => {
-    g.countries = g.countries.map((country) => ({
-      country,
-      code: mapCountryNameToISOCode.get(country).toLowerCase(),
-    }));
-  });
-
   return renderTemplate({
     template: "country-buttons.mustache",
     target: "#countries",
-    view: { countryGroups, mapCountryNameToISOCode },
+    view: { countryGroups },
   });
 }
