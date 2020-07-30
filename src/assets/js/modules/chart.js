@@ -120,6 +120,12 @@ class MainChart {
       "",
     ];
 
+    // TODO: Random colors for now
+    this.parties.color = d3
+      .scaleOrdinal()
+      .domain(families)
+      .range(d3.schemeTableau10);
+
     const countries = d3
       .map(data, (d) => d.country)
       .keys()
@@ -159,21 +165,24 @@ class MainChart {
   }
 
   createDefs() {
-    const defs = this.svg.g.append("defs");
-
-    const radialGradient = defs
-      .append("radialGradient")
-      .attr("id", "radial-gradient");
+    const radialGradient = this.svg.g
+      .append("defs")
+      .selectAll(".radial-gradient")
+      .data(this.data.families)
+      .join("radialGradient")
+      .attr("id", (familyId) => `radial-gradient-${familyId}`)
+      .attr("class", ".radial-gradient");
 
     radialGradient
       .append("stop")
       .attr("offset", "0%")
-      .attr("stop-color", "gold");
+      .attr("stop-color", (familyId) => this.parties.color(familyId));
 
     radialGradient
       .append("stop")
       .attr("offset", "100%")
-      .attr("stop-color", "#fff");
+      .attr("stop-color", "#fff")
+      .attr("stop-opacity", 0);
   }
 
   setUpScales() {
@@ -199,13 +208,6 @@ class MainChart {
     const { x, y } = this.scales;
     const { yOffset } = this.labels;
 
-    // TODO: Random colors for now
-    const color = d3
-      .scaleOrdinal()
-      .domain(this.data.families)
-      .range(d3.schemeTableau10);
-    this.parties.color = color;
-
     this.svg.bg
       .append("g")
       .attr("class", "axis x-axis x-axis-bg")
@@ -223,7 +225,7 @@ class MainChart {
       .attr("height", 25)
       .attr("rx", 15)
       .attr("ry", 15)
-      .attr("stroke", ({ familyId }) => color(familyId))
+      .attr("stroke", ({ familyId }) => this.parties.color(familyId))
       .attr("stroke-width", 2)
       .attr("fill", "whitesmoke");
 
@@ -459,7 +461,10 @@ class MainChart {
           update
             .attr("cx", (d) => d.x)
             .attr("cy", (d) => d.y)
-            .attr("fill", "url(#radial-gradient)")
+            .attr(
+              "fill",
+              ({ data: d }) => `url(#radial-gradient-${d.familyId})`
+            )
             .call((update) =>
               update
                 .transition()
