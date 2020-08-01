@@ -94,7 +94,8 @@ class MainChart {
       d.isAlive = d.currentShare > 0;
       this.partyProfile.keys.forEach(
         (key) =>
-          (d[`${key}Label`] = this.partyProfile.labels[key][+(d[key] > 5)])
+          (d[`${key}Label`] =
+            d[key] === null ? "" : this.partyProfile.labels[key][+(d[key] > 5)])
       );
       return d;
     });
