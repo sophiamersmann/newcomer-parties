@@ -55,7 +55,7 @@ main {
 
     .party-list-item {
       display: grid;
-      grid-template-columns: repeat(1fr, 4);
+      grid-template-columns: 1fr 4fr 4fr 2fr;
       grid-template-areas:
         ".... header header right"
         "left center center right"
@@ -78,27 +78,26 @@ main {
 
       .area-header {
         grid-area: header;
-        margin: 0 $spacing / 8;
       }
 
       .area-left {
         grid-area: left;
+        justify-self: center;
       }
 
       .area-center {
         grid-area: center;
-        margin: 0 $spacing / 8;
       }
 
       .area-right {
         grid-area: right;
         text-align: right;
         align-self: end;
+        justify-self: center;
       }
 
       .area-footer {
         grid-area: footer;
-        margin: 0 $spacing / 8;
       }
 
       .party-hidden-info-wrapper {
