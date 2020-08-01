@@ -8,3 +8,6 @@
 
 .brush .handle--s {
   fill: currentColor; }
+
+.party.active:hover {
+  cursor: pointer; }

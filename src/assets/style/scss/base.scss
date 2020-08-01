@@ -54,9 +54,12 @@ main {
     }
 
     .party-list-item {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
+      display: grid;
+      grid-template-columns: repeat(1fr, 4);
+      grid-template-areas:
+        ".... header header right"
+        "left center center right"
+        ".... footer footer footer";
       padding: $spacing / 8;
       border-radius: 10px;
 
@@ -70,21 +73,43 @@ main {
 
       &:is(.active, :hover) {
         background-color: bisque;
+        cursor: pointer;
       }
-    }
 
-    .party-chart-and-name {
-      display: flex;
-    }
+      .area-header {
+        grid-area: header;
+        margin: 0 $spacing / 8;
+      }
 
-    .party-name {
-      line-height: 1;
-      margin: 0 5px;
-    }
+      .area-left {
+        grid-area: left;
+      }
 
-    .party-year {
-      // width of svg + left margin of party name
-      margin-left: 21px;
+      .area-center {
+        grid-area: center;
+        margin: 0 $spacing / 8;
+      }
+
+      .area-right {
+        grid-area: right;
+        text-align: right;
+        align-self: end;
+      }
+
+      .area-footer {
+        grid-area: footer;
+        margin: 0 $spacing / 8;
+      }
+
+      .party-hidden-info-wrapper {
+        transition: height 0.5s ease-out;
+        height: 0;
+        overflow: hidden;
+
+        .party-hidden-info {
+          background-color: lavender;
+        }
+      }
     }
   }
 }

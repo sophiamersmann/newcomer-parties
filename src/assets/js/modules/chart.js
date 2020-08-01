@@ -52,6 +52,12 @@ class MainChart {
 
     this.partyProfile = {
       keys: ["leftRight", "libertyAuthority", "stateMarket", "euProAnti"],
+      labels: {
+        leftRight: ["Left", "Right"],
+        libertyAuthority: ["Liberty", "Authority"],
+        stateMarket: ["State", "Market"],
+        euProAnti: ["euPro", "euAnti"],
+      },
     };
 
     this.templates = {
@@ -86,6 +92,10 @@ class MainChart {
   prepareData(data) {
     const raw = data.map((d) => {
       d.isAlive = d.currentShare > 0;
+      this.partyProfile.keys.forEach(
+        (key) =>
+          (d[`${key}Label`] = this.partyProfile.labels[key][+(d[key] > 5)])
+      );
       return d;
     });
 
@@ -388,6 +398,16 @@ class MainChart {
       partyInfo.classList.remove("active");
     };
 
+    const onClick = (d) => {
+      if (!isActive(d.data) || this.scales.y(this.state.year) < d.y) return;
+
+      slide(
+        d3
+          .select(`#party-list-item-${d.data.partyId}`)
+          .select(".party-hidden-info-wrapper")
+      );
+    };
+
     this.svg.g
       .selectAll(".beeswarm-pair")
       .data(this.state.beeswarms)
@@ -412,6 +432,7 @@ class MainChart {
                   : dead
                 ).selector.slice(1)}`
             )
+            .classed("active", ({ data: d }) => isActive(d))
             .attr("cx", (d) => d.x)
             .attr("cy", (d) => d.y)
             .attr("r", ({ data: d }) =>
@@ -426,11 +447,14 @@ class MainChart {
               y(this.state.year) >= d.y ? 1 : transparent
             )
             .on("mouseover", onMouseover)
-            .on("mouseout", onMouseout),
+            .on("mouseout", onMouseout)
+            .on("click", onClick),
         (update) =>
           update
+            .classed("active", ({ data: d }) => isActive(d))
             .on("mouseover", onMouseover)
             .on("mouseout", onMouseout)
+            .on("click", onClick)
             .transition()
             .duration(400)
             .ease(d3.easeCubicInOut)
@@ -767,7 +791,10 @@ class MainChart {
           const partyId = d3.select(n[i]).attr("data-party-id");
           const party = d3.select(`#party-${partyId}`);
           this.removeBeeHighlight(party);
-        });
+        })
+        .on("click", (_, i, n) =>
+          slide(d3.select(n[i]).select(".party-hidden-info-wrapper"))
+        );
 
       this.injectShareCharts();
       this.injectPositionCharts();

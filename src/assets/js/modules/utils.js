@@ -9,3 +9,9 @@ async function renderTemplate({ template, target, view }) {
 function isNull(value) {
   return value == null || value.length === 0;
 }
+
+function slide(element) {
+  const newHeight =
+    element.style("height") === "0px" ? element.property("scrollHeight") : 0;
+  element.style("height", `${newHeight}px`);
+}
