@@ -55,7 +55,7 @@ class MainChart {
       labels: {
         leftRight: ["left", "right"],
         libertyAuthority: ["libertarian", "authoritarian"],
-        stateMarket: ["State", "Market"],
+        stateMarket: ["state", "market"],
         euProAnti: ["pro-European", "EU-sceptic"],
       },
     };
@@ -123,9 +123,9 @@ class MainChart {
               }</span>`
             : "",
           pos.get("stateMarket").value > 1
-            ? `todo: <span class="party-pos-state-marekt">${
+            ? `<span class="party-pos-state-marekt">${
                 pos.get("stateMarket").label
-              }</span>`
+              }-led regulation of the economy</span>`
             : "",
           pos.get("euProAnti").value > 1
             ? `<span class="party-pos-eu">${pos.get("euProAnti").label}</span>`
