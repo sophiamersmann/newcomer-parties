@@ -92,11 +92,20 @@ class MainChart {
   prepareData(data) {
     const raw = data.map((d) => {
       d.isAlive = d.currentShare > 0;
-      this.partyProfile.keys.forEach(
-        (key) =>
-          (d[`${key}Label`] =
-            d[key] === null ? "" : this.partyProfile.labels[key][+(d[key] > 5)])
-      );
+
+      d.positions.map((e) => {
+        e.valueOrig = e.value;
+        e.isUpper = null;
+        e.label = null;
+        if (e.valueOrig !== null) {
+          e.value = e.valueOrig - 1;
+          e.isUpper = e.value >= 4.5;
+          e.value = e.isUpper ? e.value - 4.5 : Math.abs(e.value - 4.5);
+          e.label = this.partyProfile.labels[e.key][+e.isUpper];
+        }
+        return e;
+      });
+
       return d;
     });
 
@@ -724,13 +733,13 @@ class MainChart {
 
   injectPositionCharts() {
     const width = 32;
-    const height = 32;
-    const radius = 4;
+    const height = width;
+    const margin = 2;
 
-    const x = d3
+    const radialScale = d3
       .scaleLinear()
-      .domain([0, 10])
-      .range([radius, width - radius]);
+      .domain([0, 4.5])
+      .range([0, width / 2 - margin]);
 
     this.state.panelParties
       .map((d) => d.values)
@@ -744,34 +753,31 @@ class MainChart {
           .append("svg")
           .attr("width", width)
           .attr("height", height)
-          .attr("viewBox", [0, 0, width, height]);
-
-        svg
-          .selectAll(".vertical-line")
-          .data([width / 2])
-          .join("line")
-          .attr("class", "vertical-line")
-          .attr("x1", (d) => d)
-          .attr("y1", 0)
-          .attr("x2", (d) => d)
-          .attr("y2", height)
-          .attr("stroke", "gray");
+          .attr("viewBox", [-width / 2, -height / 2, width, height]);
 
         svg
           .selectAll("circle")
-          .data(
-            this.partyProfile.keys
-              .map((key) => ({ type: key, value: d[key] }))
-              .filter((d) => d.value)
-          )
+          .data([0.5, 1.5, 2.5, 3.5, 4.5])
           .join("circle")
-          .attr("cx", (d) => x(d.value))
+          .attr("r", (d) => radialScale(d))
+          .attr("fill", "transparent")
+          .attr("stroke", "lightgray")
+          .attr("stroke-width", 0.5);
+
+        const g = svg
+          .selectAll("g")
+          .data(d.positions.filter((e) => e.value !== null))
+          .join("g")
           .attr(
-            "cy",
-            (d) => radius + this.partyProfile.keys.indexOf(d.type) * 2 * radius
-          )
-          .attr("r", radius)
-          .attr("fill", "black");
+            "transform",
+            (e, i) => `rotate(${(e.isUpper ? 4 * 45 : 0) + i * 45})`
+          );
+
+        g.append("line")
+          .attr("y2", (e) => radialScale(e.value))
+          .attr("stroke-width", 2)
+          .attr("stroke-linecap", "round")
+          .attr("stroke", "black");
       });
   }
 
@@ -832,12 +838,24 @@ class MainChart {
       share: +d.vote_share,
       currentShare: +d.most_recent_vote_share,
 
-      leftRight: isNull(d.left_right) ? null : +d.left_right,
-      stateMarket: isNull(d.state_market) ? null : +d.state_market,
-      libertyAuthority: isNull(d.liberty_authority)
-        ? null
-        : +d.liberty_authority,
-      euProAnti: isNull(d.eu_anti_pro) ? null : 10 - d.eu_anti_pro,
+      positions: [
+        {
+          key: "leftRight",
+          value: isNull(d.left_right) ? null : +d.left_right,
+        },
+        {
+          key: "stateMarket",
+          value: isNull(d.state_market) ? null : +d.state_market,
+        },
+        {
+          key: "libertyAuthority",
+          value: isNull(d.liberty_authority) ? null : +d.liberty_authority,
+        },
+        {
+          key: "euProAnti",
+          value: isNull(d.eu_anti_pro) ? null : 10 - d.eu_anti_pro,
+        },
+      ],
     };
   }
 
