@@ -53,10 +53,10 @@ class MainChart {
     this.partyProfile = {
       keys: ["leftRight", "libertyAuthority", "stateMarket", "euProAnti"],
       labels: {
-        leftRight: ["Left", "Right"],
-        libertyAuthority: ["Liberty", "Authority"],
+        leftRight: ["left", "right"],
+        libertyAuthority: ["libertarian", "authoritarian"],
         stateMarket: ["State", "Market"],
-        euProAnti: ["euPro", "euAnti"],
+        euProAnti: ["pro-European", "EU-sceptic"],
       },
     };
 
@@ -105,6 +105,34 @@ class MainChart {
         }
         return e;
       });
+
+      const pos = d3.map(d.positions, (e) => e.key);
+      d.info =
+        `got into parliament with ${d3.format(".1%")(
+          d.share / 100
+        )} of the votes<br>` +
+        [
+          pos.get("leftRight").value > 1
+            ? `on the political <span class="party-pos-left-right">${
+                pos.get("leftRight").label
+              }</span>`
+            : "",
+          pos.get("libertyAuthority").value > 1
+            ? `<span class="party-pos-lib-auth">${
+                pos.get("libertyAuthority").label
+              }</span>`
+            : "",
+          pos.get("stateMarket").value > 1
+            ? `todo: <span class="party-pos-state-marekt">${
+                pos.get("stateMarket").label
+              }</span>`
+            : "",
+          pos.get("euProAnti").value > 1
+            ? `<span class="party-pos-eu">${pos.get("euProAnti").label}</span>`
+            : "",
+        ]
+          .filter((item) => item)
+          .join(" &#183; ");
 
       return d;
     });
@@ -840,16 +868,16 @@ class MainChart {
 
       positions: [
         {
-          key: "leftRight",
-          value: isNull(d.left_right) ? null : +d.left_right,
-        },
-        {
           key: "stateMarket",
           value: isNull(d.state_market) ? null : +d.state_market,
         },
         {
           key: "libertyAuthority",
           value: isNull(d.liberty_authority) ? null : +d.liberty_authority,
+        },
+        {
+          key: "leftRight",
+          value: isNull(d.left_right) ? null : +d.left_right,
         },
         {
           key: "euProAnti",
