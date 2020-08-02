@@ -718,14 +718,9 @@ class MainChart {
     );
     this.state.panelParties = d3
       .nest()
-      .key((d) => d.familyId)
-      .sortKeys((a, b) =>
-        d3.ascending(
-          this.data.families.indexOf(a),
-          this.data.families.indexOf(b)
-        )
-      )
-      .sortValues((a, b) => d3.descending(a.electionYear, b.electionYear))
+      .key((d) => d.electionYear - (d.electionYear % 10))
+      .sortKeys(d3.descending)
+      .sortValues((a, b) => d3.descending(a.electionDate, b.electionDate))
       .entries(this.state.panelParties)
       .map(({ key, values }) => ({ decade: key, values }));
     this.templates.panelParties.view = {
