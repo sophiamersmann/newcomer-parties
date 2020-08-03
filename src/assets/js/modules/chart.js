@@ -713,11 +713,22 @@ class MainChart {
     );
     this.state.panelParties = d3
       .nest()
-      .key((d) => d.electionYear - (d.electionYear % 10))
-      .sortKeys(d3.descending)
-      .sortValues((a, b) => d3.descending(a.electionDate, b.electionDate))
-      .entries(this.state.panelParties)
-      .map(({ key, values }) => ({ decade: key, values }));
+      .key((d) => [d.country, d.electionYear].join(";"))
+      .sortKeys((a, b) => {
+        const [countryA, yearA] = a.split(";");
+        const [countryB, yearB] = b.split(";");
+        return (
+          d3.descending(+yearA, +yearB) || d3.ascending(countryA, countryB)
+        );
+      })
+      .sortValues((a, b) =>
+        d3.ascending(
+          this.data.families.indexOf(a.familyId),
+          this.data.families.indexOf(b.familyId)
+        )
+      )
+      .entries(this.state.panelParties);
+
     this.templates.panelParties.view = {
       parties: this.state.panelParties,
     };
