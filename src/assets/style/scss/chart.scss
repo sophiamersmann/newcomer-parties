@@ -19,3 +19,7 @@
 .party.active:hover {
   cursor: pointer;
 }
+
+.party-position-chart > svg {
+  overflow: visible;
+}

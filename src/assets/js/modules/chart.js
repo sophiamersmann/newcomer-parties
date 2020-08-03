@@ -51,13 +51,14 @@ class MainChart {
     };
 
     this.partyProfile = {
-      keys: ["leftRight", "libertyAuthority", "stateMarket", "euProAnti"],
+      keys: ["stateMarket", "libertyAuthority", "leftRight", "euProAnti"],
       labels: {
         leftRight: ["left", "right"],
         libertyAuthority: ["libertarian", "authoritarian"],
         stateMarket: ["state", "market"],
-        euProAnti: ["pro-European", "EU-sceptic"],
+        euProAnti: ["pro-EU", "EU-sceptic"],
       },
+      threshold: 1,
     };
 
     this.templates = {
@@ -112,22 +113,22 @@ class MainChart {
           d.share / 100
         )} of the votes<br>` +
         [
-          pos.get("leftRight").value > 1
+          pos.get("leftRight").value > this.partyProfile.threshold
             ? `on the political <span class="party-pos-left-right">${
                 pos.get("leftRight").label
               }</span>`
             : "",
-          pos.get("libertyAuthority").value > 1
+          pos.get("libertyAuthority").value > this.partyProfile.threshold
             ? `<span class="party-pos-lib-auth">${
                 pos.get("libertyAuthority").label
               }</span>`
             : "",
-          pos.get("stateMarket").value > 1
+          pos.get("stateMarket").value > this.partyProfile.threshold
             ? `<span class="party-pos-state-marekt">${
                 pos.get("stateMarket").label
               }-led regulation of the economy</span>`
             : "",
-          pos.get("euProAnti").value > 1
+          pos.get("euProAnti").value > this.partyProfile.threshold
             ? `<span class="party-pos-eu">${pos.get("euProAnti").label}</span>`
             : "",
         ]
@@ -770,10 +771,21 @@ class MainChart {
       .domain([0, 4.5])
       .range([0, width / 2 - margin]);
 
+    const labels = [];
+    for (let index of d3.range(2)) {
+      this.partyProfile.keys.forEach((key) =>
+        labels.push(this.partyProfile.labels[key][index])
+      );
+    }
+
     this.state.panelParties
       .map((d) => d.values)
       .flat()
       .forEach((d) => {
+        const currLabels = d.positions
+          .filter((e) => e.value > this.partyProfile.threshold)
+          .map((e) => e.label);
+
         const svgContainer = d3.select(
           `#party-list-item-${d.partyId} .party-position-chart`
         );
@@ -795,10 +807,45 @@ class MainChart {
           .attr("stroke", "lightgray")
           .attr("stroke-width", 0.5);
 
+        svg
+          .append("g")
+          .attr("class", "web")
+          .attr("opacity", 0)
+          .selectAll(".web-line")
+          .data(d3.range(4))
+          .join("line")
+          .attr("class", "web-line")
+          .attr("transform", (d) => `rotate(${d * 45})`)
+          .attr("y1", -(radialScale.range()[1] + margin))
+          .attr("y2", radialScale.range()[1] + margin)
+          .attr("stroke-width", 1)
+          .attr("stroke", "lightgray");
+
+        svg
+          .append("g")
+          .attr("class", "labels")
+          .attr("opacity", 0)
+          .selectAll("text")
+          .data(labels)
+          .join("text")
+          .attr("y", radialScale.range()[1] + margin)
+          .attr(
+            "transform",
+            (_, i) =>
+              `rotate(${i * 45}) rotate(90 0 ${
+                radialScale.range()[1] + margin
+              })`
+          )
+          .attr("dominant-baseline", "middle")
+          .attr("font-size", "8px")
+          .attr("fill", (d) => (currLabels.includes(d) ? "black" : "lightgray"))
+          .text((d) => d);
+
         const g = svg
-          .selectAll("g")
+          .selectAll(".g-pos")
           .data(d.positions.filter((e) => e.value !== null))
           .join("g")
+          .attr("class", "g-pos")
           .attr(
             "transform",
             (e, i) => `rotate(${(e.isUpper ? 4 * 45 : 0) + i * 45})`
@@ -809,6 +856,11 @@ class MainChart {
           .attr("stroke-width", 2)
           .attr("stroke-linecap", "round")
           .attr("stroke", "black");
+
+        const annotations = svg.selectAll(".web, .labels");
+        svg
+          .on("mouseenter", () => annotations.attr("opacity", 1))
+          .on("mouseleave", () => annotations.attr("opacity", 0));
       });
   }
 

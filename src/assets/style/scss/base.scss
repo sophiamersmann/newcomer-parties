@@ -37,13 +37,13 @@ main {
 .panel {
   border-left: 1px solid black;
   flex: 0 1 20vw;
-  padding: $spacing / 2;
 }
 
 #party-list {
   height: 100%;
   overflow: auto;
   scroll-behavior: smooth;
+  padding: $spacing / 2;
 
   .party-list-group {
     border-radius: 10px;
@@ -62,10 +62,6 @@ main {
         ".... footer footer footer";
       padding: $spacing / 8;
       border-radius: 10px;
-
-      & > * {
-        pointer-events: none;
-      }
 
       &:not(:last-child) {
         margin-bottom: $spacing / 8;

@@ -25,13 +25,13 @@ main {
 
 .panel {
   border-left: 1px solid black;
-  flex: 0 1 20vw;
-  padding: 1rem; }
+  flex: 0 1 20vw; }
 
 #party-list {
   height: 100%;
   overflow: auto;
-  scroll-behavior: smooth; }
+  scroll-behavior: smooth;
+  padding: 1rem; }
   #party-list .party-list-group {
     border-radius: 10px;
     background-color: #f8f9fa; }
@@ -43,8 +43,6 @@ main {
       grid-template-areas: ".... header header right" "left center center right" ".... footer footer footer";
       padding: 0.25rem;
       border-radius: 10px; }
-      #party-list .party-list-group .party-list-item > * {
-        pointer-events: none; }
       #party-list .party-list-group .party-list-item:not(:last-child) {
         margin-bottom: 0.25rem; }
       #party-list .party-list-group .party-list-item:is(.active, :hover) {
