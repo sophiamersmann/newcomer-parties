@@ -219,7 +219,7 @@ class MainChart {
       .data(this.data.families)
       .join("radialGradient")
       .attr("id", (familyId) => `radial-gradient-${familyId}`)
-      .attr("class", ".radial-gradient");
+      .attr("class", "radial-gradient");
 
     radialGradient
       .append("stop")
@@ -462,14 +462,9 @@ class MainChart {
           enter
             .append("circle")
             .attr("id", ({ data: d }) => `party-${d.partyId}`)
-            .attr(
-              "class",
-              ({ data: d }) =>
-                `${selector.slice(1)} ${(d.isAlive
-                  ? alive
-                  : dead
-                ).selector.slice(1)}`
-            )
+            .attr("class", selector.slice(1))
+            .classed(alive.selector.slice(1), ({ data: d }) => d.isAlive)
+            .classed(dead.selector.slice(1), ({ data: d }) => !d.isAlive)
             .classed("active", ({ data: d }) => isActive(d))
             .attr("cx", (d) => d.x)
             .attr("cy", (d) => d.y)
