@@ -785,6 +785,8 @@ class MainChart {
           .attr("viewBox", [-width / 2, -height / 2, width, height]);
 
         svg
+          .append("g")
+          .attr("class", "grid")
           .selectAll("circle")
           .data([0.5, 1.5, 2.5, 3.5, 4.5])
           .join("circle")
