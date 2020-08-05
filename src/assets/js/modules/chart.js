@@ -963,7 +963,7 @@ class MainChart {
       .entries(data)
       .map(({ key, value }) => ({
         group: key,
-        countries: [...new Set(value)].map((country) => ({
+        countries: [...new Set(value)].sort(d3.ascending).map((country) => ({
           country,
           countryCode: countryCode.get(country).countryCode,
         })),
