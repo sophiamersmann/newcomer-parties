@@ -22,6 +22,17 @@ $(document).ready(() => {
       const divCountries = $("#countries > div");
       const countryButton = $("#countries button");
 
+      divCountries.each((i) => {
+        const item = $(divCountries[i]);
+        const group = item.data("group");
+        const groupButton = countryGroupButton.filter(`[data-group=${group}]`);
+        item.css(
+          "margin-left",
+          groupButton.position().left -
+            parseFloat($(".overview").css("padding-left"))
+        );
+      });
+
       countryGroupButton.click((event) => {
         const target = $(event.target);
         const countryGroup = target.data("group");

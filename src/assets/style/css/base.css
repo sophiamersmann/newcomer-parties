@@ -18,7 +18,7 @@ main {
   flex: 1 0 80vw; }
   main .overview {
     background-color: aliceblue;
-    height: 100px;
+    height: 150px;
     padding: 1rem 2rem; }
     main .overview h1 {
       display: inline; }
@@ -70,7 +70,7 @@ main {
           background-color: lavender; }
 
 #chart-wrapper {
-  height: calc(100% - 100px);
+  height: calc(100% - 150px);
   display: flex;
   justify-content: center;
   align-items: center; }
