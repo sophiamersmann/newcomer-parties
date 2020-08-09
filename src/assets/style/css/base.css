@@ -37,6 +37,8 @@ main {
     background-color: #f8f9fa; }
     #party-list .party-list-group:not(:last-child) {
       margin-bottom: 2rem; }
+    #party-list .party-list-group:last-child {
+      margin-bottom: 1rem; }
     #party-list .party-list-group .party-list-item {
       display: grid;
       grid-template-columns: 1fr 4fr 4fr 2fr;
