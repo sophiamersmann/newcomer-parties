@@ -38,6 +38,7 @@ class MainChart {
     };
 
     this.brush = {
+      // brushY: null,
       initialDates: [new Date(2020, 0, 1), new Date(1980, 0, 1)],
     };
 
@@ -62,11 +63,6 @@ class MainChart {
     };
 
     this.templates = {
-      year: {
-        template: "year.mustache",
-        target: "#year",
-        view: { year: this.state.year.getFullYear() },
-      },
       panelParties: {
         template: "parties.mustache",
         target: "#party-list",
@@ -659,7 +655,20 @@ class MainChart {
 
     this.svg.g.select(".overlay").remove();
     adjustHandleHeight(this.svg.g);
+
+    // this.brush.brushY = brush;
   }
+
+  // moveBrush(year) {
+  //   const { y } = this.scales;
+  //   const { brushY: brush, initialDates } = this.brush;
+  //   d3.select(".brush")
+  //     .transition()
+  //     // TODO: think about this transition
+  //     .duration(1200)
+  //     .ease(d3.easeCubicInOut)
+  //     .call(brush.move, [initialDates[0], year].map(y));
+  // }
 
   updateState({
     countryGroup,
@@ -685,10 +694,12 @@ class MainChart {
       if (action) this.drawBees();
     }
 
-    if (year !== undefined && year !== this.state.year) {
+    if (
+      year !== undefined &&
+      year.getFullYear() !== this.state.year.getFullYear()
+    ) {
       this.state.year = year;
-      this.templates.year.view = { year: year.getFullYear() };
-      if (action) renderTemplate(this.templates.year);
+      if (action) this.renderYear();
     }
 
     if (
@@ -865,11 +876,16 @@ class MainChart {
   }
 
   renderTemplates() {
-    renderTemplate(this.templates.year);
+    this.renderYear();
     this.renderPanelParties();
   }
 
+  renderYear() {
+    document.getElementById("input-year").value = this.state.year.getFullYear();
+  }
+
   renderPanelParties() {
+    // TODO: create once, then only change display value
     renderTemplate(this.templates.panelParties).then(() => {
       d3.selectAll(".party-list-item")
         .on("mouseenter", (_, i, n) => {
