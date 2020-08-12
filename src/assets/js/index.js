@@ -52,10 +52,14 @@ $(document).ready(() => {
 
       countryButton.click((event) => {
         const target = $(event.target);
-        const country = target.data("country");
+        const others = countryButton.not(target);
 
-        countryButton.removeClass("active");
+        others.removeClass("active");
         target.toggleClass("active");
+
+        const country = target.hasClass("active")
+          ? target.data("country")
+          : null;
 
         mainChart.updateState({ country });
       });
