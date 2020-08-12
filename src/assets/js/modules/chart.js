@@ -38,7 +38,7 @@ class MainChart {
     };
 
     this.brush = {
-      // brushY: null,
+      brushY: null,
       initialDates: [new Date(2020, 0, 1), new Date(1980, 0, 1)],
     };
 
@@ -656,19 +656,19 @@ class MainChart {
     this.svg.g.select(".overlay").remove();
     adjustHandleHeight(this.svg.g);
 
-    // this.brush.brushY = brush;
+    this.brush.brushY = brush;
   }
 
-  // moveBrush(year) {
-  //   const { y } = this.scales;
-  //   const { brushY: brush, initialDates } = this.brush;
-  //   d3.select(".brush")
-  //     .transition()
-  //     // TODO: think about this transition
-  //     .duration(1200)
-  //     .ease(d3.easeCubicInOut)
-  //     .call(brush.move, [initialDates[0], year].map(y));
-  // }
+  moveBrush(year) {
+    const { y } = this.scales;
+    const { brushY: brush, initialDates } = this.brush;
+    d3.select(".brush")
+      .transition()
+      // TODO: improve this transition
+      .duration(1200)
+      .ease(d3.easeCubicInOut)
+      .call(brush.move, [initialDates[0], year].map(y));
+  }
 
   updateState({
     countryGroup,

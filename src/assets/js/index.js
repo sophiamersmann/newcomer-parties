@@ -21,6 +21,7 @@ $(document).ready(() => {
     .then(() => {
       const divCountries = $("#countries > div");
       const countryButton = $("#countries button");
+      const selectYear = $("#input-year");
 
       divCountries.each((i) => {
         const item = $(divCountries[i]);
@@ -67,6 +68,18 @@ $(document).ready(() => {
       inputVoteShare.on("input", (event) => {
         renderMinVoteShare();
         mainChart.updateState({ minVoteShare: +$(event.target).val() });
+      });
+
+      selectYear.on("input", (event) => {
+        const target = $(event.target);
+        const year = +target.val();
+
+        // TODO: what happens if input is invalid
+        if (1945 <= year && year <= 2020) {
+          const date = new Date(year, 1, 1);
+          mainChart.updateState({ year: date, action: false });
+          mainChart.moveBrush(date);
+        }
       });
     });
 });
