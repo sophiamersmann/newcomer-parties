@@ -80,7 +80,7 @@ class MainChart {
     };
   }
 
-  async init({ countryGroup = "all", minVoteShare = 0, country = null } = {}) {
+  async init({ countryGroup = "", minVoteShare = 0, country = null } = {}) {
     const filename = d3.select(this.svg.selector).attr("data-src");
     return d3.csv(filename, MainChart.loadDatum).then((data) => {
       this.prepareData(data);
@@ -399,7 +399,7 @@ class MainChart {
     const isActive = (d) =>
       this.state.country !== null
         ? this.state.country === d.country
-        : this.state.countryGroup === "all" ||
+        : !this.state.countryGroup ||
           this.state.countryGroup === d.countryGroup;
 
     const isVisible = function (elem, container) {
@@ -676,7 +676,7 @@ class MainChart {
       this.state.parties = this.data.raw;
       this.state.country = 0;
 
-      if (this.state.countryGroup !== "all") {
+      if (this.state.countryGroup) {
         this.state.parties = this.data.raw.filter(
           (d) => d.countryGroup === this.state.countryGroup
         );
@@ -706,7 +706,7 @@ class MainChart {
 
     this.state.panelParties = this.data.raw.filter(
       (d) =>
-        (this.state.countryGroup === "all" ||
+        (!this.state.countryGroup ||
           d.countryGroup === this.state.countryGroup) &&
         d.electionDate >= this.state.year &&
         d.share >= this.state.minVoteShare * 100 &&

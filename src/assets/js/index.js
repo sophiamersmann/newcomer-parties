@@ -3,7 +3,7 @@ $(document).ready(() => {
   const minVoteShare = +inputVoteShare.val();
 
   const countryGroupButton = $(".country-groups > button");
-  const countryGroup = countryGroupButton.filter(".active").data("group");
+  const countryGroup = getActiveCountryGroup(countryGroupButton);
 
   renderMinVoteShare = renderMinVoteShare.bind(inputVoteShare);
   renderMinVoteShare();
@@ -35,17 +35,15 @@ $(document).ready(() => {
 
       countryGroupButton.click((event) => {
         const target = $(event.target);
-        const countryGroup = target.data("group");
+        const others = countryGroupButton.not(target);
 
-        countryButton.removeClass("active");
-
-        if (!target.hasClass("active")) {
-          countryGroupButton.removeClass("active");
-          target.toggleClass("active");
-        }
+        others.removeClass("active");
+        target.toggleClass("active");
+        const countryGroup = getActiveCountryGroup(countryGroupButton);
 
         divCountries.addClass("hide");
-        if (countryGroup !== "all") {
+        countryButton.removeClass("active");
+        if (countryGroup) {
           $(`#countries-${countryGroup}`).removeClass("hide");
         }
 
@@ -68,6 +66,11 @@ $(document).ready(() => {
       });
     });
 });
+
+function getActiveCountryGroup(buttons) {
+  const activeButton = buttons.filter(".active");
+  return activeButton.length > 0 ? activeButton.data("group") : "";
+}
 
 function renderMinVoteShare() {
   return renderTemplate({
