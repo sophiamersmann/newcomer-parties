@@ -62,8 +62,8 @@ class MainChart {
       threshold: 1,
     };
 
-    this.templates = {
-      panelParties: {
+    this.panel = {
+      template: {
         template: "parties.mustache",
         target: "#party-list",
         view: { parties: null },
@@ -82,6 +82,7 @@ class MainChart {
       this.prepareData(data);
       this.updateState({ countryGroup, minVoteShare, country, action: false });
       this.draw();
+      this.createPanel();
       this.renderTemplates();
     });
   }
@@ -179,6 +180,50 @@ class MainChart {
     const mappings = MainChart.createMappings(data);
 
     this.data = { raw, counts, families, countries, mappings };
+  }
+
+  createPanel() {
+    this.panel.template.view = {
+      parties: d3
+        .nest()
+        .key((d) => [d.country, d.electionYear].join(";"))
+        .sortKeys((a, b) => {
+          const [countryA, yearA] = a.split(";");
+          const [countryB, yearB] = b.split(";");
+          return (
+            d3.descending(+yearA, +yearB) || d3.ascending(countryA, countryB)
+          );
+        })
+        .sortValues((a, b) =>
+          d3.ascending(
+            this.data.families.indexOf(a.familyId),
+            this.data.families.indexOf(b.familyId)
+          )
+        )
+        .entries(this.data.raw),
+    };
+
+    renderTemplate(this.panel.template).then(() => {
+      d3.selectAll(".party-list-item")
+        .on("mouseenter", (_, i, n) => {
+          const partyId = d3.select(n[i]).attr("data-party-id");
+          const party = d3.select(`#party-${partyId}`);
+          this.highlightBee(party);
+        })
+        .on("mouseleave", (_, i, n) => {
+          const partyId = d3.select(n[i]).attr("data-party-id");
+          const party = d3.select(`#party-${partyId}`);
+          this.removeBeeHighlight(party);
+        })
+        .on("click", (_, i, n) =>
+          slide(d3.select(n[i]).select(".party-hidden-info-wrapper"))
+        );
+
+      this.injectShareCharts();
+      this.injectPositionCharts();
+
+      this.renderPanelParties();
+    });
   }
 
   draw() {
@@ -715,47 +760,24 @@ class MainChart {
       if (action) this.drawBees();
     }
 
-    this.state.panelParties = this.data.raw.filter(
-      (d) =>
+    this.data.raw.map((d) => {
+      d.isActive =
         (!this.state.countryGroup ||
           d.countryGroup === this.state.countryGroup) &&
         d.electionDate >= this.state.year &&
         d.share >= this.state.minVoteShare * 100 &&
-        (!this.state.country || d.country === this.state.country)
-    );
-    this.state.panelParties = d3
-      .nest()
-      .key((d) => [d.country, d.electionYear].join(";"))
-      .sortKeys((a, b) => {
-        const [countryA, yearA] = a.split(";");
-        const [countryB, yearB] = b.split(";");
-        return (
-          d3.descending(+yearA, +yearB) || d3.ascending(countryA, countryB)
-        );
-      })
-      .sortValues((a, b) =>
-        d3.ascending(
-          this.data.families.indexOf(a.familyId),
-          this.data.families.indexOf(b.familyId)
-        )
-      )
-      .entries(this.state.panelParties);
+        (!this.state.country || d.country === this.state.country);
+      return d;
+    });
 
-    this.templates.panelParties.view = {
-      parties: this.state.panelParties,
-    };
-
-    if (action) {
-      this.renderPanelParties();
-    }
+    if (action) this.renderPanelParties();
   }
 
   injectShareCharts() {
-    const parties = this.state.panelParties.map((d) => d.values).flat();
-
     const svg = d3
       .selectAll(".party-share-chart")
-      .data(parties)
+      // TODO: incorrectly sorted
+      .data(this.data.raw)
       .append("svg")
       .attr("width", 16)
       .attr("height", 16)
@@ -789,90 +811,85 @@ class MainChart {
       );
     }
 
-    this.state.panelParties
-      .map((d) => d.values)
-      .flat()
-      .forEach((d) => {
-        const currLabels = d.positions
-          .filter((e) => e.value > this.partyProfile.threshold)
-          .map((e) => e.label);
+    this.data.raw.forEach((d) => {
+      const currLabels = d.positions
+        .filter((e) => e.value > this.partyProfile.threshold)
+        .map((e) => e.label);
 
-        const svgContainer = d3.select(
-          `#party-list-item-${d.partyId} .party-position-chart`
+      const svgContainer = d3.select(
+        `#party-list-item-${d.partyId} .party-position-chart`
+      );
+
+      const svg = svgContainer
+        .append("svg")
+        .attr("width", width)
+        .attr("height", height)
+        .attr("viewBox", [-width / 2, -height / 2, width, height]);
+
+      svg
+        .append("g")
+        .attr("class", "grid")
+        .selectAll("circle")
+        .data([0.5, 1.5, 2.5, 3.5, 4.5])
+        .join("circle")
+        .attr("r", (d) => radialScale(d))
+        .attr("fill", "transparent")
+        .attr("stroke", "lightgray")
+        .attr("stroke-width", 0.5);
+
+      svg
+        .append("g")
+        .attr("class", "web")
+        .attr("opacity", 0)
+        .selectAll(".web-line")
+        .data(d3.range(4))
+        .join("line")
+        .attr("class", "web-line")
+        .attr("transform", (d) => `rotate(${d * 45})`)
+        .attr("y1", -(radialScale.range()[1] + margin))
+        .attr("y2", radialScale.range()[1] + margin)
+        .attr("stroke-width", 1)
+        .attr("stroke", "lightgray");
+
+      svg
+        .append("g")
+        .attr("class", "labels")
+        .attr("opacity", 0)
+        .selectAll("text")
+        .data(labels)
+        .join("text")
+        .attr("y", radialScale.range()[1] + margin)
+        .attr(
+          "transform",
+          (_, i) =>
+            `rotate(${i * 45}) rotate(90 0 ${radialScale.range()[1] + margin})`
+        )
+        .attr("dominant-baseline", "middle")
+        .attr("font-size", "8px")
+        .attr("fill", (d) => (currLabels.includes(d) ? "black" : "lightgray"))
+        .text((d) => d);
+
+      const g = svg
+        .selectAll(".g-pos")
+        .data(d.positions.filter((e) => e.value !== null))
+        .join("g")
+        .attr("class", "g-pos")
+        .attr(
+          "transform",
+          (e, i) => `rotate(${(e.isUpper ? 4 * 45 : 0) + i * 45})`
         );
 
-        const svg = svgContainer
-          .append("svg")
-          .attr("width", width)
-          .attr("height", height)
-          .attr("viewBox", [-width / 2, -height / 2, width, height]);
+      g.append("line")
+        .attr("y2", (e) => radialScale(e.value))
+        .attr("stroke-width", 2)
+        .attr("stroke-linecap", "round")
+        .attr("stroke", "black");
 
-        svg
-          .append("g")
-          .attr("class", "grid")
-          .selectAll("circle")
-          .data([0.5, 1.5, 2.5, 3.5, 4.5])
-          .join("circle")
-          .attr("r", (d) => radialScale(d))
-          .attr("fill", "transparent")
-          .attr("stroke", "lightgray")
-          .attr("stroke-width", 0.5);
-
-        svg
-          .append("g")
-          .attr("class", "web")
-          .attr("opacity", 0)
-          .selectAll(".web-line")
-          .data(d3.range(4))
-          .join("line")
-          .attr("class", "web-line")
-          .attr("transform", (d) => `rotate(${d * 45})`)
-          .attr("y1", -(radialScale.range()[1] + margin))
-          .attr("y2", radialScale.range()[1] + margin)
-          .attr("stroke-width", 1)
-          .attr("stroke", "lightgray");
-
-        svg
-          .append("g")
-          .attr("class", "labels")
-          .attr("opacity", 0)
-          .selectAll("text")
-          .data(labels)
-          .join("text")
-          .attr("y", radialScale.range()[1] + margin)
-          .attr(
-            "transform",
-            (_, i) =>
-              `rotate(${i * 45}) rotate(90 0 ${
-                radialScale.range()[1] + margin
-              })`
-          )
-          .attr("dominant-baseline", "middle")
-          .attr("font-size", "8px")
-          .attr("fill", (d) => (currLabels.includes(d) ? "black" : "lightgray"))
-          .text((d) => d);
-
-        const g = svg
-          .selectAll(".g-pos")
-          .data(d.positions.filter((e) => e.value !== null))
-          .join("g")
-          .attr("class", "g-pos")
-          .attr(
-            "transform",
-            (e, i) => `rotate(${(e.isUpper ? 4 * 45 : 0) + i * 45})`
-          );
-
-        g.append("line")
-          .attr("y2", (e) => radialScale(e.value))
-          .attr("stroke-width", 2)
-          .attr("stroke-linecap", "round")
-          .attr("stroke", "black");
-
-        const annotations = svg.selectAll(".web, .labels");
-        svg
-          .on("mouseenter", () => annotations.attr("opacity", 1))
-          .on("mouseleave", () => annotations.attr("opacity", 0));
-      });
+      const annotations = svg.selectAll(".web, .labels");
+      svg
+        .on("mouseenter", () => annotations.attr("opacity", 1))
+        .on("mouseleave", () => annotations.attr("opacity", 0));
+    });
   }
 
   renderTemplates() {
@@ -885,26 +902,13 @@ class MainChart {
   }
 
   renderPanelParties() {
-    // TODO: create once, then only change display value
-    renderTemplate(this.templates.panelParties).then(() => {
-      d3.selectAll(".party-list-item")
-        .on("mouseenter", (_, i, n) => {
-          const partyId = d3.select(n[i]).attr("data-party-id");
-          const party = d3.select(`#party-${partyId}`);
-          this.highlightBee(party);
-        })
-        .on("mouseleave", (_, i, n) => {
-          const partyId = d3.select(n[i]).attr("data-party-id");
-          const party = d3.select(`#party-${partyId}`);
-          this.removeBeeHighlight(party);
-        })
-        .on("click", (_, i, n) =>
-          slide(d3.select(n[i]).select(".party-hidden-info-wrapper"))
-        );
+    const mapping = d3.map(this.data.raw, (d) => d.partyId);
 
-      this.injectShareCharts();
-      this.injectPositionCharts();
-    });
+    d3.selectAll(".party-list-item").style("display", (_, i, n) =>
+      mapping.get(d3.select(n[i]).attr("data-party-id")).isActive
+        ? "grid"
+        : "none"
+    );
   }
 
   static loadDatum(d) {
