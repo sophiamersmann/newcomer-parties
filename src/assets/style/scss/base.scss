@@ -52,12 +52,12 @@ main {
 
     .party-list-item {
       display: grid;
-      grid-template-columns: 1fr 4fr 4fr 2fr;
+      grid-template-columns: 4fr 4fr 2fr;
       grid-template-areas:
-        ".... header header right"
-        "left center center right"
-        ".... footer footer footer";
-      padding: $spacing / 8;
+        "header header right"
+        "center center right"
+        "footer footer footer";
+      padding: $spacing / 4;
       border-radius: 10px;
 
       &:is(.active, :hover) {
@@ -67,11 +67,6 @@ main {
 
       .area-header {
         grid-area: header;
-      }
-
-      .area-left {
-        grid-area: left;
-        justify-self: center;
       }
 
       .area-center {

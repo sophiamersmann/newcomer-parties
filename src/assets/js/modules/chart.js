@@ -219,9 +219,7 @@ class MainChart {
           slide(d3.select(n[i]).select(".party-hidden-info-wrapper"))
         );
 
-      this.injectShareCharts();
       this.injectPositionCharts();
-
       this.renderPanelParties();
     });
   }
@@ -771,27 +769,6 @@ class MainChart {
     });
 
     if (action) this.renderPanelParties();
-  }
-
-  injectShareCharts() {
-    const svg = d3
-      .selectAll(".party-share-chart")
-      // TODO: incorrectly sorted
-      .data(this.data.raw)
-      .append("svg")
-      .attr("width", 16)
-      .attr("height", 16)
-      .attr("viewBox", [-8, -8, 16, 16]);
-
-    svg
-      .append("circle")
-      .attr("r", this.parties.radius.active)
-      .attr("fill", (d) =>
-        d.isAlive ? this.parties.color(d.familyId) : "transparent"
-      )
-      .attr("stroke", (d) =>
-        d.isAlive ? null : this.parties.color(d.familyId)
-      );
   }
 
   injectPositionCharts() {
