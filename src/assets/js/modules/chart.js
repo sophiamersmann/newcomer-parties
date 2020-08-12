@@ -74,6 +74,10 @@ class MainChart {
       formatYear: d3.timeFormat("%Y"),
       formatDecade: d3.timeFormat("%Ys"),
     };
+
+    this.flags = {
+      renderYear: true,
+    };
   }
 
   async init({ countryGroup = "", minVoteShare = 0, country = null } = {}) {
@@ -678,7 +682,7 @@ class MainChart {
       })
       .on("brush", () => {
         const year = getYear(y, initialDates);
-        if (year) this.updateState({ year });
+        if (year) this.updateState({ year, action: this.flags.renderYear });
         brushed(this.parties.transparent);
         adjustHandleHeight(this.svg.g);
       })
@@ -688,6 +692,7 @@ class MainChart {
           this.updateState({ year });
           brushened(year, initialDates);
         }
+        this.flags.renderYear = true;
       });
 
     this.svg.g
@@ -703,6 +708,7 @@ class MainChart {
   }
 
   moveBrush(year) {
+    this.flags.renderYear = false;
     const { y } = this.scales;
     const { brushY: brush, initialDates } = this.brush;
     d3.select(".brush")
