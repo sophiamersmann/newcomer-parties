@@ -435,7 +435,7 @@ class MainChart {
     const { y } = this.scales;
     const { selector, radius, color, transparent, alive, dead } = this.parties;
 
-    const isActive = (d) =>
+    const renderLargeRadius = (d) =>
       this.state.country !== null
         ? this.state.country === d.country
         : !this.state.countryGroup ||
@@ -452,7 +452,7 @@ class MainChart {
     };
 
     const onMouseover = (d, i, n) => {
-      if (!isActive(d.data) || this.scales.y(this.state.year) < d.y) return;
+      if (!d.data.isActive) return;
 
       const party = d3.select(n[i]);
       this.highlightBee(party);
@@ -467,7 +467,7 @@ class MainChart {
     };
 
     const onMouseout = (d, i, n) => {
-      if (!isActive(d.data) || this.scales.y(this.state.year) < d.y) return;
+      if (!d.data.isActive) return;
 
       const party = d3.select(n[i]);
       this.removeBeeHighlight(party);
@@ -477,7 +477,7 @@ class MainChart {
     };
 
     const onClick = (d) => {
-      if (!isActive(d.data) || this.scales.y(this.state.year) < d.y) return;
+      if (!d.data.isActive) return;
 
       slide(
         d3
@@ -505,11 +505,11 @@ class MainChart {
             .attr("class", selector.slice(1))
             .classed(alive.selector.slice(1), ({ data: d }) => d.isAlive)
             .classed(dead.selector.slice(1), ({ data: d }) => !d.isAlive)
-            .classed("active", ({ data: d }) => isActive(d))
+            .classed("active", ({ data: d }) => d.isActive)
             .attr("cx", (d) => d.x)
             .attr("cy", (d) => d.y)
             .attr("r", ({ data: d }) =>
-              isActive(d) ? radius.active : radius.inactive
+              renderLargeRadius(d) ? radius.active : radius.inactive
             )
             .attr("stroke", ({ data: d }) => color(d.familyId))
             .attr("stroke-width", 1)
@@ -524,7 +524,7 @@ class MainChart {
             .on("click", onClick),
         (update) =>
           update
-            .classed("active", ({ data: d }) => isActive(d))
+            .classed("active", ({ data: d }) => d.isActive)
             .on("mouseover", onMouseover)
             .on("mouseout", onMouseout)
             .on("click", onClick)
@@ -532,7 +532,7 @@ class MainChart {
             .duration(400)
             .ease(d3.easeCubicInOut)
             .attr("r", ({ data: d }) =>
-              isActive(d) ? radius.active : radius.inactive
+              renderLargeRadius(d) ? radius.active : radius.inactive
             ),
         (exit) => exit.remove()
       );
