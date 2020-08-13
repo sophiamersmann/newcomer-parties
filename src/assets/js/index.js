@@ -30,7 +30,7 @@ $(document).ready(() => {
         item.css(
           "margin-left",
           groupButton.position().left -
-            parseFloat($(".overview").css("padding-left"))
+            parseFloat($(".header").css("padding-left"))
         );
       });
 

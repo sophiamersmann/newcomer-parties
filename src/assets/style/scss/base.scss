@@ -1,5 +1,7 @@
 @import "global";
 
+// GENERAL LAYOUT
+
 html {
   height: 100%;
   box-sizing: border-box;
@@ -18,26 +20,71 @@ html {
 body {
   height: 100%;
   display: flex;
+
+  main {
+    flex: 1 0 80vw;
+
+    $header-height: 150px;
+
+    .header {
+      background-color: aliceblue;
+      height: $header-height;
+      padding: $spacing / 2 $spacing;
+    }
+
+    #chart-wrapper {
+      height: calc(100% - #{$header-height});
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+  }
+
+  .panel {
+    border-left: 1px solid black;
+    flex: 0 1 20vw;
+  }
 }
 
-main {
-  flex: 1 0 80vw;
+// USER INPUT
 
-  .overview {
-    background-color: aliceblue;
-    height: 150px;
-    padding: $spacing / 2 $spacing;
+#input-year {
+  &:valid {
+    background-color: lightgreen;
+  }
 
-    h1 {
-      display: inline;
+  &:invalid {
+    background-color: coral;
+  }
+}
+
+#select-vote-share {
+  display: inline;
+
+  .form-group {
+    display: inline-block;
+
+    input {
+      vertical-align: middle;
     }
   }
 }
 
-.panel {
-  border-left: 1px solid black;
-  flex: 0 1 20vw;
+.select-countries {
+  .country-groups {
+    .active {
+      background-color: lavender;
+    }
+  }
+
+  #countries {
+    .active {
+      background-color: khaki;
+    }
+  }
 }
+
+// LIST OF PARTIES IN THE PANEL
 
 #party-list {
   height: 100%;
@@ -100,78 +147,16 @@ main {
   }
 }
 
-#chart-wrapper {
-  height: calc(100% - 150px);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
+// MISC
 
-#select-vote-share {
-  display: inline;
-
-  .form-group {
-    display: inline-block;
-
-    input {
-      vertical-align: middle;
-    }
-  }
-}
-
-.side-lines {
-  width: 90%;
-  margin: 0 auto;
-  overflow: hidden;
-  text-align: center;
-
-  &:before,
-  &:after {
-    content: "";
-    display: inline-block;
-    width: 50%;
-    margin: 0 0.5em 0 -55%;
-    vertical-align: middle;
-    border-bottom: 1px solid;
-  }
-
-  &:after {
-    margin: 0 -55% 0 0.5em;
-  }
-}
-
-.select-countries {
-  .country-groups {
-    .active {
-      background-color: lavender;
-    }
-  }
-
-  #countries {
-    .active {
-      background-color: khaki;
-    }
-  }
+h1 {
+  font-size: 1.6rem;
 }
 
 .hide {
   display: none;
 }
 
-h1 {
-  font-size: 1.6rem;
-}
-
 .flag-icon-squared {
   border-radius: 50%;
-}
-
-#input-year {
-  &:valid {
-    background-color: lightgreen;
-  }
-
-  &:invalid {
-    background-color: coral;
-  }
 }
