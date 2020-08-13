@@ -37,7 +37,30 @@
     <main>
       <div class="header">
         <h1>
-          Newcomer Parties in European Parliaments since
+          Newcomer Parties To European Parliaments
+        </h1>
+
+        <div>
+          Parties elected into parliament for the first time<br />
+          by winning at least
+
+          <div id="select-vote-share">
+            <div class="form-group">
+              <input
+                type="range"
+                id="input-vote-share"
+                name="voteShare"
+                min="0"
+                max="0.5"
+                step="0.01"
+                value="0"
+              />
+              <label id="input-vote-share-label" for="input-vote-share"></label>
+            </div>
+          </div>
+
+          in an election after
+
           <input
             type="number"
             id="input-year"
@@ -47,22 +70,6 @@
             pattern="[0-9]{4}"
             required
           />
-        </h1>
-
-        <div id="select-vote-share">
-          winning at least
-          <div class="form-group">
-            <input
-              type="range"
-              id="input-vote-share"
-              name="voteShare"
-              min="0"
-              max="0.5"
-              step="0.01"
-              value="0"
-            />
-            <label id="input-vote-share-label" for="input-vote-share"></label>
-          </div>
         </div>
 
         <div class="select-countries">
