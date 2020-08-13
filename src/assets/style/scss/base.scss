@@ -48,7 +48,6 @@ main {
   .party-list-group {
     border-radius: 10px;
     background-color: $lightgray;
-    margin-bottom: $spacing;
 
     .party-list-item {
       display: grid;
@@ -59,6 +58,10 @@ main {
         "footer footer footer";
       padding: $spacing / 4;
       border-radius: 10px;
+
+      &:last-child {
+        margin-bottom: $spacing;
+      }
 
       &:is(.active, :hover) {
         background-color: bisque;
@@ -172,4 +175,3 @@ h1 {
     background-color: coral;
   }
 }
-

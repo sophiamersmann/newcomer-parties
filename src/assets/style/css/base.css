@@ -34,14 +34,15 @@ main {
   padding: 2rem 1rem; }
   #party-list .party-list-group {
     border-radius: 10px;
-    background-color: #f8f9fa;
-    margin-bottom: 2rem; }
+    background-color: #f8f9fa; }
     #party-list .party-list-group .party-list-item {
       display: grid;
       grid-template-columns: 4fr 4fr 2fr;
       grid-template-areas: "header header right" "center center right" "footer footer footer";
       padding: 0.5rem;
       border-radius: 10px; }
+      #party-list .party-list-group .party-list-item:last-child {
+        margin-bottom: 2rem; }
       #party-list .party-list-group .party-list-item:is(.active, :hover) {
         background-color: bisque;
         cursor: pointer; }
