@@ -300,45 +300,72 @@ class MainChart {
     const { x, y } = this.scales;
     const { rotate } = this.labels;
 
+    const lineHeight = 16.00177764892578; // TODO: Magic value (d3.select(".family-label text").node().getBBox().height)
+    const longFamilyNames = ["chr", "eco", "soc", "com"];
+
     this.svg.g
       .append("g")
       .attr("class", "axis x-axis x-axis-labels")
       .selectAll(".family-label")
       .data(this.data.families)
-      .join("text")
-      .attr("id", (familyId) => `family-label-${familyId}`)
+      .join("g")
+      .attr("id", (familyId) =>
+        familyId ? `family-label-${familyId}` : "family-id-other"
+      )
       .attr("class", "family-label")
-      .attr("x", (familyId) => x(familyId))
-      .attr("y", margin.top - 2.5) // TODO: Magic value
+      .selectAll("text")
+      .data((familyId) => {
+        const familyName = this.data.mappings.family.get(familyId).familyName;
+
+        let text = [familyName];
+        let single = true;
+        if (longFamilyNames.includes(familyId)) {
+          text = familyName.split(familyName.includes("/") ? "/" : " ");
+          single = false;
+        }
+
+        return text.map((t) => ({ familyId, text: t, single }));
+      })
+      .join("text")
+      .attr("data-family-id", (d) => d.familyId)
+      .attr("x", (d) => x(d.familyId))
+      .attr(
+        "y",
+        (d, i) => margin.top - 2.5 + (d.single ? i : i - 1) * lineHeight
+      )
       .attr(
         "transform",
-        (familyId) => `rotate(${rotate} ${x(familyId)} ${margin.top})`
+        (d) => `rotate(${rotate} ${x(d.familyId)} ${margin.top})`
       )
-      .text((familyId) => this.data.mappings.family.get(familyId).familyName);
+      .text((d) => d.text.toUpperCase());
 
     this.svg.bg
       .append("g")
       .attr("class", "axis x-axis x-axis-bg")
       .selectAll(".family-label-bg")
       .data(
-        this.data.families.map((familyId) => ({
-          familyId,
-          bbox: d3.select(`#family-label-${familyId}`).node().getBBox(),
-        }))
+        d3
+          .selectAll(".family-label text")
+          .nodes()
+          .map((node) => ({
+            familyId: node.getAttribute("data-family-id"),
+            bbox: node.getBBox(),
+          }))
       )
       .join("rect")
-      .attr("x", (d) => x(d.familyId) - d.bbox.width / 2)
-      .attr("y", margin.top)
-      .attr("width", (d) => d.bbox.width)
-      .attr("height", (d) => d.bbox.height)
+      .attr("class", "family-label-bg")
+      .attr("x", ({ bbox }) => bbox.x - bbox.width / 2)
+      .attr("y", ({ bbox }) => bbox.y - 1) // TODO: Magic value
+      .attr("width", ({ bbox }) => bbox.width)
+      .attr("height", ({ bbox }) => bbox.height)
       .attr(
         "transform",
-        (d) =>
-          `translate(${d.bbox.width / 2} ${-d.bbox.height}) rotate(${rotate} ${
-            x(d.familyId) - d.bbox.width / 2
-          } ${margin.top + d.bbox.height})`
+        ({ bbox }) =>
+          `translate(${bbox.width / 2}) rotate(${rotate} ${
+            bbox.x - bbox.width / 2
+          } ${margin.top})`
       )
-      .attr("fill", "lightgray");
+      .attr("fill", ({ familyId }) => this.parties.color(familyId));
 
     const yTicks = y.ticks();
     const yTickLabelDiff = y(yTicks[0]) - y(yTicks[1]);
