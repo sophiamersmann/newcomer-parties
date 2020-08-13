@@ -75,7 +75,6 @@ $(document).ready(() => {
           const target = $(event.target);
           const year = +target.val();
 
-          // TODO: what happens if input is invalid
           if (1945 <= year && year <= 2020) {
             const date = new Date(year, 1, 1);
             mainChart.updateState({ year: date, action: false });

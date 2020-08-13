@@ -162,3 +162,14 @@ h1 {
 .flag-icon-squared {
   border-radius: 50%;
 }
+
+#input-year {
+  &:valid {
+    background-color: lightgreen;
+  }
+
+  &:invalid {
+    background-color: coral;
+  }
+}
+
