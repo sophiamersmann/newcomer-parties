@@ -70,17 +70,23 @@ $(document).ready(() => {
         mainChart.updateState({ minVoteShare: +$(event.target).val() });
       });
 
-      selectYear.on("input", (event) => {
-        const target = $(event.target);
-        const year = +target.val();
+      selectYear
+        .on("input", (event) => {
+          const target = $(event.target);
+          const year = +target.val();
 
-        // TODO: what happens if input is invalid
-        if (1945 <= year && year <= 2020) {
-          const date = new Date(year, 1, 1);
-          mainChart.updateState({ year: date, action: false });
-          mainChart.moveBrush(date);
-        }
-      });
+          // TODO: what happens if input is invalid
+          if (1945 <= year && year <= 2020) {
+            const date = new Date(year, 1, 1);
+            mainChart.updateState({ year: date, action: false });
+            mainChart.moveBrush(date);
+          }
+        })
+        .on("keydown", (event) => {
+          if (event.which === 38 || event.which === 40) {
+            event.preventDefault();
+          }
+        });
     });
 });
 
