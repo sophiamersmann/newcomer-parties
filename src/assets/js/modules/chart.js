@@ -34,7 +34,7 @@ class MainChart {
 
     this.labels = {
       xOffset: 5,
-      yOffset: 35,
+      rotate: -35,
     };
 
     this.brush = {
@@ -298,7 +298,23 @@ class MainChart {
   drawAxes() {
     const { width, margin } = this.svg;
     const { x, y } = this.scales;
-    const { yOffset } = this.labels;
+    const { rotate } = this.labels;
+
+    this.svg.g
+      .append("g")
+      .attr("class", "axis x-axis x-axis-labels")
+      .selectAll(".family-label")
+      .data(this.data.families)
+      .join("text")
+      .attr("id", (familyId) => `family-label-${familyId}`)
+      .attr("class", "family-label")
+      .attr("x", (familyId) => x(familyId))
+      .attr("y", margin.top - 2.5) // TODO: Magic value
+      .attr(
+        "transform",
+        (familyId) => `rotate(${rotate} ${x(familyId)} ${margin.top})`
+      )
+      .text((familyId) => this.data.mappings.family.get(familyId).familyName);
 
     this.svg.bg
       .append("g")
@@ -307,31 +323,22 @@ class MainChart {
       .data(
         this.data.families.map((familyId) => ({
           familyId,
-          l: this.data.mappings.family.get(familyId).familyName.length,
+          bbox: d3.select(`#family-label-${familyId}`).node().getBBox(),
         }))
       )
       .join("rect")
-      .attr("x", ({ familyId, l }) => x(familyId) - 4.5 * l)
-      .attr("y", (_, i) => margin.top - 18 - (i % 2 === 0 ? 0 : yOffset))
-      .attr("width", ({ l }) => 9 * l)
-      .attr("height", 25)
-      .attr("rx", 15)
-      .attr("ry", 15)
-      .attr("stroke", ({ familyId }) => this.parties.color(familyId))
-      .attr("stroke-width", 2)
-      .attr("fill", "whitesmoke");
-
-    this.svg.bg
-      .append("g")
-      .attr("class", "axis x-axis x-axis-labels")
-      .selectAll(".family-label")
-      .data(this.data.families)
-      .join("text")
-      .attr("class", "family-label")
-      .attr("x", (familyId) => x(familyId))
-      .attr("y", (_, i) => margin.top - (i % 2 === 0 ? 0 : yOffset))
-      .attr("text-anchor", "middle")
-      .text((familyId) => this.data.mappings.family.get(familyId).familyName);
+      .attr("x", (d) => x(d.familyId) - d.bbox.width / 2)
+      .attr("y", margin.top)
+      .attr("width", (d) => d.bbox.width)
+      .attr("height", (d) => d.bbox.height)
+      .attr(
+        "transform",
+        (d) =>
+          `translate(${d.bbox.width / 2} ${-d.bbox.height}) rotate(${rotate} ${
+            x(d.familyId) - d.bbox.width / 2
+          } ${margin.top + d.bbox.height})`
+      )
+      .attr("fill", "lightgray");
 
     const yTicks = y.ticks();
     const yTickLabelDiff = y(yTicks[0]) - y(yTicks[1]);
@@ -405,7 +412,7 @@ class MainChart {
       .attr("class", (d) => `beeswarm-sep beeswarm-sep-${d.type}`)
       .attr("x1", (d) => x(d.family))
       .attr("x2", (d) => x(d.family))
-      .attr("y1", (d) => margin.top + 7 - (d.even ? 0 : this.labels.yOffset))
+      .attr("y1", margin.top)
       .attr("y2", (d) => d.y2)
       .attr("stroke-width", 2)
       .attr("stroke", (d) => color(d.family))
