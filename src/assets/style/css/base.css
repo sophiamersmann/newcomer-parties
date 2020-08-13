@@ -9,6 +9,8 @@ html {
     box-sizing: inherit;
     margin: 0;
     padding: 0; }
+  html *:focus {
+    outline: none; }
 
 body {
   height: 100%;
@@ -16,11 +18,10 @@ body {
   body main {
     flex: 1 0 80vw; }
     body main .header {
-      background-color: aliceblue;
-      height: 150px;
-      padding: 1rem 2rem; }
+      height: 180px;
+      padding: 2rem; }
     body main #chart-wrapper {
-      height: calc(100% - 150px);
+      height: calc(100% - 180px);
       display: flex;
       justify-content: center;
       align-items: center; }
@@ -28,24 +29,65 @@ body {
     border-left: 1px solid black;
     flex: 0 1 20vw; }
 
-#input-year:valid {
-  background-color: lightgreen; }
+.description {
+  padding: 0.5rem 0;
+  font-size: 1.15rem;
+  line-height: 1.2; }
 
-#input-year:invalid {
-  background-color: coral; }
+#input-year {
+  text-align: left;
+  width: 46px;
+  font-weight: 700;
+  background: white;
+  border: none;
+  border-bottom: 3px solid orange;
+  padding: 0 4px;
+  -moz-appearance: textfield; }
+  #input-year::-webkit-outer-spin-button, #input-year::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0; }
+  #input-year:valid {
+    border-bottom: 3px solid orange; }
+  #input-year:invalid {
+    border-bottom: 3px solid yellow; }
 
 #select-vote-share {
   display: inline; }
   #select-vote-share .form-group {
     display: inline-block; }
     #select-vote-share .form-group input {
+      width: 90px;
       vertical-align: middle; }
+  #select-vote-share #input-vote-share-label > span {
+    display: inline-block;
+    width: 40px;
+    text-align: right;
+    border-bottom: 3px solid orange;
+    padding: 0 4px; }
 
-.select-countries .country-groups .active {
-  background-color: lavender; }
-
-.select-countries #countries .active {
-  background-color: khaki; }
+.select-countries {
+  font-size: 1.15rem; }
+  .select-countries .label {
+    display: inline-block;
+    width: 170px; }
+  .select-countries .country-groups {
+    margin-bottom: 0.25rem; }
+  .select-countries #countries {
+    line-height: 1.2; }
+  .select-countries button {
+    background-color: white;
+    border: none;
+    padding: 0 4px;
+    margin: 0 4px; }
+    .select-countries button:hover {
+      cursor: pointer; }
+    .select-countries button.active {
+      font-weight: 700;
+      border-bottom: 3px solid orange; }
+    .select-countries button .flag-icon {
+      width: 15px;
+      height: 15px;
+      vertical-align: baseline; }
 
 #party-list {
   height: 100%;
@@ -92,3 +134,12 @@ h1 {
 
 .flag-icon-squared {
   border-radius: 50%; }
+
+.font-weight-light {
+  font-weight: 200; }
+
+.font-weight-regular {
+  font-weight: 400; }
+
+.font-weight-bold {
+  font-weight: 700; }

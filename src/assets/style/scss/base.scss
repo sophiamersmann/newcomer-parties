@@ -15,6 +15,10 @@ html {
     margin: 0;
     padding: 0;
   }
+
+  *:focus {
+    outline: none;
+  }
 }
 
 body {
@@ -24,12 +28,11 @@ body {
   main {
     flex: 1 0 80vw;
 
-    $header-height: 150px;
+    $header-height: 180px;
 
     .header {
-      background-color: aliceblue;
       height: $header-height;
-      padding: $spacing / 2 $spacing;
+      padding: $spacing;
     }
 
     #chart-wrapper {
@@ -46,15 +49,38 @@ body {
   }
 }
 
+// DESCRIPTION IN HEADER
+
+.description {
+  padding: $spacing / 4 0;
+  font-size: 1.15rem;
+  line-height: 1.2;
+}
+
 // USER INPUT
 
 #input-year {
+  text-align: left;
+  width: 46px;
+  font-weight: 700;
+  background: white;
+  border: none;
+  border-bottom: 3px solid orange;
+  padding: 0 4px;
+  -moz-appearance: textfield;
+
+  &::-webkit-outer-spin-button,
+  &::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+
   &:valid {
-    background-color: lightgreen;
+    border-bottom: 3px solid orange;
   }
 
   &:invalid {
-    background-color: coral;
+    border-bottom: 3px solid yellow;
   }
 }
 
@@ -65,21 +91,55 @@ body {
     display: inline-block;
 
     input {
+      width: 90px;
       vertical-align: middle;
     }
+  }
+
+  #input-vote-share-label > span {
+    display: inline-block;
+    width: 40px;
+    text-align: right;
+    border-bottom: 3px solid orange;
+    padding: 0 4px;
   }
 }
 
 .select-countries {
+  font-size: 1.15rem;
+
+  .label {
+    display: inline-block;
+    width: 170px;
+  }
+
   .country-groups {
-    .active {
-      background-color: lavender;
-    }
+    margin-bottom: $spacing / 8;
   }
 
   #countries {
-    .active {
-      background-color: khaki;
+    line-height: 1.2;
+  }
+
+  button {
+    background-color: white;
+    border: none;
+    padding: 0 4px;
+    margin: 0 4px;
+
+    &:hover {
+      cursor: pointer;
+    }
+
+    &.active {
+      font-weight: 700;
+      border-bottom: 3px solid orange;
+    }
+
+    .flag-icon {
+      width: 15px;
+      height: 15px;
+      vertical-align: baseline;
     }
   }
 }
@@ -159,4 +219,16 @@ h1 {
 
 .flag-icon-squared {
   border-radius: 50%;
+}
+
+.font-weight-light {
+  font-weight: 200;
+}
+
+.font-weight-regular {
+  font-weight: 400;
+}
+
+.font-weight-bold {
+  font-weight: 700;
 }

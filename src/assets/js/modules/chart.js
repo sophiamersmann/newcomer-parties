@@ -337,6 +337,7 @@ class MainChart {
         "transform",
         (d) => `rotate(${rotate} ${x(d.familyId)} ${margin.top})`
       )
+      .style("font-size", "0.8rem")
       .text((d) => d.text.toUpperCase());
 
     this.svg.bg

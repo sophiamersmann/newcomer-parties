@@ -98,7 +98,7 @@ function renderMinVoteShare() {
   return renderTemplate({
     template: "input-vote-share.mustache",
     target: "#input-vote-share-label",
-    view: { minVoteShare: this.val() },
+    view: { minVoteShare: d3.format(".0%")(this.val()) },
   });
 }
 
