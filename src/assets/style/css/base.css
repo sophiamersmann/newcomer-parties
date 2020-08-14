@@ -80,10 +80,18 @@ body {
     padding: 0 4px;
     margin: 0 4px; }
     .select-countries button:hover {
-      cursor: pointer; }
+      cursor: pointer;
+      font-weight: 700; }
+    .select-countries button::before {
+      display: block;
+      content: attr(title);
+      font-weight: bold;
+      height: 0;
+      overflow: hidden;
+      visibility: hidden; }
     .select-countries button.active {
       font-weight: 700;
-      border-bottom: 3px solid orange; }
+      box-shadow: inset 0 -3px 0 0 orange; }
     .select-countries button .flag-icon {
       width: 15px;
       height: 15px;

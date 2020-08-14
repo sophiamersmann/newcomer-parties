@@ -129,11 +129,21 @@ body {
 
     &:hover {
       cursor: pointer;
+      font-weight: 700;
+    }
+
+    &::before {
+      display: block;
+      content: attr(title);
+      font-weight: bold;
+      height: 0;
+      overflow: hidden;
+      visibility: hidden;
     }
 
     &.active {
       font-weight: 700;
-      border-bottom: 3px solid orange;
+      box-shadow: inset 0 -3px 0 0 orange;
     }
 
     .flag-icon {
