@@ -55,9 +55,9 @@ class MainChart {
       keys: ["stateMarket", "libertyAuthority", "leftRight", "euProAnti"],
       labels: {
         leftRight: ["left", "right"],
-        libertyAuthority: ["libertarian", "authoritarian"],
+        libertyAuthority: ["liberty", "authority"],
         stateMarket: ["state", "market"],
-        euProAnti: ["pro-EU", "EU-sceptic"],
+        euProAnti: ["pro-EU", "anti-EU"], // TODO: "EU-sceptic" might be better
       },
       threshold: 1,
     };
@@ -846,6 +846,16 @@ class MainChart {
 
       svg
         .append("g")
+        .attr("class", "bg")
+        .attr("opacity", 0)
+        .append("circle")
+        .attr("r", 48) // magic value
+        .attr("fill", "white")
+        .attr("stroke-width", 1)
+        .attr("stroke", "bisque");
+
+      svg
+        .append("g")
         .attr("class", "grid")
         .selectAll("circle")
         .data([0.5, 1.5, 2.5, 3.5, 4.5])
@@ -903,7 +913,7 @@ class MainChart {
         .attr("stroke-linecap", "round")
         .attr("stroke", "black");
 
-      const annotations = svg.selectAll(".web, .labels");
+      const annotations = svg.selectAll(".bg, .web, .labels");
       svg
         .on("mouseenter", () => annotations.attr("opacity", 1))
         .on("mouseleave", () => annotations.attr("opacity", 0));
