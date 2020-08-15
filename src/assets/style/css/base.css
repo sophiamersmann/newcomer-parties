@@ -77,8 +77,8 @@ body {
   font-weight: 300; }
 
 .header .section-describe {
-  font-size: 1.15rem;
-  line-height: 1.25; }
+  line-height: 1.25;
+  font-size: 1.1rem; }
 
 .header .section-select .label {
   display: inline-block;
