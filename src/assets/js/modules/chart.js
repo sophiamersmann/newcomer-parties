@@ -1,6 +1,7 @@
 // TODO: This will be importded from _global.scss
 const colors = {
   black: "#212529",
+  gray: "#b8bfc6",
   lightgray: "#f8f9fa",
 
   rightDark: "#215685",
@@ -878,7 +879,7 @@ class MainChart {
         .attr("r", 50) // magic value
         .attr("fill", "white")
         .attr("stroke-width", 1)
-        .attr("stroke", "bisque");
+        .attr("stroke", MainChart.politicalColor(d.familyId, "light")); // TODO: medium might be better
 
       svg
         .append("g")
@@ -888,7 +889,7 @@ class MainChart {
         .join("circle")
         .attr("r", (d) => radialScale(d))
         .attr("fill", "transparent")
-        .attr("stroke", "lightgray")
+        .attr("stroke", colors.gray)
         .attr("stroke-width", 0.5);
 
       svg
@@ -903,7 +904,7 @@ class MainChart {
         .attr("y1", -(radialScale.range()[1] + margin))
         .attr("y2", radialScale.range()[1] + margin)
         .attr("stroke-width", 1)
-        .attr("stroke", "lightgray");
+        .attr("stroke", colors.gray);
 
       svg
         .append("g")
@@ -920,7 +921,11 @@ class MainChart {
         )
         .attr("dominant-baseline", "middle")
         .attr("font-size", "8px")
-        .attr("fill", (d) => (currLabels.includes(d) ? "black" : "lightgray"))
+        .attr("fill", (e) =>
+          currLabels.includes(e)
+            ? MainChart.politicalColor(d.familyId, "dark")
+            : colors.gray
+        )
         .text((d) => d);
 
       const g = svg
@@ -937,7 +942,7 @@ class MainChart {
         .attr("y2", (e) => radialScale(e.value))
         .attr("stroke-width", 2)
         .attr("stroke-linecap", "round")
-        .attr("stroke", "black");
+        .attr("stroke", MainChart.politicalColor(d.familyId, "dark"));
 
       const annotations = svg.selectAll(".bg, .web, .labels");
       svg
