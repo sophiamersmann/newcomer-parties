@@ -95,16 +95,16 @@ body {
   font-weight: 500;
   background: #fff;
   border: none;
-  border-bottom: 3px solid orange;
+  border-bottom: 3px solid #ff7f0f;
   padding: 0 4px;
   -moz-appearance: textfield; }
   #input-year::-webkit-outer-spin-button, #input-year::-webkit-inner-spin-button {
     -webkit-appearance: none;
     margin: 0; }
   #input-year:valid {
-    border-bottom: 3px solid orange; }
+    border-bottom: 3px solid #ff7f0f; }
   #input-year:invalid {
-    border-bottom: 3px solid yellow; }
+    border-bottom: 3px solid #fff1e5; }
 
 #select-vote-share {
   display: inline; }
@@ -114,7 +114,7 @@ body {
     display: inline-block;
     width: 40px;
     text-align: right;
-    border-bottom: 3px solid orange;
+    border-bottom: 3px solid #ff7f0f;
     padding: 0 4px; }
   #select-vote-share input {
     -webkit-appearance: none;
@@ -196,9 +196,9 @@ body {
   font-weight: 300; }
   .section-select button:hover {
     cursor: pointer;
-    background-color: orange; }
+    background-color: #ff7f0f; }
   .section-select button.active {
-    background-color: orange; }
+    background-color: #ff7f0f; }
   .section-select button .flag-icon {
     width: 15px;
     height: 15px;
