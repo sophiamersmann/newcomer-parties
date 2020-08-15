@@ -2,7 +2,37 @@
 const colors = {
   black: "#212529",
   lightgray: "#f8f9fa",
-  white: "#fff",
+
+  rightDark: "#215685",
+  rightMedium: "#99c2e6",
+  rightLight: "#ebf3fa",
+  libDark: "#f8cf63",
+  libMedium: "#fad985",
+  libLight: "#fef7e7",
+  conDark: "#333333",
+  conMedium: "#bfbfbf",
+  conLight: "#f2f2f2",
+  chrDark: "#4e9eab",
+  chrMedium: "#a7d0d7",
+  chrLight: "#edf6f7",
+  agrDark: "#6b5840",
+  agrMedium: "#cfc1af",
+  agrLight: "#f5f3ef",
+  ecoDark: "#458132",
+  ecoMedium: "#b1dba3",
+  ecoLight: "#eff8ed",
+  socDark: "#b63420",
+  socMedium: "#ec9e93",
+  socLight: "#fbece9",
+  comDark: "#7540a0",
+  comMedium: "#c2a4db",
+  comLight: "#f3edf8",
+  specDark: "#595959",
+  specMedium: "#bfbfbf",
+  specLight: "#f2f2f2",
+  otherDark: "#767676",
+  otherMedium: "#bfbfbf",
+  otherLight: "#f2f2f2",
 };
 
 class MainChart {
@@ -107,11 +137,13 @@ class MainChart {
       d.positions.map((e) => {
         e.valueOrig = e.value;
         e.isUpper = null;
+        e.label = null;
         e.text = null;
         if (e.valueOrig !== null) {
           e.value = e.valueOrig - 1;
           e.isUpper = e.value >= 4.5;
           e.value = e.isUpper ? e.value - 4.5 : Math.abs(e.value - 4.5);
+          e.label = this.partyProfile.labels[e.key][+e.isUpper];
           e.text = this.partyProfile.text[e.key][+e.isUpper];
         }
         return e;
@@ -162,12 +194,6 @@ class MainChart {
       "spec",
       "other",
     ];
-
-    // TODO: Random colors for now
-    this.parties.color = d3
-      .scaleOrdinal()
-      .domain(families)
-      .range(d3.schemeTableau10);
 
     const countries = d3
       .map(data, (d) => d.country)
@@ -261,7 +287,9 @@ class MainChart {
     radialGradient
       .append("stop")
       .attr("offset", "0%")
-      .attr("stop-color", (familyId) => this.parties.color(familyId));
+      .attr("stop-color", (familyId) =>
+        MainChart.politicalColor(familyId, "dark")
+      );
 
     radialGradient
       .append("stop")
@@ -293,7 +321,7 @@ class MainChart {
     const { x, y } = this.scales;
     const { rotate } = this.labels;
 
-    const lineHeight = 16.00177764892578; // TODO: Magic value (d3.select(".family-label text").node().getBBox().height)
+    const lineHeight = 15.7; // TODO: Magic value (d3.select(".family-label text").node().getBBox().height)
     const longFamilyNames = ["chr", "eco", "soc", "com"];
 
     this.svg.g
@@ -328,6 +356,7 @@ class MainChart {
         "transform",
         (d) => `rotate(${rotate} ${x(d.familyId)} ${margin.top})`
       )
+      .attr("fill", (d) => MainChart.politicalColor(d.familyId, "light"))
       .style("font-size", "0.8rem")
       .text((d) => d.text.toUpperCase());
 
@@ -357,7 +386,9 @@ class MainChart {
             bbox.x - bbox.width / 2
           } ${margin.top})`
       )
-      .attr("fill", ({ familyId }) => this.parties.color(familyId));
+      .attr("fill", ({ familyId }) =>
+        MainChart.politicalColor(familyId, "dark")
+      );
 
     const yTicks = y.ticks();
     const yTickLabelDiff = y(yTicks[0]) - y(yTicks[1]);
@@ -394,7 +425,7 @@ class MainChart {
   setUpBeeswarms() {
     const { x, y } = this.scales;
     const { height, margin } = this.svg;
-    const { color } = this.parties;
+    // const { color } = this.parties;
 
     this.svg.bg
       .selectAll(".bg-beeswarm-pair")
@@ -407,7 +438,7 @@ class MainChart {
       .data(this.data.families)
       .join("g")
       .attr("class", "beeswarm-pair")
-      .attr("fill", (d) => color(d.familyId))
+      .attr("fill", (d) => MainChart.politicalColor(d, "dark"))
       .append("g")
       .attr("class", "g-beeswarm-sep")
       .selectAll(".beeswarm-sep")
@@ -434,7 +465,7 @@ class MainChart {
       .attr("y1", margin.top)
       .attr("y2", (d) => d.y2)
       .attr("stroke-width", 2)
-      .attr("stroke", (d) => color(d.family))
+      .attr("stroke", (d) => MainChart.politicalColor(d.family, "dark"))
       .attr("stroke-opacity", (d) => d.opacity);
   }
 
@@ -463,7 +494,7 @@ class MainChart {
 
   drawBees() {
     const { y } = this.scales;
-    const { selector, radius, color, transparent, alive, dead } = this.parties;
+    const { selector, radius, transparent, alive, dead } = this.parties;
 
     const renderLargeRadius = (d) =>
       this.state.country !== null
@@ -541,10 +572,14 @@ class MainChart {
             .attr("r", ({ data: d }) =>
               renderLargeRadius(d) ? radius.active : radius.inactive
             )
-            .attr("stroke", ({ data: d }) => color(d.familyId))
+            .attr("stroke", ({ data: d }) =>
+              MainChart.politicalColor(d.familyId, "dark")
+            )
             .attr("stroke-width", 1)
             .attr("fill", ({ data: d }) =>
-              d.isAlive ? this.parties.color(d.familyId) : "transparent"
+              d.isAlive
+                ? MainChart.politicalColor(d.familyId, "dark")
+                : "transparent"
             )
             .attr("opacity", (d) =>
               y(this.state.year) >= d.y ? 1 : transparent
@@ -840,7 +875,7 @@ class MainChart {
         .attr("class", "bg")
         .attr("opacity", 0)
         .append("circle")
-        .attr("r", 48) // magic value
+        .attr("r", 50) // magic value
         .attr("fill", "white")
         .attr("stroke-width", 1)
         .attr("stroke", "bisque");
@@ -979,6 +1014,11 @@ class MainChart {
         },
       ],
     };
+  }
+
+  static politicalColor(familyId, shade) {
+    shade = shade.charAt(0).toUpperCase() + shade.toLowerCase().slice(1);
+    return colors[`${familyId}${shade}`];
   }
 
   static createMappings(data) {
