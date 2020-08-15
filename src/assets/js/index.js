@@ -2,7 +2,7 @@ $(document).ready(() => {
   const inputVoteShare = $("#input-vote-share");
   const minVoteShare = +inputVoteShare.val();
 
-  const countryGroupButton = $(".country-groups > button");
+  const countryGroupButton = $(".select-region > button");
   const countryGroup = getActiveCountryGroup(countryGroupButton);
 
   renderMinVoteShare = renderMinVoteShare.bind(inputVoteShare);
@@ -19,8 +19,8 @@ $(document).ready(() => {
     .init({ countryGroup, minVoteShare })
     .then(() => renderCountryButtons(mainChart.data.mappings.countryGroups))
     .then(() => {
-      const divCountries = $("#countries > div");
-      const countryButton = $("#countries button");
+      const divCountries = $("#select-country > div");
+      const countryButton = $("#select-country button");
       const selectYear = $("#input-year");
 
       divCountries.each((i) => {
@@ -105,7 +105,7 @@ function renderMinVoteShare() {
 function renderCountryButtons(countryGroups) {
   return renderTemplate({
     template: "country-buttons.mustache",
-    target: "#countries",
+    target: "#select-country",
     view: { countryGroups },
   });
 }

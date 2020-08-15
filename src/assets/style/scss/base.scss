@@ -7,7 +7,6 @@ html {
   height: 100%;
   box-sizing: border-box;
   color: $black;
-  background-color: $white;
   font-family: "Roboto", sans-serif;
 
   *,
@@ -46,18 +45,44 @@ body {
   }
 
   .panel {
-    border-left: 1px solid black;
+    border-left: 1px solid $black;
     flex: 0 1 20vw;
   }
 }
 
-// DESCRIPTION IN HEADER
+// HEADER
 
-.description {
-  padding: $spacing / 4 0;
-  font-size: 1.15rem;
-  line-height: 1.25;
-  font-weight: 100;
+.header {
+  h1 {
+    font-family: "Space Grotesk", sans-serif;
+    font-size: 1.6rem;
+  }
+
+  b {
+    font-weight: 500;
+  }
+
+  .section {
+    margin: $spacing / 4 0;
+    font-weight: 300;
+  }
+
+  .section-describe {
+    font-size: 1.15rem;
+    line-height: 1.25;
+  }
+
+  .section-select {
+    .label {
+      display: inline-block;
+      width: 100px;
+      font-weight: 400;
+    }
+
+    .select-region {
+      margin-bottom: $spacing / 8;
+    }
+  }
 }
 
 // USER INPUT
@@ -66,10 +91,10 @@ body {
   text-align: left;
   width: 52px;
   font-weight: 500;
-  background: white;
+  background: #fff;
   border: none;
-  border-bottom: 3px solid orange;
-  padding: 0 4px;
+  border-bottom: $underline-width solid orange;
+  padding: 0 $underline-padding;
   -moz-appearance: textfield;
 
   &::-webkit-outer-spin-button,
@@ -79,11 +104,11 @@ body {
   }
 
   &:valid {
-    border-bottom: 3px solid orange;
+    border-bottom: $underline-width solid orange;
   }
 
   &:invalid {
-    border-bottom: 3px solid yellow;
+    border-bottom: $underline-width solid yellow;
   }
 }
 
@@ -99,64 +124,45 @@ body {
     }
   }
 
-  #input-vote-share-label > span {
+  #input-vote-share-label {
     display: inline-block;
     width: 40px;
     text-align: right;
-    border-bottom: 3px solid orange;
-    padding: 0 4px;
+    border-bottom: $underline-width solid orange;
+    padding: 0 $underline-padding;
   }
 }
 
-.select-countries {
-  // font-size: 1.15rem;
-  margin: $spacing / 4 0;
+.section-select button {
+  background-color: #fff;
+  border: none;
+  padding: 0 $underline-padding;
+  margin: 2px 4px;
+  font-weight: 300;
 
-  .label {
-    display: inline-block;
-    width: 100px;
+  &:hover {
+    cursor: pointer;
+    font-weight: 500;
   }
 
-  .country-groups {
-    margin-bottom: $spacing / 8;
+  &::before {
+    display: block;
+    content: attr(title);
+    font-weight: 500;
+    height: 0;
+    overflow: hidden;
+    visibility: hidden;
   }
 
-  #countries {
-    line-height: 1.4;
+  &.active {
+    box-shadow: inset 0 (-$underline-width) 0 0 orange;
   }
 
-  button {
-    background-color: white;
-    border: none;
-    padding: 0 4px;
-    margin: 0 4px;
-    font-weight: 300;
-
-    &:hover {
-      cursor: pointer;
-      font-weight: 500;
-    }
-
-    &::before {
-      display: block;
-      content: attr(title);
-      font-weight: 500;
-      height: 0;
-      overflow: hidden;
-      visibility: hidden;
-    }
-
-    &.active {
-      font-weight: 500;
-      box-shadow: inset 0 -3px 0 0 orange;
-    }
-
-    .flag-icon {
-      width: 15px;
-      height: 15px;
-      vertical-align: baseline;
-      pointer-events: none;
-    }
+  .flag-icon {
+    width: 15px;
+    height: 15px;
+    vertical-align: baseline;
+    pointer-events: none;
   }
 }
 
@@ -225,31 +231,10 @@ body {
 
 // MISC
 
-h1 {
-  font-family: "Space Grotesk", sans-serif;
-  font-size: 1.6rem;
-}
-
 .hide {
   display: none;
 }
 
 .flag-icon-squared {
   border-radius: 50%;
-}
-
-.font-weight-light {
-  font-weight: 300;
-}
-
-.font-weight-regular {
-  font-weight: 400;
-}
-
-.font-weight-semibold {
-  font-weight: 500;
-}
-
-.font-weight-bold {
-  font-weight: 700;
 }

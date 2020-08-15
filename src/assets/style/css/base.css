@@ -38,7 +38,6 @@ html {
   height: 100%;
   box-sizing: border-box;
   color: #212529;
-  background-color: #fff;
   font-family: "Roboto", sans-serif; }
   html *,
   html *:after,
@@ -63,20 +62,37 @@ body {
       justify-content: center;
       align-items: center; }
   body .panel {
-    border-left: 1px solid black;
+    border-left: 1px solid #212529;
     flex: 0 1 20vw; }
 
-.description {
-  padding: 0.5rem 0;
+.header h1 {
+  font-family: "Space Grotesk", sans-serif;
+  font-size: 1.6rem; }
+
+.header b {
+  font-weight: 500; }
+
+.header .section {
+  margin: 0.5rem 0;
+  font-weight: 300; }
+
+.header .section-describe {
   font-size: 1.15rem;
-  line-height: 1.25;
-  font-weight: 100; }
+  line-height: 1.25; }
+
+.header .section-select .label {
+  display: inline-block;
+  width: 100px;
+  font-weight: 400; }
+
+.header .section-select .select-region {
+  margin-bottom: 0.25rem; }
 
 #input-year {
   text-align: left;
   width: 52px;
   font-weight: 500;
-  background: white;
+  background: #fff;
   border: none;
   border-bottom: 3px solid orange;
   padding: 0 4px;
@@ -96,46 +112,36 @@ body {
     #select-vote-share .form-group input {
       width: 90px;
       vertical-align: middle; }
-  #select-vote-share #input-vote-share-label > span {
+  #select-vote-share #input-vote-share-label {
     display: inline-block;
     width: 40px;
     text-align: right;
     border-bottom: 3px solid orange;
     padding: 0 4px; }
 
-.select-countries {
-  margin: 0.5rem 0; }
-  .select-countries .label {
-    display: inline-block;
-    width: 100px; }
-  .select-countries .country-groups {
-    margin-bottom: 0.25rem; }
-  .select-countries #countries {
-    line-height: 1.4; }
-  .select-countries button {
-    background-color: white;
-    border: none;
-    padding: 0 4px;
-    margin: 0 4px;
-    font-weight: 300; }
-    .select-countries button:hover {
-      cursor: pointer;
-      font-weight: 500; }
-    .select-countries button::before {
-      display: block;
-      content: attr(title);
-      font-weight: 500;
-      height: 0;
-      overflow: hidden;
-      visibility: hidden; }
-    .select-countries button.active {
-      font-weight: 500;
-      box-shadow: inset 0 -3px 0 0 orange; }
-    .select-countries button .flag-icon {
-      width: 15px;
-      height: 15px;
-      vertical-align: baseline;
-      pointer-events: none; }
+.section-select button {
+  background-color: #fff;
+  border: none;
+  padding: 0 4px;
+  margin: 2px 4px;
+  font-weight: 300; }
+  .section-select button:hover {
+    cursor: pointer;
+    font-weight: 500; }
+  .section-select button::before {
+    display: block;
+    content: attr(title);
+    font-weight: 500;
+    height: 0;
+    overflow: hidden;
+    visibility: hidden; }
+  .section-select button.active {
+    box-shadow: inset 0 -3px 0 0 orange; }
+  .section-select button .flag-icon {
+    width: 15px;
+    height: 15px;
+    vertical-align: baseline;
+    pointer-events: none; }
 
 #party-list {
   height: 100%;
@@ -174,24 +180,8 @@ body {
         #party-list .party-list-group .party-list-item .party-hidden-info-wrapper .party-hidden-info {
           background-color: lavender; }
 
-h1 {
-  font-family: "Space Grotesk", sans-serif;
-  font-size: 1.6rem; }
-
 .hide {
   display: none; }
 
 .flag-icon-squared {
   border-radius: 50%; }
-
-.font-weight-light {
-  font-weight: 300; }
-
-.font-weight-regular {
-  font-weight: 400; }
-
-.font-weight-semibold {
-  font-weight: 500; }
-
-.font-weight-bold {
-  font-weight: 700; }
