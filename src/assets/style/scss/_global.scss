@@ -9,42 +9,37 @@ $lightgray: #f8f9fa;
 $accent: #ff7f0f;
 $accent-light: #fff1e5;
 
-$color-right-dark: #215685;
-$color-right-medium: #99c2e6;
-$color-right-light: #ebf3fa;
+$families: right, lib, con, chr, agr, eco, soc, com, spec, other;
 
-$color-lib-dark: #f8cf63;
-$color-lib-medium: #fad985;
-$color-lib-light: #fef7e7;
-
-$color-con-dark: #333333;
-$color-con-medium: #bfbfbf;
-$color-con-light: #f2f2f2;
-
-$color-chr-dark: #4e9eab;
-$color-chr-medium: #a7d0d7;
-$color-chr-light: #edf6f7;
-
-$color-agr-dark: #6b5840;
-$color-agr-medium: #cfc1af;
-$color-agr-light: #f5f3ef;
-
-$color-eco-dark: #458132;
-$color-eco-medium: #b1dba3;
-$color-eco-light: #eff8ed;
-
-$color-soc-dark: #b63420;
-$color-soc-medium: #ec9e93;
-$color-soc-light: #fbece9;
-
-$color-com-dark: #7540a0;
-$color-com-medium: #c2a4db;
-$color-com-light: #f3edf8;
-
-$color-spec-dark: #595959;
-$color-spec-medium: #bfbfbf;
-$color-spec-light: #f2f2f2;
-
-$color-other-dark: #767676;
-$color-other-medium: #bfbfbf;
-$color-other-light: #f2f2f2;
+$political-colors: (
+  right-dark: #215685,
+  right-medium: #99c2e6,
+  right-light: #ebf3fa,
+  lib-dark: #f8cf63,
+  lib-medium: #fad985,
+  lib-light: #fef7e7,
+  con-dark: #333333,
+  con-medium: #bfbfbf,
+  con-light: #f2f2f2,
+  chr-dark: #4e9eab,
+  chr-medium: #a7d0d7,
+  chr-light: #edf6f7,
+  agr-dark: #6b5840,
+  agr-medium: #cfc1af,
+  agr-light: #f5f3ef,
+  eco-dark: #458132,
+  eco-medium: #b1dba3,
+  eco-light: #eff8ed,
+  soc-dark: #b63420,
+  soc-medium: #ec9e93,
+  soc-light: #fbece9,
+  com-dark: #7540a0,
+  com-medium: #c2a4db,
+  com-light: #f3edf8,
+  spec-dark: #595959,
+  spec-medium: #bfbfbf,
+  spec-light: #f2f2f2,
+  other-dark: #767676,
+  other-medium: #bfbfbf,
+  other-light: #f2f2f2,
+);

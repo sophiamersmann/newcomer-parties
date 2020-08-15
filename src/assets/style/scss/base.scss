@@ -261,7 +261,6 @@ body {
         "footer footer footer";
       padding: $spacing / 4;
       border-radius: 0 10px 10px 0;
-      border-left: 5px solid;
       padding-left: $spacing / 2;
 
       .party-year {
@@ -270,11 +269,6 @@ body {
 
       &:last-child {
         margin-bottom: $spacing;
-      }
-
-      &:is(.active, :hover) {
-        background-color: bisque;
-        cursor: pointer;
       }
 
       .area-header {
@@ -305,6 +299,21 @@ body {
           background-color: lavender;
         }
       }
+    }
+
+    @mixin political-border($family) {
+      .party-list-item-#{$family} {
+        border-left: 5px solid map-get($political-colors, $family#{-dark});
+
+        &:is(.active, :hover) {
+          background-color: map-get($political-colors, $family#{-light});
+          cursor: pointer;
+        }
+      }
+    }
+
+    @each $family in $families {
+      @include political-border($family);
     }
   }
 }

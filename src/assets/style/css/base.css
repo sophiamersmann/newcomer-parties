@@ -220,15 +220,11 @@ body {
       grid-template-areas: "header header right" "center center right" "footer footer footer";
       padding: 0.5rem;
       border-radius: 0 10px 10px 0;
-      border-left: 5px solid;
       padding-left: 1rem; }
       #party-list .party-list-group .party-list-item .party-year {
         font-weight: 300; }
       #party-list .party-list-group .party-list-item:last-child {
         margin-bottom: 2rem; }
-      #party-list .party-list-group .party-list-item:is(.active, :hover) {
-        background-color: bisque;
-        cursor: pointer; }
       #party-list .party-list-group .party-list-item .area-header {
         grid-area: header; }
       #party-list .party-list-group .party-list-item .area-center {
@@ -246,6 +242,56 @@ body {
         overflow: hidden; }
         #party-list .party-list-group .party-list-item .party-hidden-info-wrapper .party-hidden-info {
           background-color: lavender; }
+    #party-list .party-list-group .party-list-item-right {
+      border-left: 5px solid #215685; }
+      #party-list .party-list-group .party-list-item-right:is(.active, :hover) {
+        background-color: #ebf3fa;
+        cursor: pointer; }
+    #party-list .party-list-group .party-list-item-lib {
+      border-left: 5px solid #f8cf63; }
+      #party-list .party-list-group .party-list-item-lib:is(.active, :hover) {
+        background-color: #fef7e7;
+        cursor: pointer; }
+    #party-list .party-list-group .party-list-item-con {
+      border-left: 5px solid #333333; }
+      #party-list .party-list-group .party-list-item-con:is(.active, :hover) {
+        background-color: #f2f2f2;
+        cursor: pointer; }
+    #party-list .party-list-group .party-list-item-chr {
+      border-left: 5px solid #4e9eab; }
+      #party-list .party-list-group .party-list-item-chr:is(.active, :hover) {
+        background-color: #edf6f7;
+        cursor: pointer; }
+    #party-list .party-list-group .party-list-item-agr {
+      border-left: 5px solid #6b5840; }
+      #party-list .party-list-group .party-list-item-agr:is(.active, :hover) {
+        background-color: #f5f3ef;
+        cursor: pointer; }
+    #party-list .party-list-group .party-list-item-eco {
+      border-left: 5px solid #458132; }
+      #party-list .party-list-group .party-list-item-eco:is(.active, :hover) {
+        background-color: #eff8ed;
+        cursor: pointer; }
+    #party-list .party-list-group .party-list-item-soc {
+      border-left: 5px solid #b63420; }
+      #party-list .party-list-group .party-list-item-soc:is(.active, :hover) {
+        background-color: #fbece9;
+        cursor: pointer; }
+    #party-list .party-list-group .party-list-item-com {
+      border-left: 5px solid #7540a0; }
+      #party-list .party-list-group .party-list-item-com:is(.active, :hover) {
+        background-color: #f3edf8;
+        cursor: pointer; }
+    #party-list .party-list-group .party-list-item-spec {
+      border-left: 5px solid #595959; }
+      #party-list .party-list-group .party-list-item-spec:is(.active, :hover) {
+        background-color: #f2f2f2;
+        cursor: pointer; }
+    #party-list .party-list-group .party-list-item-other {
+      border-left: 5px solid #767676; }
+      #party-list .party-list-group .party-list-item-other:is(.active, :hover) {
+        background-color: #f2f2f2;
+        cursor: pointer; }
 
 .hide {
   display: none; }
