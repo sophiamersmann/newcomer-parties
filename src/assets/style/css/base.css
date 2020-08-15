@@ -209,7 +209,8 @@ body {
   height: 100%;
   overflow: auto;
   scroll-behavior: smooth;
-  padding: 2rem 1rem; }
+  padding: 2rem 1rem;
+  font-size: 0.9rem; }
   #party-list .party-list-group {
     border-radius: 10px;
     background-color: #f8f9fa; }
@@ -218,7 +219,11 @@ body {
       grid-template-columns: 4fr 4fr 2fr;
       grid-template-areas: "header header right" "center center right" "footer footer footer";
       padding: 0.5rem;
-      border-radius: 10px; }
+      border-radius: 0 10px 10px 0;
+      border-left: 5px solid;
+      padding-left: 1rem; }
+      #party-list .party-list-group .party-list-item .party-year {
+        font-weight: 300; }
       #party-list .party-list-group .party-list-item:last-child {
         margin-bottom: 2rem; }
       #party-list .party-list-group .party-list-item:is(.active, :hover) {

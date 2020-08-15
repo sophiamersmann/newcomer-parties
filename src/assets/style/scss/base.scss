@@ -246,6 +246,7 @@ body {
   overflow: auto;
   scroll-behavior: smooth;
   padding: $spacing $spacing / 2;
+  font-size: 0.9rem;
 
   .party-list-group {
     border-radius: 10px;
@@ -259,7 +260,13 @@ body {
         "center center right"
         "footer footer footer";
       padding: $spacing / 4;
-      border-radius: 10px;
+      border-radius: 0 10px 10px 0;
+      border-left: 5px solid;
+      padding-left: $spacing / 2;
+
+      .party-year {
+        font-weight: 300;
+      }
 
       &:last-child {
         margin-bottom: $spacing;
