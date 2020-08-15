@@ -324,6 +324,8 @@ class MainChart {
 
     const lineHeight = 15.7; // TODO: Magic value (d3.select(".family-label text").node().getBBox().height)
     const longFamilyNames = ["chr", "eco", "soc", "com"];
+    const padding = 1.5;
+    const borderRadius = 2;
 
     this.svg.g
       .append("g")
@@ -348,10 +350,11 @@ class MainChart {
       })
       .join("text")
       .attr("data-family-id", (d) => d.familyId)
-      .attr("x", (d) => x(d.familyId))
+      .attr("x", (d) => x(d.familyId) + padding)
       .attr(
         "y",
-        (d, i) => margin.top - 2.5 + (d.single ? i : i - 1) * lineHeight
+        (d, i) =>
+          margin.top - 2.5 + (d.single ? i : i - 1) * lineHeight - padding
       )
       .attr(
         "transform",
@@ -371,7 +374,12 @@ class MainChart {
           .nodes()
           .map((node) => ({
             familyId: node.getAttribute("data-family-id"),
-            bbox: node.getBBox(),
+            bbox: {
+              x: node.getBBox().x - padding,
+              y: node.getBBox().y - padding,
+              width: node.getBBox().width + padding * 3, // TODO: why not 2?
+              height: node.getBBox().height + padding * 2,
+            },
           }))
       )
       .join("rect")
@@ -380,10 +388,12 @@ class MainChart {
       .attr("y", ({ bbox }) => bbox.y - 1) // TODO: Magic value
       .attr("width", ({ bbox }) => bbox.width)
       .attr("height", ({ bbox }) => bbox.height)
+      .attr("rx", borderRadius)
+      .attr("ry", borderRadius)
       .attr(
         "transform",
         ({ bbox }) =>
-          `translate(${bbox.width / 2}) rotate(${rotate} ${
+          `translate(${bbox.width / 2} ${borderRadius}) rotate(${rotate} ${
             bbox.x - bbox.width / 2
           } ${margin.top})`
       )
