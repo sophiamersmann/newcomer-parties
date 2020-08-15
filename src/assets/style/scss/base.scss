@@ -234,7 +234,6 @@ body {
   .flag-icon {
     width: 15px;
     height: 15px;
-    vertical-align: baseline;
     pointer-events: none;
   }
 }
@@ -296,7 +295,16 @@ body {
         overflow: hidden;
 
         .party-hidden-info {
-          background-color: lavender;
+          margin-top: $spacing / 4;
+          font-size: 0.8rem;
+
+          div {
+            margin: $spacing / 8 0;
+          }
+
+          b {
+            font-weight: 500;
+          }
         }
       }
     }
@@ -322,6 +330,10 @@ body {
 
 .hide {
   display: none;
+}
+
+.flag-icon {
+  vertical-align: baseline;
 }
 
 .flag-icon-squared {

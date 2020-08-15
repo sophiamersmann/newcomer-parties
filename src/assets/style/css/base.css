@@ -202,7 +202,6 @@ body {
   .section-select button .flag-icon {
     width: 15px;
     height: 15px;
-    vertical-align: baseline;
     pointer-events: none; }
 
 #party-list {
@@ -241,7 +240,12 @@ body {
         height: 0;
         overflow: hidden; }
         #party-list .party-list-group .party-list-item .party-hidden-info-wrapper .party-hidden-info {
-          background-color: lavender; }
+          margin-top: 0.5rem;
+          font-size: 0.8rem; }
+          #party-list .party-list-group .party-list-item .party-hidden-info-wrapper .party-hidden-info div {
+            margin: 0.25rem 0; }
+          #party-list .party-list-group .party-list-item .party-hidden-info-wrapper .party-hidden-info b {
+            font-weight: 500; }
     #party-list .party-list-group .party-list-item-right {
       border-left: 5px solid #215685; }
       #party-list .party-list-group .party-list-item-right:is(.active, :hover) {
@@ -295,6 +299,9 @@ body {
 
 .hide {
   display: none; }
+
+.flag-icon {
+  vertical-align: baseline; }
 
 .flag-icon-squared {
   border-radius: 50%; }

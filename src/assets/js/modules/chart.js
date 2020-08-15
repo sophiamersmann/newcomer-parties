@@ -57,9 +57,18 @@ class MainChart {
         leftRight: ["left", "right"],
         libertyAuthority: ["liberty", "authority"],
         stateMarket: ["state", "market"],
-        euProAnti: ["pro-EU", "anti-EU"], // TODO: "EU-sceptic" might be better
+        euProAnti: ["pro-EU", "anti-EU"],
       },
-      threshold: 1,
+      text: {
+        leftRight: ["on the political left", "on the political right"],
+        libertyAuthority: ["libertarian", "authoritarian"],
+        stateMarket: [
+          "state-led regulation of the economy",
+          "market-led regulation of the economy",
+        ], // TOOD: more concise
+        euProAnti: ["pro-EU", "EU-sceptic"],
+      },
+      threshold: 1, // TODO: Think about this threshold value
     };
 
     this.panel = {
@@ -98,43 +107,27 @@ class MainChart {
       d.positions.map((e) => {
         e.valueOrig = e.value;
         e.isUpper = null;
-        e.label = null;
+        e.text = null;
         if (e.valueOrig !== null) {
           e.value = e.valueOrig - 1;
           e.isUpper = e.value >= 4.5;
           e.value = e.isUpper ? e.value - 4.5 : Math.abs(e.value - 4.5);
-          e.label = this.partyProfile.labels[e.key][+e.isUpper];
+          e.text = this.partyProfile.text[e.key][+e.isUpper];
         }
         return e;
       });
 
+      d.shareFormat = d3.format(".1%")(d.share / 100);
+
       const pos = d3.map(d.positions, (e) => e.key);
-      d.info =
-        `got into parliament with ${d3.format(".1%")(
-          d.share / 100
-        )} of the votes<br>` +
-        [
-          pos.get("leftRight").value > this.partyProfile.threshold
-            ? `on the political <span class="party-pos-left-right">${
-                pos.get("leftRight").label
-              }</span>`
-            : "",
-          pos.get("libertyAuthority").value > this.partyProfile.threshold
-            ? `<span class="party-pos-lib-auth">${
-                pos.get("libertyAuthority").label
-              }</span>`
-            : "",
-          pos.get("stateMarket").value > this.partyProfile.threshold
-            ? `<span class="party-pos-state-marekt">${
-                pos.get("stateMarket").label
-              }-led regulation of the economy</span>`
-            : "",
-          pos.get("euProAnti").value > this.partyProfile.threshold
-            ? `<span class="party-pos-eu">${pos.get("euProAnti").label}</span>`
-            : "",
-        ]
-          .filter((item) => item)
-          .join(" &#183; ");
+      d.info = this.partyProfile.keys
+        .map((key) =>
+          pos.get(key).value > this.partyProfile.threshold
+            ? pos.get(key).text
+            : ""
+        )
+        .filter((item) => item)
+        .join(", ");
 
       return d;
     });
