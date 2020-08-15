@@ -73,9 +73,11 @@ body {
   }
 
   .section-select {
+    font-size: 0.9rem;
+
     .label {
       display: inline-block;
-      width: 100px;
+      margin-right: 50px;
       font-weight: 400;
     }
 
@@ -88,7 +90,7 @@ body {
 // USER INPUT
 
 #input-year {
-  text-align: left;
+  text-align: center;
   width: 52px;
   font-weight: 500;
   background: #fff;
@@ -134,28 +136,20 @@ body {
 }
 
 .section-select button {
-  background-color: #fff;
+  background-color: #fff1e5;
   border: none;
-  padding: 0 $underline-padding;
+  border-radius: 5px;
+  padding: 2px 4px;
   margin: 2px 4px;
   font-weight: 300;
 
   &:hover {
     cursor: pointer;
-    font-weight: 500;
-  }
-
-  &::before {
-    display: block;
-    content: attr(title);
-    font-weight: 500;
-    height: 0;
-    overflow: hidden;
-    visibility: hidden;
+    background-color: orange;
   }
 
   &.active {
-    box-shadow: inset 0 (-$underline-width) 0 0 orange;
+    background-color: orange;
   }
 
   .flag-icon {
