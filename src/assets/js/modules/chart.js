@@ -167,7 +167,7 @@ class MainChart {
       "soc",
       "com",
       "spec",
-      "",
+      "other",
     ];
 
     // TODO: Random colors for now
@@ -309,9 +309,7 @@ class MainChart {
       .selectAll(".family-label")
       .data(this.data.families)
       .join("g")
-      .attr("id", (familyId) =>
-        familyId ? `family-label-${familyId}` : "family-id-other"
-      )
+      .attr("id", (familyId) => `family-label-${familyId}`)
       .attr("class", "family-label")
       .selectAll("text")
       .data((familyId) => {
@@ -942,7 +940,7 @@ class MainChart {
   static loadDatum(d) {
     let { family_name_short: familyId, family_name: family } = d;
     if (["", "none", "code"].includes(familyId)) {
-      familyId = "";
+      familyId = "other";
       family = "Other";
     }
 
