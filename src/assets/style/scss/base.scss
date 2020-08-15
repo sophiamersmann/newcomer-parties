@@ -68,7 +68,7 @@ body {
   }
 
   .section-describe {
-    line-height: 1.25;
+    line-height: 1.3;
     font-size: 1.1rem;
   }
 
@@ -119,11 +119,6 @@ body {
 
   .form-group {
     display: inline-block;
-
-    input {
-      width: 90px;
-      vertical-align: middle;
-    }
   }
 
   #input-vote-share-label {
@@ -132,6 +127,90 @@ body {
     text-align: right;
     border-bottom: $underline-width solid orange;
     padding: 0 $underline-padding;
+  }
+
+  input {
+    -webkit-appearance: none;
+    width: 90px;
+    vertical-align: middle;
+
+    &::-webkit-slider-runnable-track {
+      width: 100%;
+      height: 5px;
+      cursor: pointer;
+      box-shadow: 0px 0px 0px #000000;
+      background: #fff1e5;
+      border-radius: 1px;
+      border: 0px solid #000000;
+    }
+    &::-webkit-slider-thumb {
+      box-shadow: 0px 0px 0px #000000;
+      border: 0px solid #ff7f0f;
+      height: 16px;
+      width: 16px;
+      border-radius: 24px;
+      background: #ff7f0f;
+      cursor: pointer;
+      -webkit-appearance: none;
+      margin-top: -5.5px;
+    }
+    &:focus::-webkit-slider-runnable-track {
+      background: #fff1e5;
+    }
+    &::-moz-range-track {
+      width: 100%;
+      height: 5px;
+      cursor: pointer;
+      box-shadow: 0px 0px 0px #000000;
+      background: #fff1e5;
+      border-radius: 1px;
+      border: 0px solid #000000;
+    }
+    &::-moz-range-thumb {
+      box-shadow: 0px 0px 0px #000000;
+      border: 0px solid #ff7f0f;
+      height: 16px;
+      width: 16px;
+      border-radius: 24px;
+      background: #ff7f0f;
+      cursor: pointer;
+    }
+    &::-ms-track {
+      width: 100%;
+      height: 5px;
+      cursor: pointer;
+      background: transparent;
+      border-color: transparent;
+      color: transparent;
+    }
+    &::-ms-fill-lower {
+      background: #fff1e5;
+      border: 0px solid #000000;
+      border-radius: 2px;
+      box-shadow: 0px 0px 0px #000000;
+    }
+    &::-ms-fill-upper {
+      background: #fff1e5;
+      border: 0px solid #000000;
+      border-radius: 2px;
+      box-shadow: 0px 0px 0px #000000;
+    }
+    &::-ms-thumb {
+      margin-top: 1px;
+      box-shadow: 0px 0px 0px #000000;
+      border: 0px solid #ff7f0f;
+      height: 16px;
+      width: 16px;
+      border-radius: 24px;
+      background: #ff7f0f;
+      cursor: pointer;
+    }
+    &:focus::-ms-fill-lower {
+      background: #fff1e5;
+    }
+    &:focus::-ms-fill-upper {
+      background: #fff1e5;
+    }
   }
 }
 
