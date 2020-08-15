@@ -69,13 +69,13 @@ body {
 .description {
   padding: 0.5rem 0;
   font-size: 1.15rem;
-  line-height: 1.2;
+  line-height: 1.25;
   font-weight: 100; }
 
 #input-year {
   text-align: left;
-  width: 46px;
-  font-weight: 700;
+  width: 52px;
+  font-weight: 500;
   background: white;
   border: none;
   border-bottom: 3px solid orange;
@@ -104,36 +104,38 @@ body {
     padding: 0 4px; }
 
 .select-countries {
-  font-size: 1.15rem; }
+  margin: 0.5rem 0; }
   .select-countries .label {
     display: inline-block;
-    width: 170px; }
+    width: 100px; }
   .select-countries .country-groups {
     margin-bottom: 0.25rem; }
   .select-countries #countries {
-    line-height: 1.2; }
+    line-height: 1.4; }
   .select-countries button {
     background-color: white;
     border: none;
     padding: 0 4px;
-    margin: 0 4px; }
+    margin: 0 4px;
+    font-weight: 300; }
     .select-countries button:hover {
       cursor: pointer;
-      font-weight: bold; }
+      font-weight: 500; }
     .select-countries button::before {
       display: block;
       content: attr(title);
-      font-weight: bold;
+      font-weight: 500;
       height: 0;
       overflow: hidden;
       visibility: hidden; }
     .select-countries button.active {
-      font-weight: bold;
+      font-weight: 500;
       box-shadow: inset 0 -3px 0 0 orange; }
     .select-countries button .flag-icon {
       width: 15px;
       height: 15px;
-      vertical-align: baseline; }
+      vertical-align: baseline;
+      pointer-events: none; }
 
 #party-list {
   height: 100%;
@@ -183,10 +185,13 @@ h1 {
   border-radius: 50%; }
 
 .font-weight-light {
-  font-weight: 100; }
+  font-weight: 300; }
 
 .font-weight-regular {
   font-weight: 400; }
+
+.font-weight-semibold {
+  font-weight: 500; }
 
 .font-weight-bold {
   font-weight: 700; }
