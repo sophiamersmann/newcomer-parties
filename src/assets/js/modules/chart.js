@@ -124,6 +124,7 @@ class MainChart {
   prepareData(data) {
     const raw = data.map((d) => {
       d.isAlive = d.currentShare > 0;
+      d.shareFormat = d3.format(".1%")(d.share / 100);
 
       d.positions.map((e) => {
         e.valueOrig = e.value;
@@ -140,7 +141,10 @@ class MainChart {
         return e;
       });
 
-      d.shareFormat = d3.format(".1%")(d.share / 100);
+      if (d.positions.filter((d) => d.valueOrig).length === 0) {
+        d.info = "<i>data missing</i>"; // TODO: texting
+        return d;
+      }
 
       const pos = d3.map(d.positions, (e) => e.key);
       d.info = this.partyProfile.keys
@@ -151,6 +155,10 @@ class MainChart {
         )
         .filter((item) => item)
         .join(", ");
+
+      if (!d.info) {
+        d.info = "<i>no strong positions</i>"; // TODO: texting
+      }
 
       return d;
     });
