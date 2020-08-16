@@ -42,7 +42,7 @@ class MainChart {
 
     this.parties = {
       selector: ".party",
-      radius: { active: 3.5, inactive: 0.5, selected: 5, highlight: 30 },
+      radius: { active: 3.5, inactive: 0.5, highlight: 30 },
       padding: 1.5,
       transparent: 0.25,
       alive: {
@@ -575,12 +575,6 @@ class MainChart {
   }
 
   highlightBee(selection) {
-    selection
-      .transition()
-      .duration(400)
-      .ease(d3.easeCubicOut)
-      .attr("r", this.parties.radius.selected);
-
     this.svg.bg
       .select("#party-highlight")
       .datum(selection.datum())
@@ -606,12 +600,6 @@ class MainChart {
   }
 
   removeBeeHighlight(selection) {
-    selection
-      .transition()
-      .duration(400)
-      .ease(d3.easeCubicOut)
-      .attr("r", this.parties.radius.active);
-
     this.svg.bg
       .select("#party-highlight")
       .transition()
