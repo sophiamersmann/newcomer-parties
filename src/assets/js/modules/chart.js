@@ -235,7 +235,7 @@ class MainChart {
         .on("mouseleave", (_, i, n) => {
           const partyId = d3.select(n[i]).attr("data-party-id");
           const party = d3.select(`#party-${partyId}`);
-          this.removeBeeHighlight(party);
+          this.removeBeeHighlight();
         })
         .on("click", (_, i, n) =>
           slide(d3.select(n[i]).select(".party-hidden-info-wrapper"))
@@ -500,7 +500,7 @@ class MainChart {
       if (!d.data.isActive) return;
 
       const party = d3.select(n[i]);
-      this.removeBeeHighlight(party);
+      this.removeBeeHighlight();
 
       const partyInfo = d3.select(`#party-list-item-${d.data.partyId}`).node();
       partyInfo.classList.remove("active");
@@ -599,7 +599,7 @@ class MainChart {
       );
   }
 
-  removeBeeHighlight(selection) {
+  removeBeeHighlight() {
     this.svg.bg
       .select("#party-highlight")
       .transition()
