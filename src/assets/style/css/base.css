@@ -116,7 +116,7 @@ body {
   #select-vote-share #input-vote-share-label {
     display: inline-block;
     width: 40px;
-    text-align: right;
+    text-align: center;
     border-bottom: 3px solid #fb8d2d;
     padding: 0 4px; }
   #select-vote-share input {
