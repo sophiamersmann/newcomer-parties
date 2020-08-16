@@ -126,6 +126,11 @@ class MainChart {
       d.isAlive = d.currentShare > 0;
       d.shareFormat = d3.format(".1%")(d.share / 100);
 
+      d.partyEngl = "";
+      if (d.party !== d.partyOrig) {
+        d.partyEngl = `&ndash; <i>${d.party}</i>`;
+      }
+
       d.positions.map((e) => {
         e.valueOrig = e.value;
         e.isUpper = null;
