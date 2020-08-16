@@ -357,6 +357,7 @@ class MainChart {
         (d) => `rotate(${rotate} ${x(d.familyId)} ${margin.top})`
       )
       .attr("fill", (d) => MainChart.politicalColor(d.familyId))
+      .style("font-size", "14px")
       .text((d) => d.text.toUpperCase());
 
     const yTicks = y.ticks();
@@ -388,7 +389,7 @@ class MainChart {
       .attr("y", (d) => y(d) - yTickLabelDiff / 2)
       .attr("text-anchor", "end")
       .attr("dominant-baseline", "middle")
-      .style("font-size", "0.8rem")
+      .style("font-size", "12.5px")
       .selectAll("tspan")
       .data((d) => {
         const label = this.time.formatDecade(d);
@@ -656,7 +657,7 @@ class MainChart {
               .attr("dominant-baseline", "middle")
               .attr("fill", colors.black)
               .attr("cursor", "ns-resize")
-              .style("font-size", "0.9rem")
+              .style("font-size", "14px")
               .style("font-weight", 500)
               .text(this.time.formatYear(this.state.year)),
           (update) => update.text(this.time.formatYear(this.state.year))
