@@ -356,44 +356,9 @@ class MainChart {
         "transform",
         (d) => `rotate(${rotate} ${x(d.familyId)} ${margin.top})`
       )
-      .attr("fill", (d) => MainChart.politicalColor(d.familyId, true))
+      .attr("fill", (d) => MainChart.politicalColor(d.familyId))
       .style("font-size", "0.8rem")
       .text((d) => d.text.toUpperCase());
-
-    this.svg.bg
-      .append("g")
-      .attr("class", "axis x-axis x-axis-bg")
-      .selectAll(".family-label-bg")
-      .data(
-        d3
-          .selectAll(".family-label text")
-          .nodes()
-          .map((node) => ({
-            familyId: node.getAttribute("data-family-id"),
-            bbox: {
-              x: node.getBBox().x - padding,
-              y: node.getBBox().y - padding,
-              width: node.getBBox().width + padding * 3, // TODO: why not 2?
-              height: node.getBBox().height + padding * 2,
-            },
-          }))
-      )
-      .join("rect")
-      .attr("class", "family-label-bg")
-      .attr("x", ({ bbox }) => bbox.x - bbox.width / 2)
-      .attr("y", ({ bbox }) => bbox.y - 1) // TODO: Magic value
-      .attr("width", ({ bbox }) => bbox.width)
-      .attr("height", ({ bbox }) => bbox.height)
-      .attr("rx", borderRadius)
-      .attr("ry", borderRadius)
-      .attr(
-        "transform",
-        ({ bbox }) =>
-          `translate(${bbox.width / 2} ${borderRadius}) rotate(${rotate} ${
-            bbox.x - bbox.width / 2
-          } ${margin.top})`
-      )
-      .attr("fill", ({ familyId }) => MainChart.politicalColor(familyId));
 
     const yTicks = y.ticks();
     const yTickLabelDiff = y(yTicks[0]) - y(yTicks[1]);
