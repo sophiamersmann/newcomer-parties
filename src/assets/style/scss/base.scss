@@ -110,7 +110,12 @@ body {
   }
 
   &:invalid {
+    box-shadow: none;
     border-bottom: $underline-width solid $accent-light;
+  }
+
+  &:required {
+    box-shadow: none;
   }
 }
 

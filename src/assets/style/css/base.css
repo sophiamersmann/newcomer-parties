@@ -104,7 +104,10 @@ body {
   #input-year:valid {
     border-bottom: 3px solid #fb8d2d; }
   #input-year:invalid {
+    box-shadow: none;
     border-bottom: 3px solid #fef1e6; }
+  #input-year:required {
+    box-shadow: none; }
 
 #select-vote-share {
   display: inline; }

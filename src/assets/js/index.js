@@ -85,6 +85,10 @@ $(document).ready(() => {
           if (event.which === 38 || event.which === 40) {
             event.preventDefault();
           }
+        })
+        .on("focusout", (event) => {
+          const target = $(event.target);
+          target.val(mainChart.state.year.getFullYear());
         });
     });
 });
