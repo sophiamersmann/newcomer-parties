@@ -4,36 +4,26 @@ const colors = {
   gray: "#b8bfc6",
   lightgray: "#f8f9fa",
 
-  rightDark: "#215685",
-  rightMedium: "#99c2e6",
-  rightLight: "#ebf3fa",
-  libDark: "#f8cf63",
-  libMedium: "#fad985",
-  libLight: "#fef7e7",
-  conDark: "#333333",
-  conMedium: "#bfbfbf",
-  conLight: "#f2f2f2",
-  chrDark: "#4e9eab",
-  chrMedium: "#a7d0d7",
-  chrLight: "#edf6f7",
-  agrDark: "#6b5840",
-  agrMedium: "#cfc1af",
-  agrLight: "#f5f3ef",
-  ecoDark: "#458132",
-  ecoMedium: "#b1dba3",
-  ecoLight: "#eff8ed",
-  socDark: "#b63420",
-  socMedium: "#ec9e93",
-  socLight: "#fbece9",
-  comDark: "#7540a0",
-  comMedium: "#c2a4db",
-  comLight: "#f3edf8",
-  specDark: "#595959",
-  specMedium: "#bfbfbf",
-  specLight: "#f2f2f2",
-  otherDark: "#767676",
-  otherMedium: "#bfbfbf",
-  otherLight: "#f2f2f2",
+  right: d3.hsl(208, 0.6, 0.33),
+  rightLight: d3.hsl(208, 0.6, 0.95),
+  con: d3.hsl(206, 0.69, 0.44),
+  conLight: d3.hsl(206, 0.69, 0.95),
+  lib: d3.hsl(43, 0.91, 0.68),
+  libLight: d3.hsl(43, 0.91, 0.95),
+  chr: d3.hsl(0, 0, 0.2),
+  chrLight: d3.hsl(0, 0, 0.95),
+  agr: d3.hsl(36, 0.64, 0.5),
+  agrLight: d3.hsl(36, 0.64, 0.95),
+  eco: d3.hsl(106, 0.44, 0.4),
+  ecoLight: d3.hsl(106, 0.44, 0.95),
+  soc: d3.hsl(3, 0.69, 0.44),
+  socLight: d3.hsl(3, 0.69, 0.95),
+  com: d3.hsl(4, 0.81, 0.26),
+  comLight: d3.hsl(4, 0.81, 0.95),
+  spec: d3.hsl(0, 0, 0.46),
+  specLight: d3.hsl(0, 0, 0.95),
+  other: d3.hsl(0, 0, 0.46),
+  otherLight: d3.hsl(0, 0, 0.95),
 };
 
 class MainChart {
@@ -185,8 +175,8 @@ class MainChart {
 
     const families = [
       "right",
-      "lib",
       "con",
+      "lib",
       "chr",
       "agr",
       "eco",
@@ -288,9 +278,7 @@ class MainChart {
     radialGradient
       .append("stop")
       .attr("offset", "0%")
-      .attr("stop-color", (familyId) =>
-        MainChart.politicalColor(familyId, "dark")
-      );
+      .attr("stop-color", (familyId) => MainChart.politicalColor(familyId));
 
     radialGradient
       .append("stop")
@@ -360,7 +348,7 @@ class MainChart {
         "transform",
         (d) => `rotate(${rotate} ${x(d.familyId)} ${margin.top})`
       )
-      .attr("fill", (d) => MainChart.politicalColor(d.familyId, "light"))
+      .attr("fill", (d) => MainChart.politicalColor(d.familyId, true))
       .style("font-size", "0.8rem")
       .text((d) => d.text.toUpperCase());
 
@@ -397,9 +385,7 @@ class MainChart {
             bbox.x - bbox.width / 2
           } ${margin.top})`
       )
-      .attr("fill", ({ familyId }) =>
-        MainChart.politicalColor(familyId, "dark")
-      );
+      .attr("fill", ({ familyId }) => MainChart.politicalColor(familyId));
 
     const yTicks = y.ticks();
     const yTickLabelDiff = y(yTicks[0]) - y(yTicks[1]);
@@ -436,7 +422,6 @@ class MainChart {
   setUpBeeswarms() {
     const { x, y } = this.scales;
     const { height, margin } = this.svg;
-    // const { color } = this.parties;
 
     this.svg.bg
       .selectAll(".bg-beeswarm-pair")
@@ -449,7 +434,7 @@ class MainChart {
       .data(this.data.families)
       .join("g")
       .attr("class", "beeswarm-pair")
-      .attr("fill", (d) => MainChart.politicalColor(d, "dark"))
+      .attr("fill", (d) => MainChart.politicalColor(d))
       .append("g")
       .attr("class", "g-beeswarm-sep")
       .selectAll(".beeswarm-sep")
@@ -476,7 +461,7 @@ class MainChart {
       .attr("y1", margin.top)
       .attr("y2", (d) => d.y2)
       .attr("stroke-width", 2)
-      .attr("stroke", (d) => MainChart.politicalColor(d.family, "dark"))
+      .attr("stroke", (d) => MainChart.politicalColor(d.family))
       .attr("stroke-opacity", (d) => d.opacity);
   }
 
@@ -584,13 +569,11 @@ class MainChart {
               renderLargeRadius(d) ? radius.active : radius.inactive
             )
             .attr("stroke", ({ data: d }) =>
-              MainChart.politicalColor(d.familyId, "dark")
+              MainChart.politicalColor(d.familyId)
             )
             .attr("stroke-width", 1)
             .attr("fill", ({ data: d }) =>
-              d.isAlive
-                ? MainChart.politicalColor(d.familyId, "dark")
-                : "transparent"
+              d.isAlive ? MainChart.politicalColor(d.familyId) : "transparent"
             )
             .attr("opacity", (d) =>
               y(this.state.year) >= d.y ? 1 : transparent
@@ -889,7 +872,7 @@ class MainChart {
         .attr("r", 50) // magic value
         .attr("fill", "white")
         .attr("stroke-width", 1)
-        .attr("stroke", MainChart.politicalColor(d.familyId, "light")); // TODO: medium might be better
+        .attr("stroke", MainChart.politicalColor(d.familyId, true)); // TODO: medium might be better
 
       svg
         .append("g")
@@ -933,7 +916,7 @@ class MainChart {
         .attr("font-size", "8px")
         .attr("fill", (e) =>
           currLabels.includes(e)
-            ? MainChart.politicalColor(d.familyId, "dark")
+            ? MainChart.politicalColor(d.familyId)
             : colors.gray
         )
         .text((d) => d);
@@ -952,7 +935,7 @@ class MainChart {
         .attr("y2", (e) => radialScale(e.value))
         .attr("stroke-width", 2)
         .attr("stroke-linecap", "round")
-        .attr("stroke", MainChart.politicalColor(d.familyId, "dark"));
+        .attr("stroke", MainChart.politicalColor(d.familyId));
 
       const annotations = svg.selectAll(".bg, .web, .labels");
       svg
@@ -1031,9 +1014,8 @@ class MainChart {
     };
   }
 
-  static politicalColor(familyId, shade) {
-    shade = shade.charAt(0).toUpperCase() + shade.toLowerCase().slice(1);
-    return colors[`${familyId}${shade}`];
+  static politicalColor(familyId, light = false) {
+    return light ? colors[`${familyId}Light`] : colors[familyId];
   }
 
   static createMappings(data) {

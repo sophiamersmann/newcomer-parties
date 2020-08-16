@@ -7,40 +7,30 @@ $black: #212529;
 $gray: #b8bfc6;
 $lightgray: #f8f9fa;
 
-$accent: #ff7f0f;
-$accent-light: #fff1e5;
+$accent: hsl(28, 96%, 58%);
+$accent-light: hsl(28, 96%, 95%);
 
 $families: right, lib, con, chr, agr, eco, soc, com, spec, other;
 
 $political-colors: (
-  right-dark: #215685,
-  right-medium: #99c2e6,
-  right-light: #ebf3fa,
-  lib-dark: #f8cf63,
-  lib-medium: #fad985,
-  lib-light: #fef7e7,
-  con-dark: #333333,
-  con-medium: #bfbfbf,
-  con-light: #f2f2f2,
-  chr-dark: #4e9eab,
-  chr-medium: #a7d0d7,
-  chr-light: #edf6f7,
-  agr-dark: #6b5840,
-  agr-medium: #cfc1af,
-  agr-light: #f5f3ef,
-  eco-dark: #458132,
-  eco-medium: #b1dba3,
-  eco-light: #eff8ed,
-  soc-dark: #b63420,
-  soc-medium: #ec9e93,
-  soc-light: #fbece9,
-  com-dark: #7540a0,
-  com-medium: #c2a4db,
-  com-light: #f3edf8,
-  spec-dark: #595959,
-  spec-medium: #bfbfbf,
-  spec-light: #f2f2f2,
-  other-dark: #767676,
-  other-medium: #bfbfbf,
-  other-light: #f2f2f2,
+  right: hsl(208, 60%, 33%),
+  right-light: hsl(208, 60%, 95%),
+  con: hsl(206, 69%, 44%),
+  con-light: hsl(206, 69%, 95%),
+  lib: hsl(43, 91%, 68%),
+  lib-light: hsl(43, 91%, 95%),
+  chr: hsl(0, 0%, 20%),
+  chr-light: hsl(0, 0%, 95%),
+  agr: hsl(36, 64%, 50%),
+  agr-light: hsl(36, 64%, 95%),
+  eco: hsl(106, 44%, 40%),
+  eco-light: hsl(106, 44%, 95%),
+  soc: hsl(3, 69%, 44%),
+  soc-light: hsl(3, 69%, 95%),
+  com: hsl(4, 81%, 26%),
+  com-light: hsl(4, 81%, 95%),
+  spec: hsl(0, 0%, 46%),
+  spec-light: hsl(0, 0%, 95%),
+  other: hsl(0, 0%, 46%),
+  other-light: hsl(0, 0%, 95%),
 );
