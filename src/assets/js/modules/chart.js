@@ -357,7 +357,6 @@ class MainChart {
         (d) => `rotate(${rotate} ${x(d.familyId)} ${margin.top})`
       )
       .attr("fill", (d) => MainChart.politicalColor(d.familyId))
-      .style("font-size", "0.8rem")
       .text((d) => d.text.toUpperCase());
 
     const yTicks = y.ticks();
@@ -389,7 +388,15 @@ class MainChart {
       .attr("y", (d) => y(d) - yTickLabelDiff / 2)
       .attr("text-anchor", "end")
       .attr("dominant-baseline", "middle")
-      .text((d) => this.time.formatDecade(d));
+      .style("font-size", "0.8rem")
+      .selectAll("tspan")
+      .data((d) => {
+        const label = this.time.formatDecade(d);
+        return [label.slice(0, 2), label.slice(2)];
+      })
+      .join("tspan")
+      .style("font-weight", (_, i) => (i === 0 ? 300 : 500))
+      .text((d) => d);
   }
 
   setUpBeeswarms() {
@@ -622,7 +629,7 @@ class MainChart {
           enter
             .append("rect")
             .attr("class", "handle handle--custom")
-            .attr("fill", "white")
+            .attr("fill", "#fff")
             .attr("stroke", colors.black)
             .attr("stroke-width", 1)
             .attr("cursor", "ns-resize")
@@ -635,8 +642,8 @@ class MainChart {
           "y",
           selection === null ? null : selection[1] - handleHeight / 2 - 2
         ) // TODO: Magic value
-        .attr("rx", 4)
-        .attr("ry", 4);
+        .attr("rx", 5)
+        .attr("ry", 5);
 
       g.selectAll(".handle--custom-label")
         .data([{ type: "s" }])
@@ -647,8 +654,10 @@ class MainChart {
               .attr("class", "handle--custom-label")
               .attr("text-anchor", "middle")
               .attr("dominant-baseline", "middle")
-              .attr("stroke", colors.black)
+              .attr("fill", colors.black)
               .attr("cursor", "ns-resize")
+              .style("font-size", "0.9rem")
+              .style("font-weight", 500)
               .text(this.time.formatYear(this.state.year)),
           (update) => update.text(this.time.formatYear(this.state.year))
         )
