@@ -42,9 +42,9 @@ class MainChart {
 
     this.parties = {
       selector: ".party",
-      radius: { active: 3.5, inactive: 0.5, highlight: 30 },
+      radius: { active: 3.25, inactive: 0.5, highlight: 26 },
       padding: 1.5,
-      transparent: 0.25,
+      transparent: 0.1,
       alive: {
         selector: ".party-alive",
       },
