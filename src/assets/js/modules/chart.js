@@ -559,7 +559,7 @@ class MainChart {
             )
             .attr("stroke-width", 1)
             .attr("fill", ({ data: d }) =>
-              d.isAlive ? MainChart.politicalColor(d.familyId) : "transparent"
+              MainChart.politicalColor(d.familyId, !d.isAlive)
             )
             .attr("opacity", (d) =>
               y(this.state.year) >= d.y ? 1 : transparent
