@@ -98,6 +98,7 @@ class MainChart {
         target: "#party-list",
         view: { parties: null },
       },
+      activeItemOffset: 32,
     };
 
     this.time = {
@@ -323,10 +324,9 @@ class MainChart {
     const { x, y } = this.scales;
     const { rotate } = this.labels;
 
-    const lineHeight = 15.7; // TODO: Magic value (d3.select(".family-label text").node().getBBox().height)
+    const lineHeight = 15.7;
     const longFamilyNames = ["chr", "eco", "soc", "com"];
     const padding = 1.5;
-    const borderRadius = 2;
 
     this.svg.g
       .append("g")
@@ -505,7 +505,7 @@ class MainChart {
 
       partyInfo.classList.add("active");
       if (!isVisible(partyInfo, partyList)) {
-        partyList.scrollTop = partyInfo.offsetTop - 50; // TODO: Magic value
+        partyList.scrollTop = partyInfo.offsetTop - this.panel.activeItemOffset;
       }
     };
 
@@ -647,7 +647,7 @@ class MainChart {
         .attr(
           "y",
           selection === null ? null : selection[1] - handleHeight / 2 - 2
-        ) // TODO: Magic value
+        )
         .attr("rx", 5)
         .attr("ry", 5);
 
@@ -698,13 +698,13 @@ class MainChart {
       svg
         .select(".brush .handle--s")
         .attr("height", 1)
-        .attr("transform", "translate(0, 3)"); // TODO: Magic value
+        .attr("transform", "translate(0, 3)");
     }
 
     const brush = d3
       .brushY()
       .extent([
-        [margin.left + 3, margin.top], // TODO: Magiv value
+        [margin.left, margin.top],
         [width - margin.right, height - margin.bottom],
       ])
       .on("start", () => {
@@ -744,7 +744,6 @@ class MainChart {
     const { brushY: brush, initialDates } = this.brush;
     d3.select(".brush")
       .transition()
-      // TODO: improve this transition
       .duration(1200)
       .ease(d3.easeCubicInOut)
       .call(brush.move, [initialDates[0], year].map(y));
@@ -848,7 +847,7 @@ class MainChart {
         .attr("r", 50) // magic value
         .attr("fill", "white")
         .attr("stroke-width", 1)
-        .attr("stroke", MainChart.politicalColor(d.familyId, true)); // TODO: medium might be better
+        .attr("stroke", MainChart.politicalColor(d.familyId, true));
 
       svg
         .append("g")
@@ -1025,7 +1024,6 @@ class MainChart {
   }
 
   // Adapted from https://observablehq.com/@d3/beeswarm and https://observablehq.com/@tomwhite/beeswarm-bubbles
-  // TODO: function can be simplified
   static dodge(data, padding, radius, properties, scales) {
     const { pos, size } = properties;
     const { x, y } = scales;
