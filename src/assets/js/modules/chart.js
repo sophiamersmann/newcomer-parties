@@ -89,7 +89,7 @@ class MainChart {
         ], // TOOD: more concise
         euProAnti: ["pro-EU", "EU-sceptic"],
       },
-      threshold: 1, // TODO: Think about this threshold value
+      threshold: 1.5,
     };
 
     this.panel = {
