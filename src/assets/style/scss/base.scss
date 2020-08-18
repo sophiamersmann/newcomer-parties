@@ -314,12 +314,13 @@ button {
   height: 100%;
   overflow: auto;
   scroll-behavior: smooth;
-  padding: $spacing $spacing / 2;
+  padding: 0 $spacing / 2;
   font-size: 0.9rem;
 
   .party-list-group {
     border-radius: 10px;
     background-color: $lightgray;
+    margin: $spacing 0;
 
     .party-list-item {
       display: grid;
@@ -334,10 +335,6 @@ button {
 
       .party-year {
         font-weight: 300;
-      }
-
-      &:last-child {
-        margin-bottom: $spacing;
       }
 
       .area-header {
