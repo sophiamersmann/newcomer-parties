@@ -243,6 +243,48 @@ body {
   }
 }
 
+// LEGEND
+
+.legend {
+  font-size: 0.8rem;
+  text-align: right;
+  padding: 0 $spacing;
+  position: absolute; // TODO: hacky positioning
+  right: 20%;
+
+  $line-height: 16px;
+  line-height: $line-height;
+
+  div:not(.legend-item) {
+    display: inline-block;
+  }
+
+  & > div:not(.wrapper) {
+    top: -$line-height / 2;
+    position: relative;
+  }
+
+  .wrapper {
+    text-align: start;
+    margin: 0 $spacing / 4;
+  }
+
+  .circle {
+    width: $line-height / 2;
+    height: $line-height / 2;
+    border-radius: 50%;
+    border: 1px solid $black;
+
+    &.circle-alive {
+      background: $black;
+    }
+
+    &.circle-dead {
+      background: hsl(210, 11%, 95%);
+    }
+  }
+}
+
 // LIST OF PARTIES IN THE PANEL
 
 #party-list {

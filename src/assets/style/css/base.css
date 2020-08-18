@@ -207,6 +207,31 @@ body {
     height: 15px;
     pointer-events: none; }
 
+.legend {
+  font-size: 0.8rem;
+  text-align: right;
+  padding: 0 2rem;
+  position: absolute;
+  right: 20%;
+  line-height: 16px; }
+  .legend div:not(.legend-item) {
+    display: inline-block; }
+  .legend > div:not(.wrapper) {
+    top: -8px;
+    position: relative; }
+  .legend .wrapper {
+    text-align: start;
+    margin: 0 0.5rem; }
+  .legend .circle {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    border: 1px solid #212529; }
+    .legend .circle.circle-alive {
+      background: #212529; }
+    .legend .circle.circle-dead {
+      background: #f1f2f4; }
+
 #party-list {
   height: 100%;
   overflow: auto;
