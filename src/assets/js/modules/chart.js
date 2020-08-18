@@ -147,7 +147,7 @@ class MainChart {
       });
 
       if (d.positions.filter((d) => d.valueOrig).length === 0) {
-        d.info = "<i>data missing</i>"; // TODO: texting
+        d.info = "<i>data missing</i>";
         return d;
       }
 
@@ -162,7 +162,7 @@ class MainChart {
         .join(", ");
 
       if (!d.info) {
-        d.info = "<i>no strong positions</i>"; // TODO: texting
+        d.info = "<i>no strong positions on traditional issues</i>";
       }
 
       return d;
