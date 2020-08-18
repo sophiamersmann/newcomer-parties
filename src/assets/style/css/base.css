@@ -39,6 +39,9 @@ html {
   box-sizing: border-box;
   color: #212529;
   font-family: "Roboto", sans-serif; }
+  @media screen and (max-width: 1199.98px) {
+    html {
+      font-size: 14px; } }
   html *,
   html *:after,
   html *:before {
@@ -61,9 +64,15 @@ body {
       display: flex;
       justify-content: center;
       align-items: center; }
+      @media screen and (max-width: 1199.98px) {
+        body main #chart-wrapper {
+          display: none; } }
   body .panel {
     border-left: 1px solid #212529;
     flex: 0 1 20vw; }
+    @media screen and (max-width: 1199.98px) {
+      body .panel {
+        display: none; } }
 
 .header h1 {
   font-family: "Space Grotesk", sans-serif;
@@ -207,6 +216,11 @@ body {
     height: 15px;
     pointer-events: none; }
 
+@media screen and (max-width: 1199.98px) {
+  input,
+  button {
+    pointer-events: none; } }
+
 .legend {
   font-size: 0.8rem;
   text-align: right;
@@ -214,6 +228,9 @@ body {
   position: absolute;
   right: 20%;
   line-height: 16px; }
+  @media screen and (max-width: 1199.98px) {
+    .legend {
+      display: none; } }
   .legend div:not(.legend-item) {
     display: inline-block; }
   .legend > div:not(.wrapper) {
@@ -325,6 +342,19 @@ body {
         background-color: #f2f2f2;
         cursor: pointer; }
 
+.small-screen {
+  display: none;
+  max-width: 400px; }
+  @media screen and (max-width: 1199.98px) {
+    .small-screen {
+      display: block; } }
+  .small-screen .alert {
+    margin: 1rem 0;
+    padding: 1rem;
+    border: 3px solid #336699;
+    border-radius: 10px;
+    background-color: #bedcee; }
+
 .hide {
   display: none; }
 
@@ -333,3 +363,7 @@ body {
 
 .flag-icon-squared {
   border-radius: 50%; }
+
+img {
+  width: 100%;
+  height: auto; }

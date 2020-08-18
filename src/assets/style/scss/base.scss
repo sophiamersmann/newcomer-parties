@@ -9,6 +9,10 @@ html {
   color: $black;
   font-family: "Roboto", sans-serif;
 
+  @include small-screen() {
+    font-size: 14px;
+  }
+
   *,
   *:after,
   *:before {
@@ -41,12 +45,20 @@ body {
       display: flex;
       justify-content: center;
       align-items: center;
+
+      @include small-screen() {
+        display: none;
+      }
     }
   }
 
   .panel {
     border-left: 1px solid $black;
     flex: 0 1 20vw;
+
+    @include small-screen() {
+      display: none;
+    }
   }
 }
 
@@ -243,6 +255,13 @@ body {
   }
 }
 
+input,
+button {
+  @include small-screen() {
+    pointer-events: none;
+  }
+}
+
 // LEGEND
 
 .legend {
@@ -254,6 +273,10 @@ body {
 
   $line-height: 16px;
   line-height: $line-height;
+
+  @include small-screen() {
+    display: none;
+  }
 
   div:not(.legend-item) {
     display: inline-block;
@@ -373,6 +396,25 @@ body {
   }
 }
 
+// CONTENT SHOWN ON SMALL SCREENS
+
+.small-screen {
+  display: none;
+  max-width: 400px;
+
+  @include small-screen() {
+    display: block;
+  }
+
+  .alert {
+    margin: $spacing / 2 0;
+    padding: $spacing / 2;
+    border: 3px solid #336699;
+    border-radius: 10px;
+    background-color: #bedcee;
+  }
+}
+
 // MISC
 
 .hide {
@@ -385,4 +427,9 @@ body {
 
 .flag-icon-squared {
   border-radius: 50%;
+}
+
+img {
+  width: 100%;
+  height: auto;
 }
