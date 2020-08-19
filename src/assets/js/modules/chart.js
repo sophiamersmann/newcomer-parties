@@ -86,7 +86,7 @@ class MainChart {
         stateMarket: [
           "state-led regulation of the economy",
           "market-led regulation of the economy",
-        ], // TOOD: more concise
+        ], // TODO: more concise
         euProAnti: ["pro-EU", "EU-sceptic"],
       },
       threshold: 1.5,
@@ -871,7 +871,7 @@ class MainChart {
         .attr("transform", (d) => `rotate(${d * 45})`)
         .attr("y1", -(radialScale.range()[1] + margin))
         .attr("y2", radialScale.range()[1] + margin)
-        .attr("stroke-width", 1)
+        .attr("stroke-width", 0.5)
         .attr("stroke", colors.gray);
 
       svg
@@ -881,11 +881,13 @@ class MainChart {
         .selectAll("text")
         .data(labels)
         .join("text")
-        .attr("y", radialScale.range()[1] + margin)
+        .attr("y", radialScale.range()[1] + 1.5 * margin)
         .attr(
           "transform",
           (_, i) =>
-            `rotate(${i * 45}) rotate(90 0 ${radialScale.range()[1] + margin})`
+            `rotate(${i * 45}) rotate(90 0 ${
+              radialScale.range()[1] + 1.5 * margin
+            })`
         )
         .attr("dominant-baseline", "middle")
         .attr("font-size", "8px")
