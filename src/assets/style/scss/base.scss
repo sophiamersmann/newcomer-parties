@@ -380,7 +380,8 @@ button {
       .party-list-item-#{$family} {
         border-left: 5px solid map-get($political-colors, $family);
 
-        &:is(.active, :hover) {
+        &.active,
+        &:hover {
           background-color: map-get($political-colors, $family#{-light});
           cursor: pointer;
         }

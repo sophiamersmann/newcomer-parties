@@ -292,52 +292,52 @@ body {
             font-weight: 500; }
     #party-list .party-list-group .party-list-item-right {
       border-left: 5px solid #225887; }
-      #party-list .party-list-group .party-list-item-right:is(.active, :hover) {
+      #party-list .party-list-group .party-list-item-right.active, #party-list .party-list-group .party-list-item-right:hover {
         background-color: #ebf3fa;
         cursor: pointer; }
     #party-list .party-list-group .party-list-item-lib {
       border-left: 5px solid #f8ce63; }
-      #party-list .party-list-group .party-list-item-lib:is(.active, :hover) {
+      #party-list .party-list-group .party-list-item-lib.active, #party-list .party-list-group .party-list-item-lib:hover {
         background-color: #fef7e7;
         cursor: pointer; }
     #party-list .party-list-group .party-list-item-con {
       border-left: 5px solid #237bbe; }
-      #party-list .party-list-group .party-list-item-con:is(.active, :hover) {
+      #party-list .party-list-group .party-list-item-con.active, #party-list .party-list-group .party-list-item-con:hover {
         background-color: #e9f3fb;
         cursor: pointer; }
     #party-list .party-list-group .party-list-item-chr {
       border-left: 5px solid #333333; }
-      #party-list .party-list-group .party-list-item-chr:is(.active, :hover) {
+      #party-list .party-list-group .party-list-item-chr.active, #party-list .party-list-group .party-list-item-chr:hover {
         background-color: #f2f2f2;
         cursor: pointer; }
     #party-list .party-list-group .party-list-item-agr {
       border-left: 5px solid #d1902e; }
-      #party-list .party-list-group .party-list-item-agr:is(.active, :hover) {
+      #party-list .party-list-group .party-list-item-agr.active, #party-list .party-list-group .party-list-item-agr:hover {
         background-color: #faf4ea;
         cursor: pointer; }
     #party-list .party-list-group .party-list-item-eco {
       border-left: 5px solid #4e9339; }
-      #party-list .party-list-group .party-list-item-eco:is(.active, :hover) {
+      #party-list .party-list-group .party-list-item-eco.active, #party-list .party-list-group .party-list-item-eco:hover {
         background-color: #eff8ed;
         cursor: pointer; }
     #party-list .party-list-group .party-list-item-soc {
       border-left: 5px solid #be2b23; }
-      #party-list .party-list-group .party-list-item-soc:is(.active, :hover) {
+      #party-list .party-list-group .party-list-item-soc.active, #party-list .party-list-group .party-list-item-soc:hover {
         background-color: #fbeae9;
         cursor: pointer; }
     #party-list .party-list-group .party-list-item-com {
       border-left: 5px solid #78140d; }
-      #party-list .party-list-group .party-list-item-com:is(.active, :hover) {
+      #party-list .party-list-group .party-list-item-com.active, #party-list .party-list-group .party-list-item-com:hover {
         background-color: #fde9e8;
         cursor: pointer; }
     #party-list .party-list-group .party-list-item-spec {
       border-left: 5px solid #757575; }
-      #party-list .party-list-group .party-list-item-spec:is(.active, :hover) {
+      #party-list .party-list-group .party-list-item-spec.active, #party-list .party-list-group .party-list-item-spec:hover {
         background-color: #f2f2f2;
         cursor: pointer; }
     #party-list .party-list-group .party-list-item-other {
       border-left: 5px solid #757575; }
-      #party-list .party-list-group .party-list-item-other:is(.active, :hover) {
+      #party-list .party-list-group .party-list-item-other.active, #party-list .party-list-group .party-list-item-other:hover {
         background-color: #f2f2f2;
         cursor: pointer; }
 
