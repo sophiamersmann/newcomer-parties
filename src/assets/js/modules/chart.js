@@ -247,7 +247,7 @@ class MainChart {
           slide(d3.select(n[i]).select(".party-hidden-info-wrapper"))
         );
 
-      this.injectPositionCharts();
+      this.injectProfileCharts();
       this.renderPanelParties();
     });
   }
@@ -807,7 +807,7 @@ class MainChart {
     if (action) this.renderPanelParties();
   }
 
-  injectPositionCharts() {
+  injectProfileCharts() {
     const width = 32;
     const height = width;
     const margin = 2;
