@@ -273,7 +273,9 @@ class MainChart {
     this.svg.g = d3
       .select(selector)
       .append("svg")
-      .attr("viewBox", `0 0 ${width} ${height}`)
+      .attr("viewBox", [0, 0, width, height])
+      .style("width", width + margin.left + margin.right)
+      .style("height", height + margin.top + margin.botom)
       .append("g")
       .attr("transform", `translate(${margin.left / 2},${margin.top})`);
 
