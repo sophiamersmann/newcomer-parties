@@ -82,6 +82,10 @@ body {
   .section-describe {
     line-height: 1.3;
     font-size: 1.1rem;
+
+    div {
+      margin: $spacing / 16 0;
+    }
   }
 
   .section-select {

@@ -88,6 +88,8 @@ body {
 .header .section-describe {
   line-height: 1.3;
   font-size: 1.1rem; }
+  .header .section-describe div {
+    margin: 0.125rem 0; }
 
 .header .section-select {
   font-size: 0.9rem; }
