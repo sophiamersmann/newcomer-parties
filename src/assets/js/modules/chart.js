@@ -75,7 +75,13 @@ class MainChart {
     };
 
     this.partyProfile = {
-      keys: ["stateMarket", "libertyAuthority", "leftRight", "euProAnti"],
+      keys: ["leftRight", "libertyAuthority", "stateMarket", "euProAnti"],
+      keysChartSorting: [
+        "stateMarket",
+        "libertyAuthority",
+        "leftRight",
+        "euProAnti",
+      ],
       labels: {
         leftRight: ["left", "right"],
         libertyAuthority: ["liberty", "authority"],
@@ -86,9 +92,9 @@ class MainChart {
         leftRight: ["on the political left", "on the political right"],
         libertyAuthority: ["libertarian", "authoritarian"],
         stateMarket: [
-          "state-led regulation of the economy",
-          "market-led regulation of the economy",
-        ], // TODO: more concise
+          "state-focused regulation of the economy",
+          "market-focused regulation of the economy",
+        ],
         euProAnti: ["pro-EU", "EU-sceptic"],
       },
       threshold: 1.5,
@@ -347,7 +353,9 @@ class MainChart {
         let text = [familyName];
         let single = true;
         if (longFamilyNames.includes(familyId)) {
-          text = familyName.split(familyName.includes("/") ? "/" : " ");
+          const char = familyName.includes("/") ? "/" : " ";
+          text = familyName.split(char);
+          text[0] += char;
           single = false;
         }
 
@@ -823,12 +831,19 @@ class MainChart {
 
     const labels = [];
     for (let index of d3.range(2)) {
-      this.partyProfile.keys.forEach((key) =>
+      this.partyProfile.keysChartSorting.forEach((key) =>
         labels.push(this.partyProfile.labels[key][index])
       );
     }
 
     this.data.raw.forEach((d) => {
+      d.positions = d.positions.sort((a, b) =>
+        d3.ascending(
+          this.partyProfile.keysChartSorting.indexOf(a.key),
+          this.partyProfile.keysChartSorting.indexOf(b.key)
+        )
+      );
+
       const currLabels = d.positions
         .filter((e) => e.value > this.partyProfile.threshold)
         .map((e) => e.label);
