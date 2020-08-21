@@ -58,8 +58,6 @@ body {
     font-size: 1.1rem;
 
     div {
-      margin: $spacing / 16 0;
-
       @include small-screen() {
         display: inline;
       }
