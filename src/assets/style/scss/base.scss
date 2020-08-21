@@ -28,58 +28,28 @@ html {
 
 body {
   height: 100%;
-  display: flex;
-
-  main {
-    flex: 1 0 80vw;
-
-    $header-height: 180px;
-
-    .header {
-      height: $header-height;
-      padding: $spacing;
-    }
-
-    #chart-wrapper {
-      height: calc(100% - #{$header-height});
-      display: flex;
-      justify-content: center;
-      align-items: center;
-
-      @include small-screen() {
-        display: none;
-      }
-    }
-  }
-
-  .panel {
-    border-left: 1px solid $black;
-    flex: 0 1 20vw;
-
-    @include small-screen() {
-      display: none;
-    }
-  }
+  display: grid;
+  grid-template: auto minmax(55px, 75px) 1fr / 1fr auto minmax(200px, 20%);
+  grid-template-areas:
+    "header legend panel"
+    "select select panel"
+    "main   main   panel";
 }
 
 // HEADER
 
 .header {
+  grid-area: header;
+  margin: $spacing $spacing / 8 $spacing / 8 $spacing;
+
   h1 {
     font-family: "Space Grotesk", sans-serif;
     font-size: 1.6rem;
+    margin-bottom: $spacing / 4;
   }
 
-  b {
-    font-weight: 500;
-  }
-
-  .section {
-    margin: $spacing / 4 0;
+  .content {
     font-weight: 300;
-  }
-
-  .section-describe {
     line-height: 1.3;
     font-size: 1.1rem;
 
@@ -87,18 +57,82 @@ body {
       margin: $spacing / 16 0;
     }
   }
+}
 
-  .section-select {
-    font-size: 0.9rem;
+// LEGEND
 
-    .label {
-      display: inline-block;
-      margin-right: 50px;
-      font-weight: 400;
+.legend {
+  grid-area: legend;
+  font-size: 0.8rem;
+  text-align: right;
+  padding: $spacing;
+
+  $line-height: 16px;
+  line-height: $line-height;
+
+  @include small-screen() {
+    display: none;
+  }
+
+  div:not(.legend-item) {
+    display: inline-block;
+  }
+
+  & > div:not(.wrapper) {
+    top: -$line-height / 2;
+    position: relative;
+  }
+
+  .wrapper {
+    text-align: start;
+    margin: 0 $spacing / 4;
+  }
+
+  .circle {
+    width: $line-height / 2;
+    height: $line-height / 2;
+    border-radius: 50%;
+    border: 1px solid $black;
+
+    &.circle-alive {
+      background: $black;
     }
 
-    .select-region {
-      margin-bottom: $spacing / 8;
+    &.circle-dead {
+      background: hsl(210, 11%, 95%);
+    }
+  }
+}
+
+// SELECT COUNTRIES
+
+.selection {
+  grid-area: select;
+  margin: $spacing / 8 $spacing;
+
+  font-weight: 300;
+  font-size: 0.9rem;
+
+  .label {
+    display: inline-block;
+    margin-right: $spacing;
+    font-weight: 400;
+  }
+
+  .select-region {
+    margin-bottom: $spacing / 8;
+  }
+}
+
+// MAIN CHART
+
+.main {
+  grid-area: main;
+  align-self: center;
+
+  #chart-wrapper {
+    @include small-screen() {
+      display: none;
     }
   }
 }
@@ -235,7 +269,7 @@ body {
   }
 }
 
-.section-select button {
+.selection button {
   background-color: $accent-light;
   border: none;
   border-radius: 5px;
@@ -266,53 +300,16 @@ button {
   }
 }
 
-// LEGEND
+// PANEL
 
-.legend {
-  font-size: 0.8rem;
-  text-align: right;
-  padding: 0 $spacing;
-  position: absolute;
-  right: 20%;
-
-  $line-height: 16px;
-  line-height: $line-height;
+.panel {
+  grid-area: panel;
+  border-left: 1px solid $black;
 
   @include small-screen() {
     display: none;
   }
-
-  div:not(.legend-item) {
-    display: inline-block;
-  }
-
-  & > div:not(.wrapper) {
-    top: -$line-height / 2;
-    position: relative;
-  }
-
-  .wrapper {
-    text-align: start;
-    margin: 0 $spacing / 4;
-  }
-
-  .circle {
-    width: $line-height / 2;
-    height: $line-height / 2;
-    border-radius: 50%;
-    border: 1px solid $black;
-
-    &.circle-alive {
-      background: $black;
-    }
-
-    &.circle-dead {
-      background: hsl(210, 11%, 95%);
-    }
-  }
 }
-
-// LIST OF PARTIES IN THE PANEL
 
 #party-list {
   height: 100%;
@@ -372,10 +369,6 @@ button {
           div {
             margin: $spacing / 8 0;
           }
-
-          b {
-            font-weight: 500;
-          }
         }
       }
     }
@@ -419,6 +412,15 @@ button {
 
 // MISC
 
+img {
+  width: 100%;
+  height: auto;
+}
+
+b {
+  font-weight: 500;
+}
+
 .hide {
   display: none;
 }
@@ -429,9 +431,4 @@ button {
 
 .flag-icon-squared {
   border-radius: 50%;
-}
-
-img {
-  width: 100%;
-  height: auto;
 }

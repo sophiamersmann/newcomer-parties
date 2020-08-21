@@ -8,12 +8,18 @@ $(document).ready(() => {
   renderMinVoteShare = renderMinVoteShare.bind(inputVoteShare);
   renderMinVoteShare();
 
-  const chartWrapper = $("#chart-wrapper");
+  const height =
+    $(window).height() -
+    $(".header").outerHeight(true) -
+    $(".selection").outerHeight(true) -
+    25;
+
+  if (height < 0) return;
 
   const mainChart = new MainChart(
     "#main-chart",
-    chartWrapper.width() - 100,
-    chartWrapper.height() - 100
+    $("#chart-wrapper").width(),
+    height
   );
   mainChart
     .init({ countryGroup, minVoteShare })
@@ -30,7 +36,7 @@ $(document).ready(() => {
         item.css(
           "margin-left",
           groupButton.position().left -
-            parseFloat($(".header").css("padding-left"))
+            parseFloat($(".selection").css("margin-left"))
         );
       });
 

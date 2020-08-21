@@ -34,88 +34,85 @@
   </head>
 
   <body>
-    <main>
-      <div class="header">
-        <div class="legend">
-          <div>Parties</div>
-          <div class="wrapper">
-            <div class="legend-item">
-              <div class="circle circle-alive"></div>
-              represented
-            </div>
-            <div class="legend-item">
-              <div class="circle circle-dead"></div>
-              not represented
-            </div>
-          </div>
-          <div>in today's parliaments</div>
+    <div class="header">
+      <h1>
+        Newcomer Parties To European Parliaments
+      </h1>
+
+      <div class="content">
+        <div>
+          Parties elected into parliament
+          <b>for the first time</b>
         </div>
+        <div>
+          by winning at least
 
-        <h1>
-          Newcomer Parties To European Parliaments
-        </h1>
-
-        <div class="section section-describe">
-          <div>
-            Parties elected into parliament
-            <b>for the first time</b>
-          </div>
-          <div>
-            by winning at least
-
-            <div id="select-vote-share">
-              <div class="form-group">
-                <input
-                  type="range"
-                  id="input-vote-share"
-                  name="voteShare"
-                  min="0"
-                  max="0.5"
-                  step="0.01"
-                  value="0.01"
-                />
-                <label
-                  id="input-vote-share-label"
-                  for="input-vote-share"
-                ></label>
-              </div>
+          <div id="select-vote-share">
+            <div class="form-group">
+              <input
+                type="range"
+                id="input-vote-share"
+                name="voteShare"
+                min="0"
+                max="0.5"
+                step="0.01"
+                value="0.01"
+              />
+              <label id="input-vote-share-label" for="input-vote-share"></label>
             </div>
-
-            of votes in an election after
-
-            <input
-              type="number"
-              id="input-year"
-              name="year"
-              min="1945"
-              max="2020"
-              pattern="[0-9]{4}"
-              required
-            />
-          </div>
-        </div>
-
-        <div class="section section-select">
-          <div class="select-region">
-            <span class="label">Select region</span>
-            <button data-group="north" title="North">North</button>
-            <button data-group="south" title="South">South</button>
-            <button data-group="east" title="East">East</button>
           </div>
 
-          <div id="select-country"></div>
-        </div>
+          of votes in an election after
 
-        <div class="small-screen">
-          <div class="alert">
-            This visualisation has been designed for larger devices. If you want
-            to explore an interactive version, please open on a desktop.
-          </div>
-
-          <img src="src/assets/img/chart.png" alt="Chart" />
+          <input
+            type="number"
+            id="input-year"
+            name="year"
+            min="1945"
+            max="2020"
+            pattern="[0-9]{4}"
+            required
+          />
         </div>
       </div>
 
+      <div class="small-screen">
+        <div class="alert">
+          This visualisation has been designed for larger devices. If you want
+          to explore an interactive version, please open on a desktop.
+        </div>
+
+        <img src="src/assets/img/chart.png" alt="Chart" />
+      </div>
+    </div>
+
+    <div class="selection">
+      <div class="select-region">
+        <span class="label">Select region</span>
+        <button data-group="north" title="North">North</button>
+        <button data-group="south" title="South">South</button>
+        <button data-group="east" title="East">East</button>
+      </div>
+
+      <div id="select-country"></div>
+    </div>
+
+    <div class="legend">
+      <div>Parties</div>
+      <div class="wrapper">
+        <div class="legend-item">
+          <div class="circle circle-alive"></div>
+          represented
+        </div>
+        <div class="legend-item">
+          <div class="circle circle-dead"></div>
+          not represented
+        </div>
+      </div>
+      <div>in today's parliaments</div>
+    </div>
+
+    <main class="main">
       <div id="chart-wrapper">
         <div id="main-chart" data-src="data/parlgov-dev.csv"></div>
       </div>
