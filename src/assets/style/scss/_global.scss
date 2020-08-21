@@ -35,7 +35,7 @@ $political-colors: (
   other-light: hsl(0, 0%, 95%),
 );
 
-$breakpoint: 1199.98px;
+$breakpoint: 768px;
 
 @mixin small-screen() {
   @media screen and (max-width: $breakpoint) {

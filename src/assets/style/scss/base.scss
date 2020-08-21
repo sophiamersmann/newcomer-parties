@@ -29,18 +29,22 @@ html {
 body {
   height: 100%;
   display: grid;
-  grid-template: auto minmax(60px, 80px) 1fr / 1fr auto minmax(200px, 20%);
+  grid-template: auto minmax(60px, 80px) 1fr / 1fr auto minmax(0, 20%);
   grid-template-areas:
     "header legend panel"
     "select select panel"
     "main   main   panel";
+
+  @include small-screen() {
+    display: initial;
+  }
 }
 
 // HEADER
 
 .header {
   grid-area: header;
-  margin: $spacing $spacing / 8 $spacing / 8 $spacing;
+  margin: $spacing $spacing $spacing / 8 $spacing;
 
   h1 {
     font-family: "Space Grotesk", sans-serif;
@@ -55,6 +59,10 @@ body {
 
     div {
       margin: $spacing / 16 0;
+
+      @include small-screen() {
+        display: inline;
+      }
     }
   }
 }
@@ -403,7 +411,6 @@ button {
 
 .small-screen {
   display: none;
-  max-width: 400px;
 
   @include small-screen() {
     display: block;
@@ -416,14 +423,14 @@ button {
     border-radius: 10px;
     background-color: #bedcee;
   }
+
+  img {
+    width: 100%;
+    height: auto;
+  }
 }
 
 // MISC
-
-img {
-  width: 100%;
-  height: auto;
-}
 
 b {
   font-weight: 500;
