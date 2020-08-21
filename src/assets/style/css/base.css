@@ -114,11 +114,14 @@ body {
   grid-area: main;
   align-self: center;
   padding: 0 2rem 2rem; }
-  @media screen and (max-width: 1199.98px) {
-    .main #chart-wrapper {
-      display: none; } }
-  .main #chart-wrapper svg {
-    overflow: visible; }
+  .main #chart-wrapper {
+    display: grid;
+    place-items: center; }
+    @media screen and (max-width: 1199.98px) {
+      .main #chart-wrapper {
+        display: none; } }
+    .main #chart-wrapper svg {
+      overflow: visible; }
 
 #input-year {
   text-align: center;

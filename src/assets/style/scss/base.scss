@@ -132,6 +132,9 @@ body {
   padding: 0 $spacing $spacing;
 
   #chart-wrapper {
+    display: grid;
+    place-items: center;
+
     @include small-screen() {
       display: none;
     }

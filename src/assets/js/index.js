@@ -8,13 +8,15 @@ $(document).ready(() => {
   renderMinVoteShare = renderMinVoteShare.bind(inputVoteShare);
   renderMinVoteShare();
 
-  const mainChart = new MainChart(
-    "#main-chart",
-    $("#chart-wrapper").width(),
+  const width = Math.min($("#chart-wrapper").width(), 1400);
+  const height = Math.min(
     $(window).height() -
       $(".header").outerHeight(true) -
-      $(".selection").outerHeight(true)
+      $(".selection").outerHeight(true),
+    700
   );
+
+  const mainChart = new MainChart("#main-chart", width, height);
   mainChart
     .init({ countryGroup, minVoteShare })
     .then(() => renderCountryButtons(mainChart.data.mappings.countryGroups))
