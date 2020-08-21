@@ -8,18 +8,12 @@ $(document).ready(() => {
   renderMinVoteShare = renderMinVoteShare.bind(inputVoteShare);
   renderMinVoteShare();
 
-  const height =
-    $(window).height() -
-    $(".header").outerHeight(true) -
-    $(".selection").outerHeight(true) -
-    25;
-
-  if (height < 0) return;
-
   const mainChart = new MainChart(
     "#main-chart",
     $("#chart-wrapper").width(),
-    height
+    $(window).height() -
+      $(".header").outerHeight(true) -
+      $(".selection").outerHeight(true)
   );
   mainChart
     .init({ countryGroup, minVoteShare })

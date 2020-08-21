@@ -28,16 +28,18 @@ const colors = {
 
 class MainChart {
   constructor(selector, width, height) {
+    const margin = {
+      top: 40,
+      right: 0,
+      bottom: 40,
+      left: 60,
+    };
+
     this.svg = {
       selector,
-      width: width,
-      height: height,
-      margin: {
-        top: 40,
-        right: 60,
-        bottom: 60,
-        left: 60,
-      },
+      width: width - margin.left - margin.right,
+      height: height - margin.left - margin.right,
+      margin,
     };
 
     this.parties = {
@@ -277,7 +279,7 @@ class MainChart {
       .style("width", width + margin.left + margin.right)
       .style("height", height + margin.top + margin.botom)
       .append("g")
-      .attr("transform", `translate(${margin.left / 2},${margin.top})`);
+      .attr("transform", `translate(0,${margin.top})`);
 
     this.svg.bg = this.svg.g.append("g").attr("class", "background");
   }

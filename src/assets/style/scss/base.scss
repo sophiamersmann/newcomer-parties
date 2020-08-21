@@ -29,7 +29,7 @@ html {
 body {
   height: 100%;
   display: grid;
-  grid-template: auto minmax(55px, 75px) 1fr / 1fr auto minmax(200px, 20%);
+  grid-template: auto minmax(60px, 80px) 1fr / 1fr auto minmax(200px, 20%);
   grid-template-areas:
     "header legend panel"
     "select select panel"
@@ -129,10 +129,15 @@ body {
 .main {
   grid-area: main;
   align-self: center;
+  padding: 0 $spacing $spacing;
 
   #chart-wrapper {
     @include small-screen() {
       display: none;
+    }
+
+    svg {
+      overflow: visible;
     }
   }
 }

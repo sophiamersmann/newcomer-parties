@@ -54,7 +54,7 @@ html {
 body {
   height: 100%;
   display: grid;
-  grid-template: auto minmax(55px, 75px) 1fr/1fr auto minmax(200px, 20%);
+  grid-template: auto minmax(60px, 80px) 1fr/1fr auto minmax(200px, 20%);
   grid-template-areas: "header legend panel" "select select panel" "main   main   panel"; }
 
 .header {
@@ -112,10 +112,13 @@ body {
 
 .main {
   grid-area: main;
-  align-self: center; }
+  align-self: center;
+  padding: 0 2rem 2rem; }
   @media screen and (max-width: 1199.98px) {
     .main #chart-wrapper {
       display: none; } }
+  .main #chart-wrapper svg {
+    overflow: visible; }
 
 #input-year {
   text-align: center;
