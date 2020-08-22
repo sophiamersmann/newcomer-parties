@@ -1,5 +1,5 @@
 import * as d3 from "d3";
-import { renderTemplate, isNull } from "./utils";
+import { renderTemplate, isNull, slide } from "./utils";
 
 // TODO: This will be importded from _global.scss
 const colors = {
