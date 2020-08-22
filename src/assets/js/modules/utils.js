@@ -1,3 +1,5 @@
+import Mustache from "mustache";
+
 export async function renderTemplate({ template, target, view }) {
   return fetch(`src/templates/${template}`)
     .then((response) => response.text())
