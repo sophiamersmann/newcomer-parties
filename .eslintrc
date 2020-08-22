@@ -2,7 +2,20 @@
   "parser": "babel-eslint",
   "extends": ["airbnb"],
   "env": {
-    "browser": true,
-    "node": true
+    "browser": true
+  },
+  "rules": {
+    "no-func-assign": "warn",
+    "no-param-reassign": "warn",
+    "no-shadow": "warn",
+    "no-use-before-define": "off",
+    "no-cond-assign": "warn",
+    "no-multi-assign": "warn",
+    "no-restricted-syntax": [
+      "error",
+      "ForInStatement",
+      "LabeledStatement",
+      "WithStatement"
+    ]
   }
 }

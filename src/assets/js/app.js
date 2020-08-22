@@ -1,4 +1,4 @@
-require("../style/css/base.css");
-require("../style/css/chart.css");
+require('../style/css/base.css');
+require('../style/css/chart.css');
 
-require("./index.js");
+require('./index.js');

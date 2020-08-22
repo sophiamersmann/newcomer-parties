@@ -1,11 +1,11 @@
-import * as d3 from "d3";
-import { renderTemplate, isNull, slide } from "./utils";
+import * as d3 from 'd3';
+import { renderTemplate, isNull, slide } from './utils';
 
 // TODO: This will be importded from _global.scss
 const colors = {
-  black: "#212529",
-  gray: "#b8bfc6",
-  lightgray: "#f8f9fa",
+  black: '#212529',
+  gray: '#b8bfc6',
+  lightgray: '#f8f9fa',
 
   right: d3.hsl(208, 0.6, 0.33),
   rightLight: d3.hsl(208, 0.6, 0.95),
@@ -46,15 +46,15 @@ export default class MainChart {
     };
 
     this.parties = {
-      selector: ".party",
+      selector: '.party',
       radius: { active: 3.25, inactive: 0.5, highlight: 26 },
       padding: 1.5,
       transparent: 0.1,
       alive: {
-        selector: ".party-alive",
+        selector: '.party-alive',
       },
       dead: {
-        selector: ".party-dead",
+        selector: '.party-dead',
       },
     };
 
@@ -78,43 +78,43 @@ export default class MainChart {
     };
 
     this.partyProfile = {
-      keys: ["leftRight", "libertyAuthority", "stateMarket", "euProAnti"],
+      keys: ['leftRight', 'libertyAuthority', 'stateMarket', 'euProAnti'],
       keysChartSorting: [
-        "stateMarket",
-        "libertyAuthority",
-        "leftRight",
-        "euProAnti",
+        'stateMarket',
+        'libertyAuthority',
+        'leftRight',
+        'euProAnti',
       ],
       labels: {
-        leftRight: ["left", "right"],
-        libertyAuthority: ["liberty", "authority"],
-        stateMarket: ["state", "market"],
-        euProAnti: ["pro-EU", "anti-EU"],
+        leftRight: ['left', 'right'],
+        libertyAuthority: ['liberty', 'authority'],
+        stateMarket: ['state', 'market'],
+        euProAnti: ['pro-EU', 'anti-EU'],
       },
       text: {
-        leftRight: ["on the political left", "on the political right"],
-        libertyAuthority: ["libertarian", "authoritarian"],
+        leftRight: ['on the political left', 'on the political right'],
+        libertyAuthority: ['libertarian', 'authoritarian'],
         stateMarket: [
-          "state-focused regulation of the economy",
-          "market-focused regulation of the economy",
+          'state-focused regulation of the economy',
+          'market-focused regulation of the economy',
         ],
-        euProAnti: ["pro-EU", "EU-sceptic"],
+        euProAnti: ['pro-EU', 'EU-sceptic'],
       },
       threshold: 1.5,
     };
 
     this.panel = {
       template: {
-        template: "parties.mustache",
-        target: "#party-list",
+        template: 'parties.mustache',
+        target: '#party-list',
         view: { parties: null },
       },
       activeItemOffset: 32,
     };
 
     this.time = {
-      formatYear: d3.timeFormat("%Y"),
-      formatDecade: d3.timeFormat("%Ys"),
+      formatYear: d3.timeFormat('%Y'),
+      formatDecade: d3.timeFormat('%Ys'),
     };
 
     this.flags = {
@@ -122,11 +122,13 @@ export default class MainChart {
     };
   }
 
-  async init({ countryGroup = "", minVoteShare = 0, country = null } = {}) {
-    const filename = d3.select(this.svg.selector).attr("data-src");
+  async init({ countryGroup = '', minVoteShare = 0, country = null } = {}) {
+    const filename = d3.select(this.svg.selector).attr('data-src');
     return d3.csv(filename, MainChart.loadDatum).then((data) => {
       this.prepareData(data);
-      this.updateState({ countryGroup, minVoteShare, country, action: false });
+      this.updateState({
+        countryGroup, minVoteShare, country, action: false,
+      });
       this.draw();
       this.createPanel();
       this.renderTemplates();
@@ -136,9 +138,9 @@ export default class MainChart {
   prepareData(data) {
     const raw = data.map((d) => {
       d.isAlive = d.currentShare > 0;
-      d.shareFormat = d3.format(".1%")(d.share / 100);
+      d.shareFormat = d3.format('.1%')(d.share / 100);
 
-      d.partyEngl = "";
+      d.partyEngl = '';
       if (d.party !== d.partyOrig) {
         d.partyEngl = `&ndash; <i>${d.party}</i>`;
       }
@@ -159,22 +161,20 @@ export default class MainChart {
       });
 
       if (d.positions.filter((d) => d.valueOrig).length === 0) {
-        d.info = "<i>data missing</i>";
+        d.info = '<i>data missing</i>';
         return d;
       }
 
       const pos = d3.map(d.positions, (e) => e.key);
       d.info = this.partyProfile.keys
-        .map((key) =>
-          pos.get(key).value > this.partyProfile.threshold
-            ? pos.get(key).text
-            : ""
-        )
+        .map((key) => (pos.get(key).value > this.partyProfile.threshold
+          ? pos.get(key).text
+          : ''))
         .filter((item) => item)
-        .join(", ");
+        .join(', ');
 
       if (!d.info) {
-        d.info = "<i>no strong positions on traditional issues</i>";
+        d.info = '<i>no strong positions on traditional issues</i>';
       }
 
       return d;
@@ -191,24 +191,22 @@ export default class MainChart {
       .entries(data)
       .map(({ key: country, values: vals }) => {
         const mapped = d3.map(vals, (d) => d.key);
-        const values = dateRange.map((date) =>
-          mapped.has(date) ? mapped.get(date).value : 0
-        );
+        const values = dateRange.map((date) => (mapped.has(date) ? mapped.get(date).value : 0));
         return { country, values };
       });
     counts = d3.map(counts, (d) => d.country);
 
     const families = [
-      "right",
-      "con",
-      "lib",
-      "chr",
-      "agr",
-      "eco",
-      "soc",
-      "com",
-      "spec",
-      "other",
+      'right',
+      'con',
+      'lib',
+      'chr',
+      'agr',
+      'eco',
+      'soc',
+      'com',
+      'spec',
+      'other',
     ];
 
     const countries = d3
@@ -218,45 +216,39 @@ export default class MainChart {
 
     const mappings = MainChart.createMappings(data);
 
-    this.data = { raw, counts, families, countries, mappings };
+    this.data = {
+      raw, counts, families, countries, mappings,
+    };
   }
 
   createPanel() {
     this.panel.template.view = {
       parties: d3
         .nest()
-        .key((d) => [d.country, d.electionYear].join(";"))
+        .key((d) => [d.country, d.electionYear].join(';'))
         .sortKeys((a, b) => {
-          const [countryA, yearA] = a.split(";");
-          const [countryB, yearB] = b.split(";");
+          const [countryA, yearA] = a.split(';');
+          const [countryB, yearB] = b.split(';');
           return (
             d3.descending(+yearA, +yearB) || d3.ascending(countryA, countryB)
           );
         })
-        .sortValues((a, b) =>
-          d3.ascending(
-            this.data.families.indexOf(a.familyId),
-            this.data.families.indexOf(b.familyId)
-          )
-        )
+        .sortValues((a, b) => d3.ascending(
+          this.data.families.indexOf(a.familyId),
+          this.data.families.indexOf(b.familyId),
+        ))
         .entries(this.data.raw),
     };
 
     renderTemplate(this.panel.template).then(() => {
-      d3.selectAll(".party-list-item")
-        .on("mouseenter", (_, i, n) => {
-          const partyId = d3.select(n[i]).attr("data-party-id");
+      d3.selectAll('.party-list-item')
+        .on('mouseenter', (_, i, n) => {
+          const partyId = d3.select(n[i]).attr('data-party-id');
           const party = d3.select(`#party-${partyId}`);
           this.highlightBee(party);
         })
-        .on("mouseleave", (_, i, n) => {
-          const partyId = d3.select(n[i]).attr("data-party-id");
-          const party = d3.select(`#party-${partyId}`);
-          this.removeBeeHighlight();
-        })
-        .on("click", (_, i, n) =>
-          slide(d3.select(n[i]).select(".party-hidden-info-wrapper"))
-        );
+        .on('mouseleave', this.removeBeeHighlight)
+        .on('click', (_, i, n) => slide(d3.select(n[i]).select('.party-hidden-info-wrapper')));
 
       this.injectProfileCharts();
       this.renderPanelParties();
@@ -279,39 +271,41 @@ export default class MainChart {
   }
 
   setUpSVG() {
-    const { selector, width, height, margin } = this.svg;
+    const {
+      selector, width, height, margin,
+    } = this.svg;
 
     this.svg.g = d3
       .select(selector)
-      .append("svg")
-      .attr("viewBox", [0, 0, width, height])
-      .style("width", width + margin.left + margin.right)
-      .style("height", height + margin.top + margin.botom)
-      .append("g")
-      .attr("transform", `translate(0,${margin.top})`);
+      .append('svg')
+      .attr('viewBox', [0, 0, width, height])
+      .style('width', width + margin.left + margin.right)
+      .style('height', height + margin.top + margin.botom)
+      .append('g')
+      .attr('transform', `translate(0,${margin.top})`);
 
-    this.svg.bg = this.svg.g.append("g").attr("class", "background");
+    this.svg.bg = this.svg.g.append('g').attr('class', 'background');
   }
 
   createDefs() {
     const radialGradient = this.svg.g
-      .append("defs")
-      .selectAll(".radial-gradient")
+      .append('defs')
+      .selectAll('.radial-gradient')
       .data(this.data.families)
-      .join("radialGradient")
-      .attr("id", (familyId) => `radial-gradient-${familyId}`)
-      .attr("class", "radial-gradient");
+      .join('radialGradient')
+      .attr('id', (familyId) => `radial-gradient-${familyId}`)
+      .attr('class', 'radial-gradient');
 
     radialGradient
-      .append("stop")
-      .attr("offset", "0%")
-      .attr("stop-color", (familyId) => MainChart.politicalColor(familyId));
+      .append('stop')
+      .attr('offset', '0%')
+      .attr('stop-color', (familyId) => MainChart.politicalColor(familyId));
 
     radialGradient
-      .append("stop")
-      .attr("offset", "100%")
-      .attr("stop-color", "#fff")
-      .attr("stop-opacity", 0);
+      .append('stop')
+      .attr('offset', '100%')
+      .attr('stop-color', '#fff')
+      .attr('stop-opacity', 0);
   }
 
   setUpScales() {
@@ -338,25 +332,25 @@ export default class MainChart {
     const { rotate } = this.labels;
 
     const lineHeight = 15.7;
-    const longFamilyNames = ["chr", "eco", "soc", "com"];
+    const longFamilyNames = ['chr', 'eco', 'soc', 'com'];
     const padding = 1.5;
 
     this.svg.g
-      .append("g")
-      .attr("class", "axis x-axis x-axis-labels")
-      .selectAll(".family-label")
+      .append('g')
+      .attr('class', 'axis x-axis x-axis-labels')
+      .selectAll('.family-label')
       .data(this.data.families)
-      .join("g")
-      .attr("id", (familyId) => `family-label-${familyId}`)
-      .attr("class", "family-label")
-      .selectAll("text")
+      .join('g')
+      .attr('id', (familyId) => `family-label-${familyId}`)
+      .attr('class', 'family-label')
+      .selectAll('text')
       .data((familyId) => {
-        const familyName = this.data.mappings.family.get(familyId).familyName;
+        const { familyName } = this.data.mappings.family.get(familyId);
 
         let text = [familyName];
         let single = true;
         if (longFamilyNames.includes(familyId)) {
-          const char = familyName.includes("/") ? "/" : " ";
+          const char = familyName.includes('/') ? '/' : ' ';
           text = familyName.split(char);
           text[0] += char;
           single = false;
@@ -364,59 +358,58 @@ export default class MainChart {
 
         return text.map((t) => ({ familyId, text: t, single }));
       })
-      .join("text")
-      .attr("data-family-id", (d) => d.familyId)
-      .attr("x", (d) => x(d.familyId) + padding)
+      .join('text')
+      .attr('data-family-id', (d) => d.familyId)
+      .attr('x', (d) => x(d.familyId) + padding)
       .attr(
-        "y",
-        (d, i) =>
-          margin.top - 2.5 + (d.single ? i : i - 1) * lineHeight - padding
+        'y',
+        (d, i) => margin.top - 2.5 + (d.single ? i : i - 1) * lineHeight - padding,
       )
       .attr(
-        "transform",
-        (d) => `rotate(${rotate} ${x(d.familyId)} ${margin.top})`
+        'transform',
+        (d) => `rotate(${rotate} ${x(d.familyId)} ${margin.top})`,
       )
-      .attr("fill", (d) => MainChart.politicalColor(d.familyId))
-      .style("font-size", "14px")
+      .attr('fill', (d) => MainChart.politicalColor(d.familyId))
+      .style('font-size', '14px')
       .text((d) => d.text.toUpperCase());
 
     const yTicks = y.ticks();
     const yTickLabelDiff = y(yTicks[0]) - y(yTicks[1]);
 
     this.svg.bg
-      .append("g")
-      .attr("class", "grid y-grid y-grid-area")
-      .selectAll(".y-grid-area-rect")
+      .append('g')
+      .attr('class', 'grid y-grid y-grid-area')
+      .selectAll('.y-grid-area-rect')
       .data(yTicks.filter((_, i) => i % 2 === 1))
-      .join("rect")
-      .attr("class", "y-grid-area-rect")
-      .attr("x", 0)
-      .attr("y", (d) => y(d))
-      .attr("width", width - margin.right)
-      .attr("height", yTickLabelDiff)
-      .attr("rx", 5)
-      .attr("ry", 5)
-      .attr("fill", colors.lightgray);
+      .join('rect')
+      .attr('class', 'y-grid-area-rect')
+      .attr('x', 0)
+      .attr('y', (d) => y(d))
+      .attr('width', width - margin.right)
+      .attr('height', yTickLabelDiff)
+      .attr('rx', 5)
+      .attr('ry', 5)
+      .attr('fill', colors.lightgray);
 
     this.svg.bg
-      .append("g")
-      .attr("class", "axis y-axis y-axis-labels")
-      .selectAll(".year-label")
+      .append('g')
+      .attr('class', 'axis y-axis y-axis-labels')
+      .selectAll('.year-label')
       .data(yTicks.slice(0, -1))
-      .join("text")
-      .attr("class", "year-label")
-      .attr("x", margin.left - 10)
-      .attr("y", (d) => y(d) - yTickLabelDiff / 2)
-      .attr("text-anchor", "end")
-      .attr("dominant-baseline", "middle")
-      .style("font-size", "12.5px")
-      .selectAll("tspan")
+      .join('text')
+      .attr('class', 'year-label')
+      .attr('x', margin.left - 10)
+      .attr('y', (d) => y(d) - yTickLabelDiff / 2)
+      .attr('text-anchor', 'end')
+      .attr('dominant-baseline', 'middle')
+      .style('font-size', '12.5px')
+      .selectAll('tspan')
       .data((d) => {
         const label = this.time.formatDecade(d);
         return [label.slice(0, 2), label.slice(2)];
       })
-      .join("tspan")
-      .style("font-weight", (_, i) => (i === 0 ? 300 : 500))
+      .join('tspan')
+      .style('font-weight', (_, i) => (i === 0 ? 300 : 500))
       .text((d) => d);
   }
 
@@ -425,56 +418,55 @@ export default class MainChart {
     const { height, margin } = this.svg;
 
     this.svg.bg
-      .selectAll(".bg-beeswarm-pair")
+      .selectAll('.bg-beeswarm-pair')
       .data(this.data.families)
-      .join("g")
-      .attr("class", "bg-beeswarm-pair");
+      .join('g')
+      .attr('class', 'bg-beeswarm-pair');
 
     this.svg.g
-      .selectAll(".beeswarm-pair")
+      .selectAll('.beeswarm-pair')
       .data(this.data.families)
-      .join("g")
-      .attr("class", "beeswarm-pair")
-      .attr("fill", (d) => MainChart.politicalColor(d))
-      .append("g")
-      .attr("class", "g-beeswarm-sep")
-      .selectAll(".beeswarm-sep")
+      .join('g')
+      .attr('class', 'beeswarm-pair')
+      .attr('fill', (d) => MainChart.politicalColor(d))
+      .append('g')
+      .attr('class', 'g-beeswarm-sep')
+      .selectAll('.beeswarm-sep')
       .data((family, i) => [
         {
           family,
           even: i % 2 === 0,
-          type: "transparent",
+          type: 'transparent',
           y2: height - margin.bottom,
           opacity: this.parties.transparent,
         },
         {
           family,
           even: i % 2 === 0,
-          type: "responsive",
+          type: 'responsive',
           y2: y(this.brush.initialDates[1]),
           opacity: 1,
         },
       ])
-      .join("line")
-      .attr("class", (d) => `beeswarm-sep beeswarm-sep-${d.type}`)
-      .attr("x1", (d) => x(d.family))
-      .attr("x2", (d) => x(d.family))
-      .attr("y1", margin.top)
-      .attr("y2", (d) => d.y2)
-      .attr("stroke-width", 2)
-      .attr("stroke", (d) => MainChart.politicalColor(d.family))
-      .attr("stroke-opacity", (d) => d.opacity);
+      .join('line')
+      .attr('class', (d) => `beeswarm-sep beeswarm-sep-${d.type}`)
+      .attr('x1', (d) => x(d.family))
+      .attr('x2', (d) => x(d.family))
+      .attr('y1', margin.top)
+      .attr('y2', (d) => d.y2)
+      .attr('stroke-width', 2)
+      .attr('stroke', (d) => MainChart.politicalColor(d.family))
+      .attr('stroke-opacity', (d) => d.opacity);
   }
 
   computeBeeswarms() {
-    const dodge = (data) =>
-      MainChart.dodge(
-        data,
-        this.parties.padding,
-        this.parties.radius.active,
-        { pos: "electionDate", size: "share" },
-        this.scales
-      );
+    const dodge = (data) => MainChart.dodge(
+      data,
+      this.parties.padding,
+      this.parties.radius.active,
+      { pos: 'electionDate', size: 'share' },
+      this.scales,
+    );
 
     this.state.beeswarms = d3
       .nest()
@@ -491,15 +483,16 @@ export default class MainChart {
 
   drawBees() {
     const { y } = this.scales;
-    const { selector, radius, transparent, alive, dead } = this.parties;
+    const {
+      selector, radius, transparent, alive, dead,
+    } = this.parties;
 
-    const renderLargeRadius = (d) =>
-      this.state.country !== null
-        ? this.state.country === d.country
-        : !this.state.countryGroup ||
-          this.state.countryGroup === d.countryGroup;
+    const renderLargeRadius = (d) => (this.state.country !== null
+      ? this.state.country === d.country
+      : !this.state.countryGroup
+          || this.state.countryGroup === d.countryGroup);
 
-    const isVisible = function (elem, container) {
+    const isVisible = (elem, container) => {
       const elemTop = elem.offsetTop;
       const elemBottom = elemTop + elem.clientHeight;
 
@@ -515,23 +508,22 @@ export default class MainChart {
       const party = d3.select(n[i]);
       this.highlightBee(party);
 
-      const partyList = d3.select("#party-list").node();
+      const partyList = d3.select('#party-list').node();
       const partyInfo = d3.select(`#party-list-item-${d.data.partyId}`).node();
 
-      partyInfo.classList.add("active");
+      partyInfo.classList.add('active');
       if (!isVisible(partyInfo, partyList)) {
         partyList.scrollTop = partyInfo.offsetTop - this.panel.activeItemOffset;
       }
     };
 
-    const onMouseout = (d, i, n) => {
+    const onMouseout = (d) => {
       if (!d.data.isActive) return;
 
-      const party = d3.select(n[i]);
       this.removeBeeHighlight();
 
       const partyInfo = d3.select(`#party-list-item-${d.data.partyId}`).node();
-      partyInfo.classList.remove("active");
+      partyInfo.classList.remove('active');
     };
 
     const onClick = (d) => {
@@ -540,100 +532,84 @@ export default class MainChart {
       slide(
         d3
           .select(`#party-list-item-${d.data.partyId}`)
-          .select(".party-hidden-info-wrapper")
+          .select('.party-hidden-info-wrapper'),
       );
     };
 
     this.svg.g
-      .selectAll(".beeswarm-pair")
+      .selectAll('.beeswarm-pair')
       .data(this.state.beeswarms)
       .selectAll(selector)
       .data(
-        ({ parties }) =>
-          parties.filter(
-            ({ data: d }) => d.share >= this.state.minVoteShare * 100
-          ),
-        ({ data: d }) => d.partyId
+        ({ parties }) => parties.filter(
+          ({ data: d }) => d.share >= this.state.minVoteShare * 100,
+        ),
+        ({ data: d }) => d.partyId,
       )
       .join(
-        (enter) =>
-          enter
-            .append("circle")
-            .attr("id", ({ data: d }) => `party-${d.partyId}`)
-            .attr("class", selector.slice(1))
-            .classed(alive.selector.slice(1), ({ data: d }) => d.isAlive)
-            .classed(dead.selector.slice(1), ({ data: d }) => !d.isAlive)
-            .classed("active", ({ data: d }) => d.isActive)
-            .attr("cx", (d) => d.x)
-            .attr("cy", (d) => d.y)
-            .attr("r", ({ data: d }) =>
-              renderLargeRadius(d) ? radius.active : radius.inactive
-            )
-            .attr("stroke", ({ data: d }) =>
-              MainChart.politicalColor(d.familyId)
-            )
-            .attr("stroke-width", 1)
-            .attr("fill", ({ data: d }) =>
-              MainChart.politicalColor(d.familyId, !d.isAlive)
-            )
-            .attr("opacity", (d) =>
-              y(this.state.year) >= d.y ? 1 : transparent
-            )
-            .on("mouseover", onMouseover)
-            .on("mouseout", onMouseout)
-            .on("click", onClick),
-        (update) =>
-          update
-            .classed("active", ({ data: d }) => d.isActive)
-            .on("mouseover", onMouseover)
-            .on("mouseout", onMouseout)
-            .on("click", onClick)
-            .transition()
-            .duration(400)
-            .ease(d3.easeCubicInOut)
-            .attr("r", ({ data: d }) =>
-              renderLargeRadius(d) ? radius.active : radius.inactive
-            ),
-        (exit) => exit.remove()
+        (enter) => enter
+          .append('circle')
+          .attr('id', ({ data: d }) => `party-${d.partyId}`)
+          .attr('class', selector.slice(1))
+          .classed(alive.selector.slice(1), ({ data: d }) => d.isAlive)
+          .classed(dead.selector.slice(1), ({ data: d }) => !d.isAlive)
+          .classed('active', ({ data: d }) => d.isActive)
+          .attr('cx', (d) => d.x)
+          .attr('cy', (d) => d.y)
+          .attr('r', ({ data: d }) => (renderLargeRadius(d) ? radius.active : radius.inactive))
+          .attr('stroke', ({ data: d }) => MainChart.politicalColor(d.familyId))
+          .attr('stroke-width', 1)
+          .attr('fill', ({ data: d }) => MainChart.politicalColor(d.familyId, !d.isAlive))
+          .attr('opacity', (d) => (y(this.state.year) >= d.y ? 1 : transparent))
+          .on('mouseover', onMouseover)
+          .on('mouseout', onMouseout)
+          .on('click', onClick),
+        (update) => update
+          .classed('active', ({ data: d }) => d.isActive)
+          .on('mouseover', onMouseover)
+          .on('mouseout', onMouseout)
+          .on('click', onClick)
+          .transition()
+          .duration(400)
+          .ease(d3.easeCubicInOut)
+          .attr('r', ({ data: d }) => (renderLargeRadius(d) ? radius.active : radius.inactive)),
+        (exit) => exit.remove(),
       );
   }
 
   initBeeHighlight() {
-    this.svg.bg.append("circle").attr("id", "party-highlight");
+    this.svg.bg.append('circle').attr('id', 'party-highlight');
   }
 
   highlightBee(selection) {
     this.svg.bg
-      .select("#party-highlight")
+      .select('#party-highlight')
       .datum(selection.datum())
       .join(
         (enter) => enter,
-        (update) =>
-          update
-            .attr("cx", (d) => d.x)
-            .attr("cy", (d) => d.y)
-            .attr(
-              "fill",
-              ({ data: d }) => `url(#radial-gradient-${d.familyId})`
-            )
-            .call((update) =>
-              update
-                .transition()
-                .duration(400)
-                .ease(d3.easeCubicOut)
-                .attr("r", this.parties.radius.highlight)
-            ),
-        (exit) => exit.remove()
+        (update) => update
+          .attr('cx', (d) => d.x)
+          .attr('cy', (d) => d.y)
+          .attr(
+            'fill',
+            ({ data: d }) => `url(#radial-gradient-${d.familyId})`,
+          )
+          .call((update) => update
+            .transition()
+            .duration(400)
+            .ease(d3.easeCubicOut)
+            .attr('r', this.parties.radius.highlight)),
+        (exit) => exit.remove(),
       );
   }
 
   removeBeeHighlight() {
     this.svg.bg
-      .select("#party-highlight")
+      .select('#party-highlight')
       .transition()
       .duration(400)
       .ease(d3.easeCubicOut)
-      .attr("r", 0);
+      .attr('r', 0);
   }
 
   addBrush() {
@@ -644,62 +620,57 @@ export default class MainChart {
     const handleWidth = 60;
     const handleHeight = 30;
     const brushHandle = (g, selection) => {
-      g.selectAll(".handle--custom")
-        .data([{ type: "s" }])
-        .join((enter) =>
-          enter
-            .append("rect")
-            .attr("class", "handle handle--custom")
-            .attr("fill", "#fff")
-            .attr("stroke", colors.black)
-            .attr("stroke-width", 1)
-            .attr("cursor", "ns-resize")
-        )
-        .attr("display", selection === null ? "none" : null)
-        .attr("width", handleWidth)
-        .attr("height", handleHeight)
-        .attr("x", 0)
+      g.selectAll('.handle--custom')
+        .data([{ type: 's' }])
+        .join((enter) => enter
+          .append('rect')
+          .attr('class', 'handle handle--custom')
+          .attr('fill', '#fff')
+          .attr('stroke', colors.black)
+          .attr('stroke-width', 1)
+          .attr('cursor', 'ns-resize'))
+        .attr('display', selection === null ? 'none' : null)
+        .attr('width', handleWidth)
+        .attr('height', handleHeight)
+        .attr('x', 0)
         .attr(
-          "y",
-          selection === null ? null : selection[1] - handleHeight / 2 - 2
+          'y',
+          selection === null ? null : selection[1] - handleHeight / 2 - 2,
         )
-        .attr("rx", 5)
-        .attr("ry", 5);
+        .attr('rx', 5)
+        .attr('ry', 5);
 
-      g.selectAll(".handle--custom-label")
-        .data([{ type: "s" }])
+      g.selectAll('.handle--custom-label')
+        .data([{ type: 's' }])
         .join(
-          (enter) =>
-            enter
-              .append("text")
-              .attr("class", "handle--custom-label")
-              .attr("text-anchor", "middle")
-              .attr("dominant-baseline", "middle")
-              .attr("fill", colors.black)
-              .attr("cursor", "ns-resize")
-              .style("font-size", "14px")
-              .style("font-weight", 500)
-              .text(this.time.formatYear(this.state.year)),
-          (update) => update.text(this.time.formatYear(this.state.year))
+          (enter) => enter
+            .append('text')
+            .attr('class', 'handle--custom-label')
+            .attr('text-anchor', 'middle')
+            .attr('dominant-baseline', 'middle')
+            .attr('fill', colors.black)
+            .attr('cursor', 'ns-resize')
+            .style('font-size', '14px')
+            .style('font-weight', 500)
+            .text(this.time.formatYear(this.state.year)),
+          (update) => update.text(this.time.formatYear(this.state.year)),
         )
-        .attr("x", handleWidth / 2)
-        .attr("y", selection === null ? null : selection[1]);
+        .attr('x', handleWidth / 2)
+        .attr('y', selection === null ? null : selection[1]);
     };
 
     function brushed(opacity) {
-      const selection = d3.event.selection;
+      const { selection } = d3.event;
       if (!selection) return;
       const y1 = selection[1];
-      d3.selectAll(".party").attr("opacity", (_, i, n) =>
-        y1 >= +d3.select(n[i]).attr("cy") ? 1 : opacity
-      );
-      d3.selectAll(".beeswarm-sep-responsive").attr("y2", y1);
-      d3.select(".brush").call(brushHandle, selection);
+      d3.selectAll('.party').attr('opacity', (_, i, n) => (y1 >= +d3.select(n[i]).attr('cy') ? 1 : opacity));
+      d3.selectAll('.beeswarm-sep-responsive').attr('y2', y1);
+      d3.select('.brush').call(brushHandle, selection);
     }
 
     function brushened(year, initialDates) {
       if (!d3.event.sourceEvent) return;
-      d3.select(".brush")
+      d3.select('.brush')
         .transition()
         .call(brush.move, [initialDates[0], year].map(y));
     }
@@ -711,9 +682,9 @@ export default class MainChart {
 
     function adjustHandleHeight(svg) {
       svg
-        .select(".brush .handle--s")
-        .attr("height", 1)
-        .attr("transform", "translate(0, 3)");
+        .select('.brush .handle--s')
+        .attr('height', 1)
+        .attr('transform', 'translate(0, 3)');
     }
 
     const brush = d3
@@ -722,18 +693,18 @@ export default class MainChart {
         [margin.left, margin.top],
         [width - margin.right, height - margin.bottom],
       ])
-      .on("start", () => {
+      .on('start', () => {
         brushed(this.parties.transparent);
         adjustHandleHeight(this.svg.g);
       })
-      .on("brush", () => {
+      .on('brush', () => {
         const year = getYear(y, initialDates);
         if (year) this.updateState({ year, action: this.flags.renderYear });
         brushed(this.parties.transparent);
         adjustHandleHeight(this.svg.g);
       })
-      .on("end", () => {
-        let year = getYear(y, initialDates);
+      .on('end', () => {
+        const year = getYear(y, initialDates);
         if (year) {
           this.updateState({ year });
           brushened(year, initialDates);
@@ -742,12 +713,12 @@ export default class MainChart {
       });
 
     this.svg.g
-      .append("g")
-      .attr("class", "brush")
+      .append('g')
+      .attr('class', 'brush')
       .call(brush)
       .call(brush.move, initialDates.map(y));
 
-    this.svg.g.select(".overlay").remove();
+    this.svg.g.select('.overlay').remove();
     adjustHandleHeight(this.svg.g);
 
     this.brush.brushY = brush;
@@ -757,7 +728,7 @@ export default class MainChart {
     this.flags.renderYear = false;
     const { y } = this.scales;
     const { brushY: brush, initialDates } = this.brush;
-    d3.select(".brush")
+    d3.select('.brush')
       .transition()
       .duration(1200)
       .ease(d3.easeCubicInOut)
@@ -772,8 +743,8 @@ export default class MainChart {
     action = true,
   } = {}) {
     if (
-      countryGroup !== undefined &&
-      countryGroup !== this.state.countryGroup
+      countryGroup !== undefined
+      && countryGroup !== this.state.countryGroup
     ) {
       this.state.countryGroup = countryGroup;
       this.state.parties = this.data.raw;
@@ -781,7 +752,7 @@ export default class MainChart {
 
       if (this.state.countryGroup) {
         this.state.parties = this.data.raw.filter(
-          (d) => d.countryGroup === this.state.countryGroup
+          (d) => d.countryGroup === this.state.countryGroup,
         );
       }
 
@@ -789,16 +760,16 @@ export default class MainChart {
     }
 
     if (
-      year !== undefined &&
-      year.getFullYear() !== this.state.year.getFullYear()
+      year !== undefined
+      && year.getFullYear() !== this.state.year.getFullYear()
     ) {
       this.state.year = year;
       if (action) this.renderYear();
     }
 
     if (
-      minVoteShare !== undefined &&
-      minVoteShare !== this.state.minVoteShare
+      minVoteShare !== undefined
+      && minVoteShare !== this.state.minVoteShare
     ) {
       this.state.minVoteShare = minVoteShare;
       if (action) this.drawBees();
@@ -810,12 +781,11 @@ export default class MainChart {
     }
 
     this.data.raw.map((d) => {
-      d.isActive =
-        (!this.state.countryGroup ||
-          d.countryGroup === this.state.countryGroup) &&
-        d.electionDate >= this.state.year &&
-        d.share >= this.state.minVoteShare * 100 &&
-        (!this.state.country || d.country === this.state.country);
+      d.isActive = (!this.state.countryGroup
+          || d.countryGroup === this.state.countryGroup)
+        && d.electionDate >= this.state.year
+        && d.share >= this.state.minVoteShare * 100
+        && (!this.state.country || d.country === this.state.country);
       return d;
     });
 
@@ -833,113 +803,108 @@ export default class MainChart {
       .range([0, width / 2 - margin]);
 
     const labels = [];
-    for (let index of d3.range(2)) {
-      this.partyProfile.keysChartSorting.forEach((key) =>
-        labels.push(this.partyProfile.labels[key][index])
+    for (const index of d3.range(2)) {
+      this.partyProfile.keysChartSorting.forEach(
+        (key) => labels.push(this.partyProfile.labels[key][index]),
       );
     }
 
     this.data.raw.forEach((d) => {
-      d.positions = d.positions.sort((a, b) =>
-        d3.ascending(
-          this.partyProfile.keysChartSorting.indexOf(a.key),
-          this.partyProfile.keysChartSorting.indexOf(b.key)
-        )
-      );
+      d.positions = d.positions.sort((a, b) => d3.ascending(
+        this.partyProfile.keysChartSorting.indexOf(a.key),
+        this.partyProfile.keysChartSorting.indexOf(b.key),
+      ));
 
       const currLabels = d.positions
         .filter((e) => e.value > this.partyProfile.threshold)
         .map((e) => e.label);
 
       const svgContainer = d3.select(
-        `#party-list-item-${d.partyId} .party-position-chart`
+        `#party-list-item-${d.partyId} .party-position-chart`,
       );
 
       const svg = svgContainer
-        .append("svg")
-        .attr("width", width)
-        .attr("height", height)
-        .attr("viewBox", [-width / 2, -height / 2, width, height]);
+        .append('svg')
+        .attr('width', width)
+        .attr('height', height)
+        .attr('viewBox', [-width / 2, -height / 2, width, height]);
 
       svg
-        .append("g")
-        .attr("class", "bg")
-        .attr("opacity", 0)
-        .append("circle")
-        .attr("r", 50) // magic value
-        .attr("fill", "white")
-        .attr("stroke-width", 1)
-        .attr("stroke", MainChart.politicalColor(d.familyId, true));
+        .append('g')
+        .attr('class', 'bg')
+        .attr('opacity', 0)
+        .append('circle')
+        .attr('r', 50) // magic value
+        .attr('fill', 'white')
+        .attr('stroke-width', 1)
+        .attr('stroke', MainChart.politicalColor(d.familyId, true));
 
       svg
-        .append("g")
-        .attr("class", "grid")
-        .selectAll("circle")
+        .append('g')
+        .attr('class', 'grid')
+        .selectAll('circle')
         .data([0.5, 1.5, 2.5, 3.5, 4.5])
-        .join("circle")
-        .attr("r", (d) => radialScale(d))
-        .attr("fill", "transparent")
-        .attr("stroke", colors.gray)
-        .attr("stroke-width", 0.5);
+        .join('circle')
+        .attr('r', (d) => radialScale(d))
+        .attr('fill', 'transparent')
+        .attr('stroke', colors.gray)
+        .attr('stroke-width', 0.5);
 
       svg
-        .append("g")
-        .attr("class", "web")
-        .attr("opacity", 0)
-        .selectAll(".web-line")
+        .append('g')
+        .attr('class', 'web')
+        .attr('opacity', 0)
+        .selectAll('.web-line')
         .data(d3.range(4))
-        .join("line")
-        .attr("class", "web-line")
-        .attr("transform", (d) => `rotate(${d * 45})`)
-        .attr("y1", -(radialScale.range()[1] + margin))
-        .attr("y2", radialScale.range()[1] + margin)
-        .attr("stroke-width", 0.5)
-        .attr("stroke", colors.gray);
+        .join('line')
+        .attr('class', 'web-line')
+        .attr('transform', (d) => `rotate(${d * 45})`)
+        .attr('y1', -(radialScale.range()[1] + margin))
+        .attr('y2', radialScale.range()[1] + margin)
+        .attr('stroke-width', 0.5)
+        .attr('stroke', colors.gray);
 
       svg
-        .append("g")
-        .attr("class", "labels")
-        .attr("opacity", 0)
-        .selectAll("text")
+        .append('g')
+        .attr('class', 'labels')
+        .attr('opacity', 0)
+        .selectAll('text')
         .data(labels)
-        .join("text")
-        .attr("y", radialScale.range()[1] + 1.5 * margin)
+        .join('text')
+        .attr('y', radialScale.range()[1] + 1.5 * margin)
         .attr(
-          "transform",
-          (_, i) =>
-            `rotate(${i * 45}) rotate(90 0 ${
-              radialScale.range()[1] + 1.5 * margin
-            })`
+          'transform',
+          (_, i) => `rotate(${i * 45}) rotate(90 0 ${
+            radialScale.range()[1] + 1.5 * margin
+          })`,
         )
-        .attr("dominant-baseline", "middle")
-        .attr("font-size", "8px")
-        .attr("fill", (e) =>
-          currLabels.includes(e)
-            ? MainChart.politicalColor(d.familyId)
-            : colors.gray
-        )
+        .attr('dominant-baseline', 'middle')
+        .attr('font-size', '8px')
+        .attr('fill', (e) => (currLabels.includes(e)
+          ? MainChart.politicalColor(d.familyId)
+          : colors.gray))
         .text((d) => d);
 
       const g = svg
-        .selectAll(".g-pos")
+        .selectAll('.g-pos')
         .data(d.positions.filter((e) => e.value !== null))
-        .join("g")
-        .attr("class", "g-pos")
+        .join('g')
+        .attr('class', 'g-pos')
         .attr(
-          "transform",
-          (e, i) => `rotate(${(e.isUpper ? 4 * 45 : 0) + i * 45})`
+          'transform',
+          (e, i) => `rotate(${(e.isUpper ? 4 * 45 : 0) + i * 45})`,
         );
 
-      g.append("line")
-        .attr("y2", (e) => radialScale(e.value))
-        .attr("stroke-width", 2)
-        .attr("stroke-linecap", "round")
-        .attr("stroke", MainChart.politicalColor(d.familyId));
+      g.append('line')
+        .attr('y2', (e) => radialScale(e.value))
+        .attr('stroke-width', 2)
+        .attr('stroke-linecap', 'round')
+        .attr('stroke', MainChart.politicalColor(d.familyId));
 
-      const annotations = svg.selectAll(".bg, .web, .labels");
+      const annotations = svg.selectAll('.bg, .web, .labels');
       svg
-        .on("mouseenter", () => annotations.attr("opacity", 1))
-        .on("mouseleave", () => annotations.attr("opacity", 0));
+        .on('mouseenter', () => annotations.attr('opacity', 1))
+        .on('mouseleave', () => annotations.attr('opacity', 0));
     });
   }
 
@@ -949,27 +914,25 @@ export default class MainChart {
   }
 
   renderYear() {
-    document.getElementById("input-year").value = this.state.year.getFullYear();
+    document.getElementById('input-year').value = this.state.year.getFullYear();
   }
 
   renderPanelParties() {
     const mapping = d3.map(this.data.raw, (d) => d.partyId);
 
-    d3.selectAll(".party-list-item").style("display", (_, i, n) =>
-      mapping.get(d3.select(n[i]).attr("data-party-id")).isActive
-        ? "grid"
-        : "none"
-    );
+    d3.selectAll('.party-list-item').style('display', (_, i, n) => (mapping.get(d3.select(n[i]).attr('data-party-id')).isActive
+      ? 'grid'
+      : 'none'));
   }
 
   static loadDatum(d) {
     let { family_name_short: familyId, family_name: family } = d;
-    if (["", "none", "code"].includes(familyId)) {
-      familyId = "other";
-      family = "Other";
+    if (['', 'none', 'code'].includes(familyId)) {
+      familyId = 'other';
+      family = 'Other';
     }
 
-    const date = d3.timeParse("%Y-%m-%d")(d.election_date);
+    const date = d3.timeParse('%Y-%m-%d')(d.election_date);
 
     return {
       countryId: +d.country_id,
@@ -986,27 +949,27 @@ export default class MainChart {
       electionDate: date,
       electionYear: date.getFullYear(),
 
-      familyId: familyId,
-      family: family,
+      familyId,
+      family,
 
       share: +d.vote_share,
       currentShare: +d.most_recent_vote_share,
 
       positions: [
         {
-          key: "stateMarket",
+          key: 'stateMarket',
           value: isNull(d.state_market) ? null : +d.state_market,
         },
         {
-          key: "libertyAuthority",
+          key: 'libertyAuthority',
           value: isNull(d.liberty_authority) ? null : +d.liberty_authority,
         },
         {
-          key: "leftRight",
+          key: 'leftRight',
           value: isNull(d.left_right) ? null : +d.left_right,
         },
         {
-          key: "euProAnti",
+          key: 'euProAnti',
           value: isNull(d.eu_anti_pro) ? null : 10 - d.eu_anti_pro,
         },
       ],
@@ -1023,12 +986,12 @@ export default class MainChart {
         familyId,
         familyName,
       })),
-      (d) => d.familyId
+      (d) => d.familyId,
     );
 
     const countryCode = d3.map(
       data.map(({ country, countryCode }) => ({ country, countryCode })),
-      (d) => d.country
+      (d) => d.country,
     );
 
     const countryGroups = d3
@@ -1056,8 +1019,8 @@ export default class MainChart {
       .map((d) => ({ y: y(d[pos]), data: d }))
       .sort((a, b) => b.data[size] - a.data[size]);
     const epsilon = 1e-3;
-    let head = null,
-      tail = null;
+    let head = null;
+    let tail = null;
 
     // Returns true if circle ⟨x,y⟩ intersects with any circle in the queue.
     function intersects(x, y, r) {
@@ -1082,9 +1045,7 @@ export default class MainChart {
         let a = head;
         b.x = Infinity;
         do {
-          let x =
-            a.x +
-            Math.sqrt((radius + radius + padding) ** 2 - (a.y - b.y) ** 2);
+          const x = a.x + Math.sqrt((radius + radius + padding) ** 2 - (a.y - b.y) ** 2);
           if (x < b.x && !intersects(x, b.y, radius)) b.x = x;
           a = a.next;
         } while (a);
@@ -1097,8 +1058,7 @@ export default class MainChart {
     }
 
     return circles.map((d) => {
-      d.x =
-        x(d.data.familyId) + (d.data.isAlive ? -padding - d.x : padding + d.x);
+      d.x = x(d.data.familyId) + (d.data.isAlive ? -padding - d.x : padding + d.x);
       return d;
     });
   }

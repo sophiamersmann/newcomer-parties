@@ -1,4 +1,4 @@
-import Mustache from "mustache";
+import Mustache from 'mustache';
 
 export async function renderTemplate({ template, target, view }) {
   return fetch(`src/templates/${template}`)
@@ -14,7 +14,6 @@ export function isNull(value) {
 }
 
 export function slide(element) {
-  const newHeight =
-    element.style("height") === "0px" ? element.property("scrollHeight") : 0;
-  element.style("height", `${newHeight}px`);
+  const newHeight = element.style('height') === '0px' ? element.property('scrollHeight') : 0;
+  element.style('height', `${newHeight}px`);
 }
