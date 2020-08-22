@@ -247,7 +247,7 @@ export default class MainChart {
           const party = d3.select(`#party-${partyId}`);
           this.highlightBee(party);
         })
-        .on('mouseleave', this.removeBeeHighlight)
+        .on('mouseleave', () => this.removeBeeHighlight())
         .on('click', (_, i, n) => slide(d3.select(n[i]).select('.party-hidden-info-wrapper')));
 
       this.injectProfileCharts();
@@ -604,6 +604,9 @@ export default class MainChart {
   }
 
   removeBeeHighlight() {
+    console.log('hi');
+    console.log(this.svg.bg);
+
     this.svg.bg
       .select('#party-highlight')
       .transition()
