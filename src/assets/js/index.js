@@ -1,3 +1,4 @@
+import $ from "jquery";
 import * as d3 from "d3";
 import MainChart from "./modules/chart";
 import { renderTemplate } from "./modules/utils";
