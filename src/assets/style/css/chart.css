@@ -1,7 +1,7 @@
 .brush .selection {
-  stroke: transparent;
   fill: transparent;
-  pointer-events: none; }
+  pointer-events: none;
+  stroke: transparent; }
 
 .brush .handle--n {
   display: none; }

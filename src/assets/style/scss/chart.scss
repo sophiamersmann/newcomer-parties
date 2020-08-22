@@ -1,10 +1,10 @@
-@import "global";
+@import 'global';
 
 .brush {
   .selection {
-    stroke: transparent;
     fill: transparent;
     pointer-events: none;
+    stroke: transparent;
   }
 
   .handle--n {

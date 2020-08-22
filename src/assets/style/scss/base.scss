@@ -1,23 +1,23 @@
-@import "~normalize.css/normalize.css";
-@import "~flag-icon-css/css/flag-icon.css";
-@import "global";
-@import "typo";
+@import '~normalize.css/normalize.css';
+@import '~flag-icon-css/css/flag-icon.css';
+@import 'global';
+@import 'typo';
 
 // GENERAL LAYOUT
 
 html {
-  height: 100%;
   box-sizing: border-box;
   color: $black;
-  font-family: "Roboto", sans-serif;
+  font-family: 'Roboto', sans-serif;
+  height: 100%;
 
   @include small-screen() {
     font-size: 14px;
   }
 
   *,
-  *:after,
-  *:before {
+  *::after,
+  *::before {
     box-sizing: inherit;
     margin: 0;
     padding: 0;
@@ -29,13 +29,13 @@ html {
 }
 
 body {
-  height: 100%;
   display: grid;
   grid-template: auto minmax(60px, 80px) 1fr / 1fr auto minmax(0, 20%);
   grid-template-areas:
-    "header legend panel"
-    "select select panel"
-    "main   main   panel";
+    'header legend panel'
+    'select select panel'
+    'main   main   panel';
+  height: 100%;
 
   @include small-screen() {
     display: initial;
@@ -49,15 +49,15 @@ body {
   margin: $spacing $spacing $spacing / 8 $spacing;
 
   h1 {
-    font-family: "Space Grotesk", sans-serif;
+    font-family: 'Space Grotesk', sans-serif;
     font-size: 1.6rem;
     margin-bottom: $spacing / 4;
   }
 
   .content {
+    font-size: 1.1rem;
     font-weight: 300;
     line-height: 1.3;
-    font-size: 1.1rem;
 
     div {
       @include small-screen() {
@@ -70,13 +70,13 @@ body {
 // LEGEND
 
 .legend {
-  grid-area: legend;
-  font-size: 0.8rem;
-  text-align: right;
-  padding: $spacing;
-
   $line-height: 16px;
+
+  font-size: 0.8rem;
+  grid-area: legend;
   line-height: $line-height;
+  padding: $spacing;
+  text-align: right;
 
   @include small-screen() {
     display: none;
@@ -86,21 +86,21 @@ body {
     display: inline-block;
   }
 
-  & > div:not(.wrapper) {
-    top: -$line-height / 2;
+  > div:not(.wrapper) {
     position: relative;
+    top: -$line-height / 2;
   }
 
   .wrapper {
-    text-align: start;
     margin: 0 $spacing / 4;
+    text-align: start;
   }
 
   .circle {
-    width: $line-height / 2;
-    height: $line-height / 2;
-    border-radius: 50%;
     border: 1px solid $black;
+    border-radius: 50%;
+    height: $line-height / 2;
+    width: $line-height / 2;
 
     &.circle-alive {
       background: $black;
@@ -115,16 +115,16 @@ body {
 // SELECT COUNTRIES
 
 .selection {
+  font-size: 0.9rem;
+
+  font-weight: 300;
   grid-area: select;
   margin: $spacing / 8 $spacing;
 
-  font-weight: 300;
-  font-size: 0.9rem;
-
   .label {
     display: inline-block;
-    margin-right: $spacing;
     font-weight: 400;
+    margin-right: $spacing;
   }
 
   .select-region {
@@ -135,18 +135,18 @@ body {
 // MAIN CHART
 
 .main {
-  grid-area: main;
   align-self: center;
+  grid-area: main;
   padding: 0 $spacing $spacing;
 
   #chart-wrapper {
     display: grid;
     place-items: center;
-
+  
     @include small-screen() {
       display: none;
     }
-
+  
     svg {
       overflow: visible;
     }
@@ -156,14 +156,14 @@ body {
 // USER INPUT
 
 #input-year {
+  -moz-appearance: textfield;
+  background: #fff;
+  border: 0;
+  border-bottom: $underline-width solid $accent;
+  font-weight: 500;
+  padding: 0 $underline-padding;
   text-align: center;
   width: 52px;
-  font-weight: 500;
-  background: #fff;
-  border: none;
-  border-bottom: $underline-width solid $accent;
-  padding: 0 $underline-padding;
-  -moz-appearance: textfield;
 
   &::-webkit-outer-spin-button,
   &::-webkit-inner-spin-button {
@@ -176,8 +176,8 @@ body {
   }
 
   &:invalid {
-    box-shadow: none;
     border-bottom: $underline-width solid $accent-light;
+    box-shadow: none;
   }
 
   &:required {
@@ -192,110 +192,120 @@ body {
     display: inline-block;
   }
 
-  #input-vote-share-label {
-    display: inline-block;
-    width: 40px;
-    text-align: center;
-    border-bottom: $underline-width solid $accent;
-    padding: 0 $underline-padding;
-  }
-
   input {
     -webkit-appearance: none;
-    width: 90px;
     vertical-align: middle;
+    width: 90px;
 
     &::-webkit-slider-runnable-track {
-      width: 100%;
-      height: 5px;
-      cursor: pointer;
-      box-shadow: 0px 0px 0px #000000;
       background: $accent-light;
+      border: 0 solid #000;
       border-radius: 1px;
-      border: 0px solid #000000;
-    }
-    &::-webkit-slider-thumb {
-      box-shadow: 0px 0px 0px #000000;
-      border: 0px solid $accent;
-      height: 16px;
-      width: 16px;
-      border-radius: 24px;
-      background: $accent;
+      box-shadow: 0 0 0 #000;
       cursor: pointer;
-      -webkit-appearance: none;
-      margin-top: -5.5px;
+      height: 5px;
+      width: 100%;
     }
+
+    &::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      background: $accent;
+      border: 0 solid $accent;
+      border-radius: 24px;
+      box-shadow: 0 0 0 #000;
+      cursor: pointer;
+      height: 16px;
+      margin-top: -5.5px;
+      width: 16px;
+    }
+
     &:focus::-webkit-slider-runnable-track {
       background: $accent-light;
     }
+
     &::-moz-range-track {
-      width: 100%;
-      height: 5px;
-      cursor: pointer;
-      box-shadow: 0px 0px 0px #000000;
       background: $accent-light;
+      border: 0 solid #000;
       border-radius: 1px;
-      border: 0px solid #000000;
+      box-shadow: 0 0 0 #000;
+      cursor: pointer;
+      height: 5px;
+      width: 100%;
     }
+
     &::-moz-range-thumb {
-      box-shadow: 0px 0px 0px #000000;
-      border: 0px solid $accent;
+      background: $accent;
+      border: 0 solid $accent;
+      border-radius: 24px;
+      box-shadow: 0 0 0 #000;
+      cursor: pointer;
       height: 16px;
       width: 16px;
-      border-radius: 24px;
-      background: $accent;
-      cursor: pointer;
     }
+
     &::-ms-track {
-      width: 100%;
-      height: 5px;
-      cursor: pointer;
       background: transparent;
       border-color: transparent;
       color: transparent;
+      cursor: pointer;
+      height: 5px;
+      width: 100%;
     }
+
     &::-ms-fill-lower {
       background: $accent-light;
-      border: 0px solid #000000;
+      border: 0 solid #000;
       border-radius: 2px;
-      box-shadow: 0px 0px 0px #000000;
+      box-shadow: 0 0 0 #000;
     }
+
     &::-ms-fill-upper {
       background: $accent-light;
-      border: 0px solid #000000;
+      border: 0 solid #000;
       border-radius: 2px;
-      box-shadow: 0px 0px 0px #000000;
+      box-shadow: 0 0 0 #000;
     }
+
     &::-ms-thumb {
-      margin-top: 1px;
-      box-shadow: 0px 0px 0px #000000;
-      border: 0px solid $accent;
-      height: 16px;
-      width: 16px;
-      border-radius: 24px;
       background: $accent;
+      border: 0 solid $accent;
+      border-radius: 24px;
+      box-shadow: 0 0 0 #000;
       cursor: pointer;
+      height: 16px;
+      margin-top: 1px;
+      width: 16px;
     }
+
     &:focus::-ms-fill-lower {
       background: $accent-light;
     }
+
     &:focus::-ms-fill-upper {
       background: $accent-light;
     }
   }
 }
 
+#input-vote-share-label {
+  border-bottom: $underline-width solid $accent;
+  display: inline-block;
+  padding: 0 $underline-padding;
+  text-align: center;
+  width: 40px;
+}
+
 .selection button {
   background-color: $accent-light;
-  border: none;
+  border: 0;
   border-radius: 5px;
-  padding: 2px 4px;
-  margin: 2px 4px;
   font-weight: 300;
+  margin: 2px 4px;
+  padding: 2px 4px;
 
   &:hover {
-    cursor: pointer;
     background-color: $accent;
+    cursor: pointer;
   }
 
   &.active {
@@ -303,9 +313,9 @@ body {
   }
 
   .flag-icon {
-    width: 15px;
     height: 15px;
     pointer-events: none;
+    width: 15px;
   }
 }
 
@@ -319,8 +329,8 @@ button {
 // PANEL
 
 .panel {
-  grid-area: panel;
   border-left: 1px solid $black;
+  grid-area: panel;
 
   @include small-screen() {
     display: none;
@@ -328,66 +338,16 @@ button {
 }
 
 #party-list {
+  font-size: 0.9rem;
   height: 100%;
   overflow: auto;
-  scroll-behavior: smooth;
   padding: 0 $spacing / 2;
-  font-size: 0.9rem;
+  scroll-behavior: smooth;
 
   .party-list-group {
-    border-radius: 10px;
     background-color: $lightgray;
+    border-radius: 10px;
     margin: $spacing 0;
-
-    .party-list-item {
-      display: grid;
-      grid-template-columns: 4fr 4fr 2fr;
-      grid-template-areas:
-        "header header right"
-        "center center right"
-        "footer footer footer";
-      padding: $spacing / 4;
-      border-radius: 0 10px 10px 0;
-      padding-left: $spacing / 2;
-
-      .party-year {
-        font-weight: 300;
-      }
-
-      .area-header {
-        grid-area: header;
-      }
-
-      .area-center {
-        grid-area: center;
-      }
-
-      .area-right {
-        grid-area: right;
-        text-align: right;
-        align-self: end;
-        justify-self: center;
-      }
-
-      .area-footer {
-        grid-area: footer;
-      }
-
-      .party-hidden-info-wrapper {
-        transition: height 0.5s ease-out;
-        height: 0;
-        overflow: hidden;
-
-        .party-hidden-info {
-          margin-top: $spacing / 4;
-          font-size: 0.8rem;
-
-          div {
-            margin: $spacing / 8 0;
-          }
-        }
-      }
-    }
 
     @mixin political-border($family) {
       .party-list-item-#{$family} {
@@ -407,6 +367,56 @@ button {
   }
 }
 
+.party-list-item {
+  border-radius: 0 10px 10px 0;
+  display: grid;
+  grid-template-areas:
+    'header header right'
+    'center center right'
+    'footer footer footer';
+  grid-template-columns: 4fr 4fr 2fr;
+  padding: $spacing / 4;
+  padding-left: $spacing / 2;
+
+  .party-year {
+    font-weight: 300;
+  }
+
+  .area-header {
+    grid-area: header;
+  }
+
+  .area-center {
+    grid-area: center;
+  }
+
+  .area-right {
+    align-self: end;
+    grid-area: right;
+    justify-self: center;
+    text-align: right;
+  }
+
+  .area-footer {
+    grid-area: footer;
+  }
+
+  .party-hidden-info-wrapper {
+    height: 0;
+    overflow: hidden;
+    transition: height 0.5s ease-out;
+
+    .party-hidden-info {
+      font-size: 0.8rem;
+      margin-top: $spacing / 4;
+
+      div {
+        margin: $spacing / 8 0;
+      }
+    }
+  }
+}
+
 // CONTENT SHOWN ON SMALL SCREENS
 
 .small-screen {
@@ -417,16 +427,16 @@ button {
   }
 
   .alert {
+    background-color: #bedcee;
+    border: 3px solid #369;
+    border-radius: 10px;
     margin: $spacing / 2 0;
     padding: $spacing / 2;
-    border: 3px solid #336699;
-    border-radius: 10px;
-    background-color: #bedcee;
   }
 
   img {
-    width: 100%;
     height: auto;
+    width: 100%;
   }
 }
 
