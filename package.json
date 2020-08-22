@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "http-server .",
+    "start": "webpack-dev-server",
     "scss": "node-sass --watch ./src/assets/style/scss -o ./src/assets/style/css",
     "build": "webpack"
   },
@@ -43,11 +43,11 @@
     "eslint-plugin-jsx-a11y": "^6.2.3",
     "eslint-plugin-react": "^7.20.0",
     "eslint-plugin-react-hooks": "^2.5.0",
-    "http-server": "^0.12.3",
     "sass-loader": "^9.0.3",
     "style-loader": "^1.2.1",
     "url-loader": "^4.1.0",
     "webpack": "^4.44.1",
-    "webpack-cli": "^3.3.12"
+    "webpack-cli": "^3.3.12",
+    "webpack-dev-server": "^3.11.0"
   }
 }
