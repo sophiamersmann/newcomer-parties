@@ -25,7 +25,8 @@
     "jquery": "^3.5.1",
     "mustache": "^4.0.1",
     "normalize.css": "^8.0.1",
-    "sass-node": "^4.11.2"
+    "sass-node": "^4.11.2",
+    "svg-url-loader": "^6.0.0"
   },
   "devDependencies": {
     "@babel/core": "^7.11.4",

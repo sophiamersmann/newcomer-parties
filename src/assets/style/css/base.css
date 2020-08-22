@@ -1,4 +1,5 @@
-@import url(~normalize.css);
+@import url(~normalize.css/normalize.css);
+@import url(~flag-icon-css/css/flag-icon.css);
 @font-face {
   font-family: "Space Grotesk";
   font-style: normal;

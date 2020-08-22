@@ -20,6 +20,10 @@ module.exports = {
         exclude: /node_modules/,
         use: ["babel-loader", "eslint-loader"],
       },
+      {
+        test: /\.svg/,
+        use: ["svg-url-loader"],
+      },
     ],
   },
   resolve: {
