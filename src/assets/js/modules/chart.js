@@ -1,3 +1,6 @@
+import * as d3 from "d3";
+import { renderTemplate, isNull } from "./utils";
+
 // TODO: This will be importded from _global.scss
 const colors = {
   black: "#212529",
@@ -26,7 +29,7 @@ const colors = {
   otherLight: d3.hsl(0, 0, 0.95),
 };
 
-class MainChart {
+export default class MainChart {
   constructor(selector, width, height) {
     const margin = {
       top: 40,

@@ -1,3 +1,7 @@
+import * as d3 from "d3";
+import MainChart from "./modules/chart";
+import { renderTemplate } from "./modules/utils";
+
 $(document).ready(() => {
   const inputVoteShare = $("#input-vote-share");
   const minVoteShare = +inputVoteShare.val();
