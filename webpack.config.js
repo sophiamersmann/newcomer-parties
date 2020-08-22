@@ -13,7 +13,7 @@ module.exports = {
       },
       {
         test: /\.(woff|woff2)$/,
-        loaders: ["url-loader"],
+        use: ["url-loader"],
       },
       {
         test: /\.(js)$/,
