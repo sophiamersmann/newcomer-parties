@@ -6,6 +6,12 @@
     "max-nesting-depth": 4,
     "property-no-vendor-prefix": null,
     "selector-max-compound-selectors": 4,
-    "selector-no-qualifying-type": null
+    "selector-no-qualifying-type": null,
+    "property-no-unknown": [
+      true,
+      {
+        "ignoreSelectors": [":export"]
+      }
+    ]
   }
 }
