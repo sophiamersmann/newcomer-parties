@@ -137,9 +137,6 @@ export default class MainChart {
 
   prepareData(data) {
     const raw = data.map((d) => {
-      d.isAlive = d.currentShare > 0;
-      d.shareFormat = d3.format('.1%')(d.share / 100);
-
       d.partyEngl = '';
       if (d.party !== d.partyOrig) {
         d.partyEngl = `&ndash; <i>${d.party}</i>`;
@@ -604,9 +601,6 @@ export default class MainChart {
   }
 
   removeBeeHighlight() {
-    console.log('hi');
-    console.log(this.svg.bg);
-
     this.svg.bg
       .select('#party-highlight')
       .transition()
@@ -937,11 +931,14 @@ export default class MainChart {
 
     const date = d3.timeParse('%Y-%m-%d')(d.election_date);
 
+    const share = +d.vote_share;
+    const shareFormat = d3.format('.1%')(share / 100);
+
     return {
       countryId: +d.country_id,
       country: d.country_name,
       countryCode: d.country_code,
-      countryGroup: d.country_group,
+      countryGroup: d.region,
 
       partyId: +d.party_id,
       party: d.party_name_english,
@@ -955,8 +952,10 @@ export default class MainChart {
       familyId,
       family,
 
-      share: +d.vote_share,
-      currentShare: +d.most_recent_vote_share,
+      share,
+      shareFormat,
+
+      isAlive: +d.is_alive,
 
       positions: [
         {
