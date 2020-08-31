@@ -2,6 +2,8 @@
 
 A visualisation of parties elected into parliament for the first time
 
+Published at https://sophiamersmann.github.io/newcomer-parties/
+
 **Sources**
 
 Data from [ParlGov](http://www.parlgov.org/) (development version, accessed 23 August 2020)
