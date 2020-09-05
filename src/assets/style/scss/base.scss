@@ -142,14 +142,20 @@ body {
   #chart-wrapper {
     display: grid;
     place-items: center;
-  
+
     @include small-screen() {
       display: none;
     }
-  
+
     svg {
       overflow: visible;
     }
+  }
+
+  .source-declaration {
+    bottom: $spacing / 8;
+    font-size: 0.6rem;
+    position: absolute;
   }
 }
 
@@ -437,6 +443,23 @@ button {
   img {
     height: auto;
     width: 100%;
+  }
+}
+
+// LINKS
+
+a {
+  &:link,
+  &:visited {
+    border-bottom: 1.5px solid $accent;
+    color: inherit;
+    text-decoration: none;
+  }
+
+  &:hover,
+  &:active {
+    background-color: $accent;
+    border: 0;
   }
 }
 

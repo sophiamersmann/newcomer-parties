@@ -128,6 +128,10 @@ body {
         display: none; } }
     .main #chart-wrapper svg {
       overflow: visible; }
+  .main .source-declaration {
+    bottom: 0.25rem;
+    font-size: 0.6rem;
+    position: absolute; }
 
 #input-year {
   -moz-appearance: textfield;
@@ -365,6 +369,15 @@ body {
   .small-screen img {
     height: auto;
     width: 100%; }
+
+a:link, a:visited {
+  border-bottom: 1.5px solid #fb8d2d;
+  color: inherit;
+  text-decoration: none; }
+
+a:hover, a:active {
+  background-color: #fb8d2d;
+  border: 0; }
 
 b {
   font-weight: 500; }
