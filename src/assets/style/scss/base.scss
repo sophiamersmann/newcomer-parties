@@ -156,6 +156,10 @@ body {
     bottom: $spacing / 8;
     font-size: 0.6rem;
     position: absolute;
+
+    @include small-screen() {
+      display: none;
+    }
   }
 }
 

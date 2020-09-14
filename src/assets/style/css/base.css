@@ -132,6 +132,9 @@ body {
     bottom: 0.25rem;
     font-size: 0.6rem;
     position: absolute; }
+    @media screen and (max-width: 768px) {
+      .main .source-declaration {
+        display: none; } }
 
 #input-year {
   -moz-appearance: textfield;
